@@ -1,2 +1,13 @@
 
+dependencies {
+    compile 'io.reactivex.rxjava3:rxjava:3.0.0-RC3'
+    testCompile 'org.testng:testng:7.0.0'
+}
 
+test {
+    // enable TestNG support (default is JUnit)
+    useTestNG()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
