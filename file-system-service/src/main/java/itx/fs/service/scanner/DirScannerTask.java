@@ -1,4 +1,4 @@
-package itx.fs.service;
+package itx.fs.service.scanner;
 
 import io.reactivex.rxjava3.core.FlowableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
