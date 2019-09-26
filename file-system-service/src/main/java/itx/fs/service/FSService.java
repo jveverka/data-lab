@@ -2,11 +2,11 @@ package itx.fs.service;
 
 import io.reactivex.rxjava3.core.Flowable;
 import itx.fs.service.dto.DirItem;
+import itx.fs.service.dto.DirQuery;
 
-import java.nio.file.Path;
 
 public interface FSService {
 
-    Flowable<DirItem> scanDirectory(Path path);
+    Flowable<DirItem> scanDirectory(DirQuery query);
 
 }
