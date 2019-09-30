@@ -1,12 +1,12 @@
 package itx.image.service;
 
-import itx.image.service.dto.ExifInfo;
+import itx.image.service.model.MetaData;
 
 import java.io.InputStream;
 import java.util.Optional;
 
 public interface ImageService {
 
-    Optional<ExifInfo> getExifInfo(InputStream stream);
+    Optional<MetaData> getMetaData(InputStream stream);
 
 }
