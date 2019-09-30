@@ -2,12 +2,14 @@ package itx.fs.service.dto;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class DirQuery {
 
     private final Path path;
 
     public DirQuery(Path path) {
+        Objects.requireNonNull(path);
         this.path = path;
     }
 
