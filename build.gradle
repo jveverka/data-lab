@@ -16,4 +16,5 @@ subprojects {
 
 project(':file-system-service') {}
 project(':image-info-service') {}
+project(':elasticsearch-service') {}
 
