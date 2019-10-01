@@ -33,32 +33,68 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
     @Override
     public <T> boolean deleteIndex(Class<T> type) {
-        return false;
+        DataTransformer<?> dataTransformer = transformers.get(type);
+        if (dataTransformer != null) {
+
+            return false;
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
     }
 
     @Override
     public <T> boolean hasIndex(Class<T> type) {
-        return false;
+        DataTransformer<?> dataTransformer = transformers.get(type);
+        if (dataTransformer != null) {
+
+            return false;
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
     }
 
     @Override
     public <T> boolean saveDocument(Class<T> type, Object data) {
-        return false;
+        DataTransformer<?> dataTransformer = transformers.get(type);
+        if (dataTransformer != null) {
+
+            return false;
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
     }
 
     @Override
     public <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) {
-        return Optional.empty();
+        DataTransformer<?> dataTransformer = transformers.get(type);
+        if (dataTransformer != null) {
+
+            return Optional.empty();
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
     }
 
     @Override
     public <T> Collection<T> getDocuments(Class<T> type) {
-        return null;
+        DataTransformer<?> dataTransformer = transformers.get(type);
+        if (dataTransformer != null) {
+
+            return null;
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
     }
 
     @Override
     public <T> boolean deleteDocumentById(Class<T> type, Object data) {
-        return false;
+        DataTransformer<?> dataTransformer = transformers.get(type);
+        if (dataTransformer != null) {
+
+            return false;
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
     }
 
 }
