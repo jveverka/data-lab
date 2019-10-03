@@ -1,11 +1,9 @@
 package itx.elastic.service;
 
 import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
 import itx.elastic.service.dto.ClientConfig;
 import itx.elastic.service.dto.DocumentId;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -15,6 +13,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
@@ -22,23 +21,33 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
 public class ElasticSearchServiceImpl implements ElasticSearchService {
 
     private final RestHighLevelClient client;
     private final Map<Class<?>, DataTransformer<?>> transformers;
+    private final ExecutorService executorService;
 
-    public ElasticSearchServiceImpl(ClientConfig config) {
-        this.transformers = new ConcurrentHashMap<>();
+    public ElasticSearchServiceImpl(ClientConfig config, ExecutorService executorService) {
+        Objects.requireNonNull(config);
+        Objects.requireNonNull(executorService);
         HttpHost[] hosts = config.getEndpoints().toArray(new HttpHost[config.getEndpoints().size()]);
+        this.transformers = new ConcurrentHashMap<>();
         this.client = new RestHighLevelClient(RestClient.builder(hosts));
+        this.executorService = executorService;
     }
 
     @Override
@@ -117,29 +126,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
-    public <T> void getDocuments(Class<T> type, Observer<T> observer) throws IOException {
+    public <T> void getDocuments(Class<T> type, Observer<T> observer) {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
-            SearchRequest searchRequest = new SearchRequest(dataTransformer.getIndexName());
-            observer.onSubscribe(new DisposableNoop());
-            ActionListener<SearchResponse> listener = new ActionListener<> () {
-                @Override
-                public void onResponse(SearchResponse searchResponse) {
-                    SearchHit[] hits = searchResponse.getHits().getHits();
-                    for (SearchHit hit: hits) {
-                        observer.onNext(dataTransformer.getInstance(new DocumentId(hit.getId()), hit.getSourceAsMap()));
-                    }
-                    observer.onComplete();
-                }
-                @Override
-                public void onFailure(Exception e) {
-                    observer.onError(e);
-                }
-            };
-            client.searchAsync(searchRequest, RequestOptions.DEFAULT, listener);
-            //USE SCROLL !!! client.scrollAsync();
+            SearchScrollTask<T> searchScrollTask = new SearchScrollTask<>(observer, client, dataTransformer);
+            executorService.submit(searchScrollTask);
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            UnsupportedOperationException exception = new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            observer.onError(exception);
+            observer.onComplete();
+            throw exception;
         }
     }
 
@@ -153,6 +149,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         } else {
             throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+        executorService.shutdown();
+        client.close();
     }
 
 }

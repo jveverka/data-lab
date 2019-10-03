@@ -1,13 +1,12 @@
 package itx.elastic.service;
 
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import itx.elastic.service.dto.DocumentId;
 
 import java.io.IOException;
 import java.util.Optional;
 
-public interface ElasticSearchService {
+public interface ElasticSearchService extends AutoCloseable {
 
     <T> void registerDataTransformer(Class<T> type, DataTransformer<T> transformer);
 
@@ -23,7 +22,14 @@ public interface ElasticSearchService {
 
     <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) throws IOException;
 
-    <T> void getDocuments(Class<T> type, Observer<T> observer) throws IOException;
+    /**
+     * https://www.elastic.co/guide/en/elasticsearch/client/java-rest/master/java-rest-high-search-scroll.html
+     * @param type
+     * @param observer
+     * @param <T>
+     * @throws IOException
+     */
+    <T> void getDocuments(Class<T> type, Observer<T> observer);
 
     <T> boolean deleteDocumentById(Class<T> type, T data) throws IOException;
 
