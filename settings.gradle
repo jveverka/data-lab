@@ -1,4 +1,8 @@
 include "file-system-service"
 include "image-info-service"
+
 include "elasticsearch-service"
+project(":elasticsearch-service").projectDir = new File("elasticsearch/elasticsearch-service")
+include "elasticsearch-tests"
+project(":elasticsearch-tests").projectDir = new File("elasticsearch/elasticsearch-tests")
 

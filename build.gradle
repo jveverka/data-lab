@@ -17,4 +17,9 @@ subprojects {
 project(':file-system-service') {}
 project(':image-info-service') {}
 project(':elasticsearch-service') {}
+project(':elasticsearch-tests') {
+    dependencies {
+        compile project(':elasticsearch-service')
+    }
+}
 
