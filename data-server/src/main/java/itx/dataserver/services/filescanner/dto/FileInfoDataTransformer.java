@@ -26,7 +26,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
 
     @Override
     public DocumentId getDocumentId(FileInfo data) {
-        return null;
+        return new DocumentId(data.getId().getId());
     }
 
     @Override
