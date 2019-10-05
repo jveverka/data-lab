@@ -6,9 +6,9 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import java.io.IOException;
 import java.util.Map;
 
-public interface DataTransformer <T> {
+public interface DataTransformer<T> {
 
-    XContentBuilder getSource(T data) throws IOException;
+    Map<String, Object> getSource(T data);
 
     XContentBuilder getIndexMapping() throws IOException;
 

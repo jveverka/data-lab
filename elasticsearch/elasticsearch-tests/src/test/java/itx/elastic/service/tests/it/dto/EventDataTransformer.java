@@ -8,6 +8,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 import static itx.elastic.service.impl.ESUtils.DATE_FORMAT;
@@ -15,23 +16,17 @@ import static itx.elastic.service.impl.ESUtils.DATE_FORMAT;
 public class EventDataTransformer implements DataTransformer<EventData> {
 
     @Override
-    public XContentBuilder getSource(EventData eventData) throws IOException {
-        XContentBuilder builder = XContentFactory.jsonBuilder();
-        builder.startObject();
-        {
-            builder.field("name", eventData.getName());
-            builder.field("description", eventData.getDescription());
-            builder.field("startDate", ESUtils.toString(eventData.getStartDate()));
-            builder.field("duration", eventData.getDuration());
-            builder.startObject("location");
-            {
-                builder.field("lon", eventData.getLocation().getLongitude());
-                builder.field("lat", eventData.getLocation().getLatitude());
-            }
-            builder.endObject();
-        }
-        builder.endObject();
-        return builder;
+    public Map<String, Object> getSource(EventData eventData) {
+        Map<String, Object> source = new HashMap<>();
+        Map<String, Object> geoLocationMap = new HashMap<>();
+        geoLocationMap.put("lon", eventData.getLocation().getLongitude());
+        geoLocationMap.put("lat", eventData.getLocation().getLatitude());
+        source.put("name", eventData.getName());
+        source.put("description", eventData.getDescription());
+        source.put("startDate", ESUtils.toString(eventData.getStartDate()));
+        source.put("duration", eventData.getDuration());
+        source.put("location", geoLocationMap);
+        return source;
     }
 
     @Override
