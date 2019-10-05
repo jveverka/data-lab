@@ -6,6 +6,7 @@ import itx.elastic.service.dto.ClientConfig;
 import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.impl.ESUtils;
 import itx.elastic.service.tests.it.dto.EventData;
+import itx.elastic.service.tests.it.dto.EventDataId;
 import itx.elastic.service.tests.it.dto.EventDataTransformer;
 import itx.elastic.service.tests.it.dto.Location;
 import org.testng.Assert;
@@ -33,7 +34,7 @@ public class ElasticSearchServiceDocumentsTestsIT {
                 .addEndPoint("127.0.0.1", 9200, "http")
                 .build();
         elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
-        eventData = EventData.from("id1", "name1", "description1", ESUtils.getNow(), 3600, new Location(45.2F, 15.3F));
+        eventData = EventData.from(new EventDataId("id1"), "name1", "description1", ESUtils.getNow(), 3600, new Location(45.2F, 15.3F));
     }
 
     @BeforeMethod
@@ -57,13 +58,13 @@ public class ElasticSearchServiceDocumentsTestsIT {
         Assert.assertTrue(result);
         result = elasticSearchService.flushIndex(EventData.class);
         Assert.assertTrue(result);
-        documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
+        documentById = elasticSearchService.getDocumentById(EventData.class, TestUtils.createDocumentId(eventData.getId()));
         EventData eventDataFromElastic = documentById.get();
         Assert.assertTrue(documentById.isPresent());
         Assert.assertEquals(eventData, eventDataFromElastic);
-        result = elasticSearchService.deleteDocumentById(EventData.class, new DocumentId(eventData.getId()));
+        result = elasticSearchService.deleteDocumentById(EventData.class, TestUtils.createDocumentId(eventData.getId()));
         Assert.assertTrue(result);
-        documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
+        documentById = elasticSearchService.getDocumentById(EventData.class, TestUtils.createDocumentId(eventData.getId()));
         Assert.assertTrue(documentById.isEmpty());
     }
 

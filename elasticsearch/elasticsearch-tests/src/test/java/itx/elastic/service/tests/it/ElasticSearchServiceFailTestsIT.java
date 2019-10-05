@@ -3,8 +3,8 @@ package itx.elastic.service.tests.it;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
-import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.tests.it.dto.EventData;
+import itx.elastic.service.tests.it.dto.EventDataId;
 import itx.elastic.service.tests.it.dto.EventDataTransformer;
 import itx.elastic.service.tests.it.dto.Location;
 import org.testng.Assert;
@@ -32,7 +32,7 @@ public class ElasticSearchServiceFailTestsIT {
                 .build();
         elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
         elasticSearchService.registerDataTransformer(EventData.class, new EventDataTransformer());
-        eventData = EventData.from("id1", "name1", "description1", ZonedDateTime.now(), 3600, new Location(45.2F, 15.3F));
+        eventData = EventData.from(new EventDataId("id1"), "name1", "description1", ZonedDateTime.now(), 3600, new Location(45.2F, 15.3F));
     }
 
     @Test(expectedExceptions = {IOException.class, ConnectException.class})
@@ -61,7 +61,7 @@ public class ElasticSearchServiceFailTestsIT {
 
     @Test(expectedExceptions = {IOException.class, ConnectException.class})
     public void testDisconnectedDeleteDocument() throws IOException {
-        elasticSearchService.deleteDocumentById(EventData.class, new DocumentId(eventData.getId()));
+        elasticSearchService.deleteDocumentById(EventData.class, TestUtils.createDocumentId(eventData.getId()));
         Assert.fail();
     }
 

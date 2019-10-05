@@ -5,14 +5,14 @@ import java.util.Objects;
 
 public class EventData {
 
-    private final String id;
+    private final EventDataId id;
     private final String name;
     private final String description;
     private final ZonedDateTime startDate;
     private final long duration;
     private final Location location;
 
-    public EventData(String id, String name, String description, ZonedDateTime startDate, long duration, Location location) {
+    public EventData(EventDataId id, String name, String description, ZonedDateTime startDate, long duration, Location location) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -21,7 +21,7 @@ public class EventData {
         this.location = location;
     }
 
-    public String getId() {
+    public EventDataId getId() {
         return id;
     }
 
@@ -45,7 +45,7 @@ public class EventData {
         return location;
     }
 
-    public static EventData from(String id, String name, String description, ZonedDateTime startDate, long duration, Location location) {
+    public static EventData from(EventDataId id, String name, String description, ZonedDateTime startDate, long duration, Location location) {
         return new EventData(id, name, description, startDate, duration, location);
     }
 

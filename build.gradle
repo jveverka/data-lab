@@ -14,6 +14,14 @@ subprojects {
     }
 }
 
+project(':data-server') {
+    dependencies {
+        compile project(':elasticsearch-service')
+        compile project(':image-info-service')
+        compile project(':file-system-service')
+    }
+}
+
 project(':file-system-service') {}
 project(':image-info-service') {}
 project(':elasticsearch-service') {}

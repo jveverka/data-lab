@@ -3,7 +3,6 @@ package itx.elastic.service.tests.it;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
-import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.tests.it.dto.EventData;
 import itx.elastic.service.tests.it.dto.EventDataTransformer;
 import org.testng.Assert;
@@ -44,7 +43,7 @@ public class ElasticSearchServiceBasicTestsIT {
 
         Assert.assertNotNull(eventDataOriginal);
         Map<String, Object> dataSource = eventDataTransformer.getSource(eventDataOriginal);
-        EventData eventDataFromMap = eventDataTransformer.getInstance(new DocumentId(eventDataOriginal.getId()), dataSource);
+        EventData eventDataFromMap = eventDataTransformer.getInstance(TestUtils.createDocumentId(eventDataOriginal.getId()), dataSource);
 
         Assert.assertNotNull(eventDataFromMap);
         Assert.assertEquals(eventDataOriginal, eventDataFromMap);

@@ -2,5 +2,5 @@
 
 ### Build and Run
 ```
-gradle clean build test
+gradle clean build test publishToMavenLocal
 ```

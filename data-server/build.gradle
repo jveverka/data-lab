@@ -1,12 +1,10 @@
 
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'maven-publish'
 
-mainClassName = 'itx.fs.service.FsMain'
+mainClassName = 'itx.dataserver.DsMain'
 
 dependencies {
-    compile 'io.reactivex.rxjava3:rxjava:3.0.0-RC3'
     testCompile 'org.testng:testng:7.0.0'
     testCompile 'org.mockito:mockito-core:3.0.0'
 }
@@ -22,17 +20,5 @@ test {
     useTestNG()
     testLogging {
         events "passed", "skipped", "failed"
-    }
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'itx.fs.service'
-            artifactId = 'file-system-service'
-            version = '1.0.0'
-
-            from components.java
-        }
     }
 }

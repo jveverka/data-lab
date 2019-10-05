@@ -76,7 +76,7 @@ public class EventDataTransformer implements DataTransformer<EventData> {
 
     @Override
     public DocumentId getDocumentId(EventData data) {
-        return new DocumentId(data.getId());
+        return new DocumentId(data.getId().getId());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class EventDataTransformer implements DataTransformer<EventData> {
         Location geoLocation = new Location(Float.parseFloat(geoLocationMap.get("lon").toString()), Float.parseFloat(geoLocationMap.get("lat").toString()));
         ZonedDateTime zonedDateTime = ESUtils.fromString(source.get("startDate").toString());
         long duration = Long.parseLong(source.get("duration").toString());
-        return new EventData(id.getId(), source.get("name").toString(),
+        return new EventData(new EventDataId(id.getId()), source.get("name").toString(),
                 source.get("description").toString(), zonedDateTime, duration, geoLocation);
     }
 
