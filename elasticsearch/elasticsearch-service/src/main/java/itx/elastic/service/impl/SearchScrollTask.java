@@ -48,14 +48,15 @@ public class SearchScrollTask<T> implements Runnable {
             searchRequest.source(searchSourceBuilder);
 
             SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-            LOG.info("SearchScrollTask: search found {}", searchResponse.getHits().getHits().length);
+            final long foundHits = searchResponse.getHits().getHits().length;
+            final long totalHits = searchResponse.getHits().getTotalHits().value;
+            LOG.info("SearchScrollTask: search found {}/{}", foundHits, totalHits);
 
             for (SearchHit hit : searchResponse.getHits()) {
                 observer.onNext(dataTransformer.getInstance(new DocumentId(hit.getId()), hit.getSourceAsMap()));
             }
 
             boolean scroll = searchResponse.getHits().getHits().length == searchSize;
-            long totalHits = searchResponse.getHits().getTotalHits().value;
             String scrollId = searchResponse.getScrollId();
 
             while (scroll) {

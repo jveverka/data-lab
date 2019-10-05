@@ -6,8 +6,6 @@ import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.impl.SearchScrollTask;
 import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.flush.FlushRequest;
-import org.elasticsearch.action.admin.indices.flush.FlushResponse;
 import org.elasticsearch.action.admin.indices.flush.SyncedFlushRequest;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
@@ -36,6 +34,8 @@ import java.util.concurrent.ExecutorService;
 
 
 public class ElasticSearchServiceImpl implements ElasticSearchService {
+
+    private static final String ERRROR_MESSAGE = "Missing DataTransformer for ";
 
     private final RestHighLevelClient client;
     private final Map<Class<?>, DataTransformer<?>> transformers;
@@ -74,7 +74,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 return true;
             }
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 
@@ -91,7 +91,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 return true;
             }
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 
@@ -102,7 +102,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             GetIndexRequest getIndexRequest = new GetIndexRequest(dataTransformer.getIndexName());
             return client.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 
@@ -112,13 +112,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (dataTransformer != null) {
             SyncedFlushRequest flushRequest = new SyncedFlushRequest(dataTransformer.getIndexName());
             SyncedFlushResponse syncedFlushResponse = client.indices().flushSynced(flushRequest, RequestOptions.DEFAULT);
-            //return syncedFlushResponse.failedShards() == 0;
             RefreshRequest refreshRequest = new RefreshRequest(dataTransformer.getIndexName());
             RefreshResponse refreshResponse = client.indices().refresh(refreshRequest, RequestOptions.DEFAULT);
-
             return RestStatus.OK.equals(refreshResponse.getStatus()) && syncedFlushResponse.failedShards() == 0;
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 
@@ -132,7 +130,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
             return RestStatus.CREATED.equals(indexResponse.status());
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 
@@ -147,7 +145,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
             return Optional.empty();
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 
@@ -158,7 +156,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             SearchScrollTask<T> searchScrollTask = new SearchScrollTask<>(observer, client, dataTransformer, searchSize);
             executorService.submit(searchScrollTask);
         } else {
-            UnsupportedOperationException exception = new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            UnsupportedOperationException exception = new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
             observer.onError(exception);
             observer.onComplete();
             throw exception;
@@ -173,7 +171,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             DeleteResponse deleteResponse = client.delete(deleteRequest, RequestOptions.DEFAULT);
             return RestStatus.OK.equals(deleteResponse.status());
         } else {
-            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+            throw new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());
         }
     }
 

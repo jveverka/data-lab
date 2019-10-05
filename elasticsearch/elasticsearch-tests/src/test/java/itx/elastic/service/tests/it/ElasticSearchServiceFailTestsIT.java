@@ -54,6 +54,12 @@ public class ElasticSearchServiceFailTestsIT {
     }
 
     @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    public void testFlushIndex() throws IOException {
+        elasticSearchService.flushIndex(EventData.class);
+        Assert.fail();
+    }
+
+    @Test(expectedExceptions = {IOException.class, ConnectException.class})
     public void testDisconnectedDeleteDocument() throws IOException {
         elasticSearchService.deleteDocumentById(EventData.class, new DocumentId(eventData.getId()));
         Assert.fail();
