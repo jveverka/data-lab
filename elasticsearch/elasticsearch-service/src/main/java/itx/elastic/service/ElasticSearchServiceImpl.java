@@ -3,8 +3,14 @@ package itx.elastic.service;
 import io.reactivex.rxjava3.core.Observer;
 import itx.elastic.service.dto.ClientConfig;
 import itx.elastic.service.dto.DocumentId;
+import itx.elastic.service.impl.SearchScrollTask;
 import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.flush.FlushRequest;
+import org.elasticsearch.action.admin.indices.flush.FlushResponse;
+import org.elasticsearch.action.admin.indices.flush.SyncedFlushRequest;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
+import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -15,6 +21,7 @@ import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.SyncedFlushResponse;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
@@ -100,6 +107,22 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    public <T> boolean flushIndex(Class<T> type) throws IOException {
+        DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
+        if (dataTransformer != null) {
+            SyncedFlushRequest flushRequest = new SyncedFlushRequest(dataTransformer.getIndexName());
+            SyncedFlushResponse syncedFlushResponse = client.indices().flushSynced(flushRequest, RequestOptions.DEFAULT);
+            //return syncedFlushResponse.failedShards() == 0;
+            RefreshRequest refreshRequest = new RefreshRequest(dataTransformer.getIndexName());
+            RefreshResponse refreshResponse = client.indices().refresh(refreshRequest, RequestOptions.DEFAULT);
+
+            return RestStatus.OK.equals(refreshResponse.getStatus()) && syncedFlushResponse.failedShards() == 0;
+        } else {
+            throw new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());
+        }
+    }
+
+    @Override
     public <T> boolean saveDocument(Class<T> type, T data) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -129,10 +152,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
-    public <T> void getDocuments(Class<T> type, Observer<T> observer) {
+    public <T> void getDocuments(Class<T> type, Observer<T> observer, int searchSize) {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
-            SearchScrollTask<T> searchScrollTask = new SearchScrollTask<>(observer, client, dataTransformer);
+            SearchScrollTask<T> searchScrollTask = new SearchScrollTask<>(observer, client, dataTransformer, searchSize);
             executorService.submit(searchScrollTask);
         } else {
             UnsupportedOperationException exception = new UnsupportedOperationException("Missing DataTransformer for " + type.getCanonicalName());

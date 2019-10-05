@@ -19,6 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ElasticSearchServiceDocumentsTestsIT {
 
@@ -54,12 +55,43 @@ public class ElasticSearchServiceDocumentsTestsIT {
         Optional<EventData> documentById = null;
         result = elasticSearchService.saveDocument(EventData.class, eventData);
         Assert.assertTrue(result);
+        result = elasticSearchService.flushIndex(EventData.class);
+        Assert.assertTrue(result);
         documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
         Assert.assertTrue(documentById.isPresent());
         result = elasticSearchService.deleteDocumentById(EventData.class, new DocumentId(eventData.getId()));
         Assert.assertTrue(result);
         documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
         Assert.assertTrue(documentById.isEmpty());
+    }
+
+    @Test
+    public void testCreateGetDeleteDocuments() throws IOException, InterruptedException {
+        boolean result = false;
+        int SIZE = 100;
+        EventData[] eventData = new EventData[SIZE];
+        TestObserver testObserver = new TestObserver();
+        for (int i = 0; i < SIZE; i++) {
+            eventData[i] = TestUtils.createEventData(i);
+        }
+
+        result = elasticSearchService.flushIndex(EventData.class);
+        Assert.assertTrue(result);
+        //TODO: fix transactional behavior
+        Thread.sleep(30_000);
+
+        for (int i = 0; i < SIZE; i++) {
+            result = elasticSearchService.saveDocument(EventData.class, eventData[i]);
+            Assert.assertTrue(result);
+        }
+
+        elasticSearchService.getDocuments(EventData.class, testObserver, 20);
+        testObserver.await(1, TimeUnit.MINUTES);
+
+        Assert.assertTrue(testObserver.isFinished());
+        Assert.assertNotNull(testObserver.getDisposable());
+        Assert.assertEquals(testObserver.getErrors().size(), 0);
+        Assert.assertEquals(testObserver.getDocs().size(), SIZE);
     }
 
     @AfterMethod
@@ -71,6 +103,15 @@ public class ElasticSearchServiceDocumentsTestsIT {
     @AfterClass
     public void shutdown() throws Exception {
         elasticSearchService.close();
+    }
+
+    public static void main(String[] args) throws Exception {
+        ElasticSearchServiceDocumentsTestsIT testsIT = new ElasticSearchServiceDocumentsTestsIT();
+        testsIT.init();
+        testsIT.beforeMethod();
+        testsIT.testCreateGetDeleteDocuments();
+        testsIT.afterMethod();
+        testsIT.shutdown();
     }
 
 }

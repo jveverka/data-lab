@@ -18,6 +18,8 @@ public interface ElasticSearchService extends AutoCloseable {
 
     <T> boolean hasIndex(Class<T> type) throws IOException;
 
+    <T> boolean flushIndex(Class<T> type) throws IOException;
+
     <T> boolean saveDocument(Class<T> type, T data) throws IOException;
 
     <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) throws IOException;
@@ -26,10 +28,11 @@ public interface ElasticSearchService extends AutoCloseable {
      * https://www.elastic.co/guide/en/elasticsearch/client/java-rest/master/java-rest-high-search-scroll.html
      * @param type
      * @param observer
+     * @param searchSize
      * @param <T>
      * @throws IOException
      */
-    <T> void getDocuments(Class<T> type, Observer<T> observer);
+    <T> void getDocuments(Class<T> type, Observer<T> observer, int searchSize);
 
     <T> boolean deleteDocumentById(Class<T> type, DocumentId id) throws IOException;
 

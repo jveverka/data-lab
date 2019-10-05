@@ -1,4 +1,4 @@
-package itx.elastic.service;
+package itx.elastic.service.impl;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,6 @@ public final class ESUtils {
 
     public static DateTimeFormatter getDefaultDateTimeFormatter() {
         return DateTimeFormatter.ofPattern(DATE_FORMAT);
-        //return DateTimeFormatter.ISO_ZONED_DATE_TIME;
     }
 
     public static ZonedDateTime fromString(String dateTimeWithTimeZone) {
@@ -21,6 +20,10 @@ public final class ESUtils {
 
     public static String toString(ZonedDateTime zonedDateTime) {
         return getDefaultDateTimeFormatter().format(zonedDateTime);
+    }
+
+    public static ZonedDateTime getNow() {
+        return fromString(toString(ZonedDateTime.now()));
     }
 
 }

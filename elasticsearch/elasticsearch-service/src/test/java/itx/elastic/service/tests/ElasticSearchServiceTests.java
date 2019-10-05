@@ -1,7 +1,7 @@
 package itx.elastic.service.tests;
 
 import itx.elastic.service.DataTransformer;
-import itx.elastic.service.ESUtils;
+import itx.elastic.service.impl.ESUtils;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
@@ -48,6 +48,16 @@ public class ElasticSearchServiceTests {
     @Test
     public void testZonedDateTimeConversions() {
         ZonedDateTime zonedDateTimeOriginal = ESUtils.fromString("20191004T163747.340+0200");
+        String zoneDateTimeStringFromOriginal = ESUtils.toString(zonedDateTimeOriginal);
+        ZonedDateTime zonedDateTimeParsed = ESUtils.fromString(zoneDateTimeStringFromOriginal);
+        String zoneDateTimeStringFromParsed = ESUtils.toString(zonedDateTimeParsed);
+        Assert.assertEquals(zoneDateTimeStringFromOriginal, zoneDateTimeStringFromParsed);
+        Assert.assertEquals(zonedDateTimeOriginal, zonedDateTimeParsed);
+    }
+
+    @Test
+    public void testZonedDateTimeConversionsNow() {
+        ZonedDateTime zonedDateTimeOriginal = ESUtils.getNow();
         String zoneDateTimeStringFromOriginal = ESUtils.toString(zonedDateTimeOriginal);
         ZonedDateTime zonedDateTimeParsed = ESUtils.fromString(zoneDateTimeStringFromOriginal);
         String zoneDateTimeStringFromParsed = ESUtils.toString(zonedDateTimeParsed);

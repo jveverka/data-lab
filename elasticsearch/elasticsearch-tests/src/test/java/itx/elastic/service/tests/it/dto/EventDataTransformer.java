@@ -1,18 +1,16 @@
 package itx.elastic.service.tests.it.dto;
 
 import itx.elastic.service.DataTransformer;
-import itx.elastic.service.ESUtils;
+import itx.elastic.service.impl.ESUtils;
 import itx.elastic.service.dto.DocumentId;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import static itx.elastic.service.ESUtils.DATE_FORMAT;
+import static itx.elastic.service.impl.ESUtils.DATE_FORMAT;
 
 public class EventDataTransformer implements DataTransformer<EventData> {
 

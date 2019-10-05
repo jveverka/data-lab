@@ -68,7 +68,7 @@ public class ElasticSearchServiceFailTestsIT {
     @Test
     public void testDisconnectedGetDocuments() throws IOException, InterruptedException {
         TestObserver observer = new TestObserver();
-        elasticSearchService.getDocuments(EventData.class, observer);
+        elasticSearchService.getDocuments(EventData.class, observer, 100);
         boolean await = observer.await(10, TimeUnit.SECONDS);
         Assert.assertTrue(await);
         Assert.assertTrue(observer.isFinished());

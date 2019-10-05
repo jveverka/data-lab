@@ -1,4 +1,4 @@
-package itx.elastic.service;
+package itx.elastic.service.impl;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
