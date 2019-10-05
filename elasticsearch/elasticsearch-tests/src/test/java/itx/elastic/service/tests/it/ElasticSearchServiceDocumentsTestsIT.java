@@ -59,7 +59,7 @@ public class ElasticSearchServiceDocumentsTestsIT {
         result = elasticSearchService.deleteDocumentById(EventData.class, new DocumentId(eventData.getId()));
         Assert.assertTrue(result);
         documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
-        Assert.assertTrue(documentById.isPresent());
+        Assert.assertTrue(documentById.isEmpty());
     }
 
     @AfterMethod

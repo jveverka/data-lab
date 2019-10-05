@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static itx.elastic.service.ESUtils.DATE_FORMAT;
+
 public class EventDataTransformer implements DataTransformer<EventData> {
 
     @Override
@@ -59,6 +61,7 @@ public class EventDataTransformer implements DataTransformer<EventData> {
                 builder.startObject("startDate");
                 {
                     builder.field("type", "date");
+                    builder.field("format", DATE_FORMAT);
                 }
                 builder.endObject();
                 builder.startObject("duration");
@@ -85,8 +88,7 @@ public class EventDataTransformer implements DataTransformer<EventData> {
 
     @Override
     public EventData getInstance(DocumentId id, Map<String, Object> source) {
-        Map<String, Object> geoLocationMap = (Map<String, Object>)source.get("geoLocation");
-        List<Object> relatedMap = (List<Object>)source.get("related");
+        Map<String, Object> geoLocationMap = (Map<String, Object>)source.get("location");
         Location geoLocation = new Location(Float.parseFloat(geoLocationMap.get("lon").toString()), Float.parseFloat(geoLocationMap.get("lat").toString()));
         ZonedDateTime zonedDateTime = ESUtils.fromString(source.get("startDate").toString());
         long duration = Long.parseLong(source.get("duration").toString());
