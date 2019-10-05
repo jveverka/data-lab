@@ -4,6 +4,7 @@ import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
 import itx.elastic.service.dto.DocumentId;
+import itx.elastic.service.impl.ESUtils;
 import itx.elastic.service.tests.it.dto.EventData;
 import itx.elastic.service.tests.it.dto.EventDataTransformer;
 import itx.elastic.service.tests.it.dto.Location;
@@ -15,7 +16,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,7 +33,7 @@ public class ElasticSearchServiceDocumentsTestsIT {
                 .addEndPoint("127.0.0.1", 9200, "http")
                 .build();
         elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
-        eventData = EventData.from("id1", "name1", "description1", ZonedDateTime.now(), 3600, new Location(45.2F, 15.3F));
+        eventData = EventData.from("id1", "name1", "description1", ESUtils.getNow(), 3600, new Location(45.2F, 15.3F));
     }
 
     @BeforeMethod
@@ -58,7 +58,9 @@ public class ElasticSearchServiceDocumentsTestsIT {
         result = elasticSearchService.flushIndex(EventData.class);
         Assert.assertTrue(result);
         documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
+        EventData eventDataFromElastic = documentById.get();
         Assert.assertTrue(documentById.isPresent());
+        Assert.assertEquals(eventData, eventDataFromElastic);
         result = elasticSearchService.deleteDocumentById(EventData.class, new DocumentId(eventData.getId()));
         Assert.assertTrue(result);
         documentById = elasticSearchService.getDocumentById(EventData.class, new DocumentId(eventData.getId()));
@@ -92,6 +94,18 @@ public class ElasticSearchServiceDocumentsTestsIT {
         Assert.assertNotNull(testObserver.getDisposable());
         Assert.assertEquals(testObserver.getErrors().size(), 0);
         Assert.assertEquals(testObserver.getDocs().size(), SIZE);
+
+        int matchedCounter = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (EventData data: testObserver.getDocs()) {
+                if (data.getId().equals(eventData[i].getId())) {
+                    matchedCounter++;
+                    Assert.assertEquals(data, eventData[i]);
+                    break;
+                }
+            }
+        }
+        Assert.assertEquals(matchedCounter, SIZE);
     }
 
     @AfterMethod
