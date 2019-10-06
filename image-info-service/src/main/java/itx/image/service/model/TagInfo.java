@@ -1,15 +1,17 @@
 package itx.image.service.model;
 
+import itx.image.service.model.values.TagValue;
+
 public class TagInfo {
 
     private final String name;
     private final String description;
-    private final int type;
+    private final TagValue value;
 
-    public TagInfo(String name, String description, int type) {
+    public TagInfo(String name, String description, TagValue value) {
         this.name = name;
         this.description = description;
-        this.type = type;
+        this.value = value;
     }
 
     public String getName() {
@@ -20,8 +22,8 @@ public class TagInfo {
         return description;
     }
 
-    public int getType() {
-        return type;
+    public TagValue getValue() {
+        return value;
     }
 
 }

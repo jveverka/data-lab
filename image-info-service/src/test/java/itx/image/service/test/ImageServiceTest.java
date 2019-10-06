@@ -31,7 +31,6 @@ public class ImageServiceTest {
         LOG.info("reading image {}", resourcePath);
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
         ImageService imageService = new ImageServiceImpl();
-
         Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
