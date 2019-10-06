@@ -6,4 +6,6 @@ public interface FileScannerService extends AutoCloseable {
 
     void scanAndStoreRoot() throws IOException, InterruptedException;
 
+    void scanAndStoreRootAsync() throws InterruptedException;
+
 }

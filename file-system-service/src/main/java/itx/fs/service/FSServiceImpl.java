@@ -2,11 +2,13 @@ package itx.fs.service;
 
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import itx.fs.service.dto.DirItem;
 import itx.fs.service.dto.DirQuery;
 import itx.fs.service.scanner.DirItemSource;
 import itx.fs.service.scanner.DirScanner;
 import itx.fs.service.scanner.FileSystemDirScanner;
+import itx.fs.service.scanner.ObservableSourceScanner;
 
 import java.util.concurrent.Executor;
 
@@ -28,6 +30,11 @@ public class FSServiceImpl implements FSService {
     @Override
     public Flowable<DirItem> scanDirectory(DirQuery query) {
         return Flowable.create(new DirItemSource(executor, query, dirScanner), BackpressureStrategy.BUFFER);
+    }
+
+    @Override
+    public Observable<DirItem> scanDirectoryAsync(DirQuery query) {
+        return Observable.create(new ObservableSourceScanner(query, executor));
     }
 
 }

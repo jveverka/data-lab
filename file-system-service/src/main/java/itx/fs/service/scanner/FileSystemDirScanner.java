@@ -25,8 +25,7 @@ public class FileSystemDirScanner implements DirScanner {
     public void scanDirectory(FlowableEmitter<DirItem> emitter, DirQuery query) throws IOException {
         Files.walkFileTree(query.getPath(), new SimpleFileVisitor<Path>() {
             @Override
-            public FileVisitResult visitFile(Path path, BasicFileAttributes attributes)
-                    throws IOException {
+            public FileVisitResult visitFile(Path path, BasicFileAttributes attributes) throws IOException {
                 if (attributes.isRegularFile()) {
                     try {
                         CheckSum checkSum = FSUtils.calculateChecksum(path, FSUtils.SHA256);

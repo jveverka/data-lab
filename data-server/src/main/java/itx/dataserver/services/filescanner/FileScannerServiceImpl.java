@@ -1,6 +1,7 @@
 package itx.dataserver.services.filescanner;
 
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoDataTransformer;
 import itx.elastic.service.ElasticSearchService;
@@ -30,11 +31,13 @@ public class FileScannerServiceImpl implements FileScannerService {
     private final ElasticSearchService elasticSearchService;
     private final ImageService imageService;
     private final ExecutorService executorService;
+    private final int executorSize;
 
-    public FileScannerServiceImpl(Path rootPath, ClientConfig config) {
+    public FileScannerServiceImpl(Path rootPath, ClientConfig config, int executorSize) {
         LOG.info("FileScannerService: initializing ...");
         this.rootPath = rootPath;
-        executorService = Executors.newFixedThreadPool(8);
+        this.executorSize = executorSize;
+        this.executorService = Executors.newFixedThreadPool(executorSize);
         this.dirScanner = new FSServiceImpl(executorService);
         this.elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
         FileInfoDataTransformer fileInfoDataTransformer = new FileInfoDataTransformer();
@@ -55,7 +58,7 @@ public class FileScannerServiceImpl implements FileScannerService {
     }
 
     @Override
-    public void scanAndStoreRoot() throws IOException, InterruptedException {
+    public void scanAndStoreRoot() throws InterruptedException {
         LOG.info("scanning ...");
         DirQuery query = new DirQuery(rootPath);
         FsSubscriber subscriber = new FsSubscriber(elasticSearchService, imageService);
@@ -69,6 +72,19 @@ public class FileScannerServiceImpl implements FileScannerService {
             subscriber.awaitRequested();
         }
         subscriber.getSubscription().cancel();
+        LOG.info("scan completed.");
+    }
+
+    @Override
+    public void scanAndStoreRootAsync() throws InterruptedException {
+        LOG.info("scanning ...");
+        DirQuery query = new DirQuery(rootPath, executorSize);
+        Observable<DirItem> dirItemObservable = dirScanner.scanDirectoryAsync(query);
+        FsObserver fsObserver = new FsObserver(elasticSearchService, imageService);
+        dirItemObservable.subscribe(fsObserver);
+        fsObserver.awaitSubscribed(10, TimeUnit.SECONDS);
+        LOG.info("subscription completed");
+        fsObserver.awaitCompleted();
         LOG.info("scan completed.");
     }
 
