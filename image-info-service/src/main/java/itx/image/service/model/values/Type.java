@@ -16,6 +16,7 @@ public enum Type {
     FLOATS,
     OBJECT_LIST,
     STRINGS,
-    DATE
+    DATE,
+    FLOAT
 
 }

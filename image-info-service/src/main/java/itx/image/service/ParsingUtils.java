@@ -18,6 +18,7 @@ import itx.image.service.model.values.BooleanValue;
 import itx.image.service.model.values.Bytes;
 import itx.image.service.model.values.DateValue;
 import itx.image.service.model.values.DoubleValue;
+import itx.image.service.model.values.FloatValue;
 import itx.image.service.model.values.Floats;
 import itx.image.service.model.values.Fraction;
 import itx.image.service.model.values.Fractions;
@@ -141,6 +142,9 @@ public final class ParsingUtils {
         } else if (value instanceof Date) {
             Date dateValue = (Date)value;
             return new DateValue(dateValue);
+        } else if (value instanceof Float) {
+            Float floatValue = (Float)value;
+            return new FloatValue(floatValue);
         }
         throw new UnsupportedOperationException("Unsupported value type: " + value.getClass().getCanonicalName());
     }
