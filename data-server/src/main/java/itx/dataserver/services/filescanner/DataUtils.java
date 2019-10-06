@@ -8,6 +8,7 @@ import itx.dataserver.services.filescanner.dto.MediaInfo;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.model.MetaData;
 
+import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
@@ -57,6 +58,11 @@ public final class DataUtils {
         FileSystemInfo fileSystemInfo = createFileSystemInfo(dirItem);
         MediaInfo mediaInfo = createMediaInfo(metaData);
         return new FileInfo(id, fileSystemInfo, mediaInfo);
+    }
+
+    public static FileTime createFileTime(String timeStamp) {
+        long timeStampLong = Long.parseLong(timeStamp);
+        return FileTime.fromMillis(timeStampLong);
     }
 
 }
