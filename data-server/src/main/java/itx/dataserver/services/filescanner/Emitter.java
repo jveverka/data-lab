@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.FlowableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Cancellable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
-import itx.dataserver.services.filescanner.dto.FileInfoId;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.ImageService;
