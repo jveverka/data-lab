@@ -15,6 +15,7 @@ public class DsMain {
 
     public static void main(String[] args) throws Exception {
         LOG.info("DsMain: started");
+        long startTime = System.nanoTime();
         Path rootPath = Paths.get(args[0]);
         ClientConfig config = new ClientConfig.Builder()
                 .addEndPoint("127.0.0.1", 9200, "http")
@@ -22,7 +23,8 @@ public class DsMain {
         LOG.info("DsMain: rootPath={}", rootPath.toString());
         FileScannerService scanner = new FileScannerServiceImpl(rootPath, config);
         scanner.scanAndStoreRoot();
-        LOG.info("DsMain: done.");
+        float durationSec = (System.nanoTime() - startTime)/1_000_000_000F;
+        LOG.info("DsMain: done in {} s", durationSec);
         scanner.close();
     }
 
