@@ -1,6 +1,5 @@
 package itx.image.service.test;
 
-import com.drew.imaging.ImageProcessingException;
 import itx.image.service.ImageService;
 import itx.image.service.ImageServiceImpl;
 import itx.image.service.ParsingUtils;
@@ -28,7 +27,7 @@ public class ImageServiceTest {
     }
 
     @Test(dataProvider = "testMetaDataReadProvider")
-    public void testMetaDataRead(String resourcePath) throws ImageProcessingException, IOException {
+    public void testMetaDataRead(String resourcePath) throws IOException {
         LOG.info("reading image {}", resourcePath);
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
         ImageService imageService = new ImageServiceImpl();
@@ -38,6 +37,15 @@ public class ImageServiceTest {
         Assert.assertTrue(metaDataOptional.isPresent());
         String jsonData = ParsingUtils.printToJson(metaDataOptional.get());
         Assert.assertNotNull(jsonData);
+    }
+
+    @Test
+    public void testNoMetaDataRead() {
+        InputStream imageStream = this.getClass().getResourceAsStream("/TEXT-FILE.txt");
+        ImageService imageService = new ImageServiceImpl();
+        Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
+        Assert.assertNotNull(metaDataOptional);
+        Assert.assertTrue(metaDataOptional.isEmpty());
     }
 
 }

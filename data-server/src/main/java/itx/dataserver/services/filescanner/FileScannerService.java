@@ -1,4 +1,9 @@
 package itx.dataserver.services.filescanner;
 
-public interface FileScannerService {
+import java.io.IOException;
+
+public interface FileScannerService extends AutoCloseable {
+
+    void scanAndStoreRoot() throws IOException;
+
 }

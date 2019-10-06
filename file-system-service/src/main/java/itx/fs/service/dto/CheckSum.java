@@ -36,4 +36,8 @@ public class CheckSum {
         return Objects.hash(checksum, algorithm);
     }
 
+    @Override
+    public String toString() {
+        return checksum + ":" + algorithm;
+    }
 }

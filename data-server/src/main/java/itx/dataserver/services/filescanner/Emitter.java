@@ -4,23 +4,35 @@ import io.reactivex.rxjava3.core.FlowableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Cancellable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
+import itx.dataserver.services.filescanner.dto.FileInfoId;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
+import itx.image.service.ImageService;
+import itx.image.service.model.MetaData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class Emitter implements FlowableEmitter<DirItem> {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Emitter.class);
+
     private final CountDownLatch cl;
     private final ElasticSearchService elasticSearchService;
+    private final ImageService imageService;
 
     private Disposable disposable;
     private Cancellable cancellable;
 
-    public Emitter(ElasticSearchService elasticSearchService) {
+    public Emitter(ElasticSearchService elasticSearchService, ImageService imageService) {
         this.cl = new CountDownLatch(1);
         this.elasticSearchService = elasticSearchService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -55,7 +67,14 @@ public class Emitter implements FlowableEmitter<DirItem> {
 
     @Override
     public void onNext(DirItem value) {
-        //this.elasticSearchService.saveDocument(FileInfo.class, );
+        try {
+            File file = value.getPath().toFile();
+            Optional<MetaData> metaData = this.imageService.getMetaData(new FileInputStream(file));
+            FileInfo fileInfo = DataUtils.createFileInfo(value, metaData);
+            boolean result = this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
+        } catch(Exception e) {
+            LOG.info("Exception: {}", e.getMessage());
+        }
     }
 
     @Override

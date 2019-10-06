@@ -8,33 +8,44 @@ import itx.elastic.service.dto.ClientConfig;
 import itx.fs.service.dto.DirQuery;
 import itx.fs.service.scanner.DirScanner;
 import itx.fs.service.scanner.FileSystemDirScanner;
+import itx.image.service.ImageService;
+import itx.image.service.ImageServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class FileScannerServiceImpl implements FileScannerService, AutoCloseable {
+public class FileScannerServiceImpl implements FileScannerService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FileScannerServiceImpl.class);
 
     private final Path rootPath;
     private final DirScanner dirScanner;
     private final ElasticSearchService elasticSearchService;
+    private final ImageService imageService;
 
-    public FileScannerServiceImpl(Path rootPath) {
+    public FileScannerServiceImpl(Path rootPath, ClientConfig config) {
         this.rootPath = rootPath;
         this.dirScanner = new FileSystemDirScanner();
-        ClientConfig config = new ClientConfig.Builder()
-                .addEndPoint("127.0.0.1", 9200, "http")
-                .build();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         this.elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
         FileInfoDataTransformer fileInfoDataTransformer = new FileInfoDataTransformer();
         this.elasticSearchService.registerDataTransformer(FileInfo.class, fileInfoDataTransformer);
+        this.imageService = new ImageServiceImpl();
+        try {
+            this.elasticSearchService.createIndex(FileInfo.class);
+        } catch (IOException e) {
+            LOG.error("ERROR creating index: {}", e.getMessage());
+        }
     }
 
-    public void scanAndStore() throws IOException {
+    @Override
+    public void scanAndStoreRoot() throws IOException {
         DirQuery query = new DirQuery(rootPath);
-        Emitter emitter = new Emitter(elasticSearchService);
+        Emitter emitter = new Emitter(elasticSearchService, imageService);
         dirScanner.scanDirectory(emitter, query);
     }
 
