@@ -28,6 +28,7 @@ public class FileScannerServiceImpl implements FileScannerService {
     private final ImageService imageService;
 
     public FileScannerServiceImpl(Path rootPath, ClientConfig config) {
+        LOG.info("FileScannerService: initializing ...");
         this.rootPath = rootPath;
         this.dirScanner = new FileSystemDirScanner();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -37,6 +38,7 @@ public class FileScannerServiceImpl implements FileScannerService {
         this.imageService = new ImageServiceImpl();
         try {
             this.elasticSearchService.createIndex(FileInfo.class);
+            LOG.info("index created");
         } catch (IOException e) {
             LOG.error("ERROR creating index: {}", e.getMessage());
         }
@@ -44,6 +46,7 @@ public class FileScannerServiceImpl implements FileScannerService {
 
     @Override
     public void scanAndStoreRoot() throws IOException {
+        LOG.info("scanning ...");
         DirQuery query = new DirQuery(rootPath);
         Emitter emitter = new Emitter(elasticSearchService, imageService);
         dirScanner.scanDirectory(emitter, query);

@@ -20,6 +20,7 @@ public class DsMain {
         ClientConfig config = new ClientConfig.Builder()
                 .addEndPoint("127.0.0.1", 9200, "http")
                 .build();
+        LOG.info("DsMain: rootPath={}", rootPath.toString());
         FileScannerService scanner = new FileScannerServiceImpl(rootPath, config);
         scanner.scanAndStoreRoot();
         LOG.info("DsMain: done.");

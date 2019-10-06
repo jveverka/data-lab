@@ -46,7 +46,7 @@ public class Emitter implements FlowableEmitter<DirItem> {
 
     @Override
     public long requested() {
-        return 0;
+        return 100;
     }
 
     @Override
@@ -56,12 +56,12 @@ public class Emitter implements FlowableEmitter<DirItem> {
 
     @Override
     public FlowableEmitter<DirItem> serialize() {
-        return null;
+        return this;
     }
 
     @Override
     public boolean tryOnError(Throwable t) {
-        return false;
+        return true;
     }
 
     @Override
@@ -78,11 +78,13 @@ public class Emitter implements FlowableEmitter<DirItem> {
 
     @Override
     public void onError(Throwable error) {
+        LOG.info("onError: {}", error.getMessage());
         cl.countDown();
     }
 
     @Override
     public void onComplete() {
+        LOG.info("onComplete:");
         cl.countDown();
     }
 
