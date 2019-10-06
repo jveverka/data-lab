@@ -2,9 +2,10 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'itx.dataserver.DsMain'
+mainClassName = 'itx.dataserver.DsScanMain'
 
 dependencies {
+    compile 'com.beust:jcommander:1.78'
     testCompile 'org.testng:testng:7.0.0'
     testCompile 'org.mockito:mockito-core:3.0.0'
 }
