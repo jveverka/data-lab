@@ -6,7 +6,6 @@ import itx.elastic.service.dto.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -14,7 +13,7 @@ public class DsMain {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsMain.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         LOG.info("DsMain: started");
         Path rootPath = Paths.get(args[0]);
         ClientConfig config = new ClientConfig.Builder()
@@ -24,6 +23,7 @@ public class DsMain {
         FileScannerService scanner = new FileScannerServiceImpl(rootPath, config);
         scanner.scanAndStoreRoot();
         LOG.info("DsMain: done.");
+        scanner.close();
     }
 
 }
