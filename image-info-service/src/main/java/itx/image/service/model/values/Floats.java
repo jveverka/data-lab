@@ -5,14 +5,9 @@ import java.util.Optional;
 public class Floats implements TagValue<float[]> {
 
     private final float[] value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public Floats(float[] value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public Floats(float[] value, String unit) {
+    public Floats(float[] value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class Floats implements TagValue<float[]> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

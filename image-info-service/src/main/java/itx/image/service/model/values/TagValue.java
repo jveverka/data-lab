@@ -8,6 +8,6 @@ public interface TagValue<T> {
 
     T getValue();
 
-    Optional<String> unitName();
+    Optional<String> getUnit();
 
 }

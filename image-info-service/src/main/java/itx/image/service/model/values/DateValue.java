@@ -6,14 +6,9 @@ import java.util.Optional;
 public class DateValue implements TagValue<Date> {
 
     private final Date value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public DateValue(Date value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public DateValue(Date value, String unit) {
+    public DateValue(Date value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -29,8 +24,8 @@ public class DateValue implements TagValue<Date> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

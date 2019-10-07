@@ -1,4 +1,4 @@
 package itx.dataserver.services.filescanner.dto;
 
-public class MediaInfo {
+public class MetaData {
 }

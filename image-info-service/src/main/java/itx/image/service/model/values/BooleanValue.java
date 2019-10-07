@@ -5,14 +5,9 @@ import java.util.Optional;
 public class BooleanValue implements TagValue<Boolean> {
 
     private final Boolean value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public BooleanValue(Boolean value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public BooleanValue(Boolean value, String unit) {
+    public BooleanValue(Boolean value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class BooleanValue implements TagValue<Boolean> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

@@ -5,14 +5,9 @@ import java.util.Optional;
 public class StringValues implements TagValue<String[]> {
 
     private final String[] value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public StringValues(String[] value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public StringValues(String[] value, String unit) {
+    public StringValues(String[] value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class StringValues implements TagValue<String[]> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

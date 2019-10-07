@@ -5,14 +5,9 @@ import java.util.Optional;
 public class Bytes implements TagValue<byte[]> {
 
     private final byte[] value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public Bytes(byte[] value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public Bytes(byte[] value, String unit) {
+    public Bytes(byte[] value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class Bytes implements TagValue<byte[]> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

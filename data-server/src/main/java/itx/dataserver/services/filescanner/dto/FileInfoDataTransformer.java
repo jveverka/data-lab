@@ -30,10 +30,10 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         fileSystemInfo.put("lastAccessTime", data.getFileSystemInfo().getLastAccessTime().toMillis());
         fileSystemInfo.put("type", data.getFileSystemInfo().getType().name());
         fileSystemInfo.put("size", data.getFileSystemInfo().getSize());
-        Map<String, Object> mediaInfo = new HashMap<>();
+        Map<String, Object> metaData = new HashMap<>();
         Map<String, Object> source = new HashMap<>();
         source.put("fileSystemInfo", fileSystemInfo);
-        source.put("mediaInfo", mediaInfo);
+        source.put("metaData", metaData);
         return source;
     }
 
@@ -60,7 +60,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                     builder.endObject();
                 }
                 builder.endObject();
-                builder.startObject("mediaInfo");
+                builder.startObject("metaData");
                 {
                     builder.field("type", "text");
                 }
@@ -101,8 +101,8 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                 Long.parseLong(fsInfo.get("size").toString())
                 );
 
-        MediaInfo mediaInfo = new MediaInfo();
-        return new FileInfo(fileInfoId, fileSystemInfo, mediaInfo);
+        MetaData metaData = new MetaData();
+        return new FileInfo(fileInfoId, fileSystemInfo, metaData);
     }
 
 }

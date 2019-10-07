@@ -5,9 +5,11 @@ import java.util.Optional;
 public class JPEGComponent implements TagValue<JPEGComponent.Value> {
 
     private final Value value;
+    private final Optional<String> unit;
 
-    public JPEGComponent(Value value) {
+    public JPEGComponent(Value value, Optional<String> unit) {
         this.value = value;
+        this.unit = unit;
     }
 
     @Override
@@ -21,8 +23,8 @@ public class JPEGComponent implements TagValue<JPEGComponent.Value> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.empty();
+    public Optional<String> getUnit() {
+        return unit;
     }
 
     public static class Value {

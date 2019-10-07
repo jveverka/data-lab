@@ -4,9 +4,8 @@ import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoId;
 import itx.dataserver.services.filescanner.dto.FileSystemInfo;
 import itx.dataserver.services.filescanner.dto.FileType;
-import itx.dataserver.services.filescanner.dto.MediaInfo;
+import itx.dataserver.services.filescanner.dto.MetaData;
 import itx.fs.service.dto.DirItem;
-import itx.image.service.model.MetaData;
 
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
@@ -49,14 +48,14 @@ public final class DataUtils {
                 dirItem.getAttributes().lastAccessTime(), type, dirItem.getAttributes().size());
     }
 
-    public static MediaInfo createMediaInfo(Optional<MetaData> metaData) {
-        return new MediaInfo();
+    public static MetaData createMediaInfo(Optional<itx.image.service.model.MetaData> metaData) {
+        return new MetaData();
     }
 
-    public static FileInfo createFileInfo(DirItem dirItem, Optional<MetaData> metaData) throws NoSuchAlgorithmException {
+    public static FileInfo createFileInfo(DirItem dirItem, Optional<itx.image.service.model.MetaData> metaData) throws NoSuchAlgorithmException {
         FileInfoId id = createFileInfoId(dirItem);
         FileSystemInfo fileSystemInfo = createFileSystemInfo(dirItem);
-        MediaInfo mediaInfo = createMediaInfo(metaData);
+        MetaData mediaInfo = createMediaInfo(metaData);
         return new FileInfo(id, fileSystemInfo, mediaInfo);
     }
 

@@ -6,14 +6,9 @@ import java.util.Optional;
 public class ObjectList implements TagValue<List<Object>> {
 
     private final List<Object> value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public ObjectList(List<Object> value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public ObjectList(List<Object> value, String unit) {
+    public ObjectList(List<Object> value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -29,8 +24,8 @@ public class ObjectList implements TagValue<List<Object>> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

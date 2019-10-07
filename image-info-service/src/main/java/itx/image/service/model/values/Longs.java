@@ -5,14 +5,9 @@ import java.util.Optional;
 public class Longs implements TagValue<long[]> {
 
     private final long[] value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public Longs(long[] value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public Longs(long[] value, String unit) {
+    public Longs(long[] value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class Longs implements TagValue<long[]> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

@@ -5,14 +5,9 @@ import java.util.Optional;
 public class DoubleValue implements TagValue<Double> {
 
     private final Double value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public DoubleValue(Double value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public DoubleValue(Double value, String unit) {
+    public DoubleValue(Double value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class DoubleValue implements TagValue<Double> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

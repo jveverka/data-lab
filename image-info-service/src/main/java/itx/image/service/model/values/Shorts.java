@@ -5,14 +5,9 @@ import java.util.Optional;
 public class Shorts implements TagValue<short[]> {
 
     private final short[] value;
-    private final String unit;
+    private final Optional<String> unit;
 
-    public Shorts(short[] value) {
-        this.value = value;
-        this.unit = null;
-    }
-
-    public Shorts(short[] value, String unit) {
+    public Shorts(short[] value, Optional<String> unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +23,8 @@ public class Shorts implements TagValue<short[]> {
     }
 
     @Override
-    public Optional<String> unitName() {
-        return Optional.ofNullable(unit);
+    public Optional<String> getUnit() {
+        return unit;
     }
 
 }

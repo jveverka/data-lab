@@ -4,12 +4,12 @@ public class FileInfo {
 
     private final FileInfoId id;
     private final FileSystemInfo fileSystemInfo;
-    private final MediaInfo mediaInfo;
+    private final MetaData metaData;
 
-    public FileInfo(FileInfoId id, FileSystemInfo fileSystemInfo, MediaInfo mediaInfo) {
+    public FileInfo(FileInfoId id, FileSystemInfo fileSystemInfo, MetaData metaData) {
         this.id = id;
         this.fileSystemInfo = fileSystemInfo;
-        this.mediaInfo = mediaInfo;
+        this.metaData = metaData;
     }
 
     public FileInfoId getId() {
@@ -20,8 +20,8 @@ public class FileInfo {
         return fileSystemInfo;
     }
 
-    public MediaInfo getMediaInfo() {
-        return mediaInfo;
+    public MetaData getMetaData() {
+        return metaData;
     }
 
 }
