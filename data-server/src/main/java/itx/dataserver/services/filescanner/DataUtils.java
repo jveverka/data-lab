@@ -1,11 +1,13 @@
 package itx.dataserver.services.filescanner;
 
+import itx.dataserver.services.filescanner.dto.ContentAnnotationContainer;
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoId;
-import itx.dataserver.services.filescanner.dto.FileMetaData;
+import itx.dataserver.services.filescanner.dto.MetaDataContainer;
 import itx.dataserver.services.filescanner.dto.FileSystemInfo;
 import itx.dataserver.services.filescanner.dto.FileType;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataContainer;
+import itx.dataserver.services.filescanner.dto.content.ContentAnnotationHolder;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataHolder;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.model.MetaData;
 
@@ -53,21 +55,32 @@ public final class DataUtils {
                 dirItem.getAttributes().lastAccessTime(), type, dirItem.getAttributes().size());
     }
 
-    public static FileMetaData createMetaDataContainer(Optional<MetaData> metaData) {
-        List<MetaDataContainer<?>> metaDataContainers = new ArrayList<>();
-        return new FileMetaData(metaDataContainers);
+    public static MetaDataContainer createMetaDataContainer(Optional<MetaData> metaData) {
+        List<MetaDataHolder<?>> metaDataHolders = new ArrayList<>();
+        return new MetaDataContainer(metaDataHolders);
     }
 
-    public static FileMetaData createMetaDataFromSource(Map<String, Object> source) {
-        List<MetaDataContainer<?>> metaDataContainers = new ArrayList<>();
-        return new FileMetaData(metaDataContainers);
+    public static MetaDataContainer createMetaDataFromSource(Map<String, Object> source) {
+        List<MetaDataHolder<?>> metaData = new ArrayList<>();
+        return new MetaDataContainer(metaData);
+    }
+
+    public static ContentAnnotationContainer createAnnotations() {
+        List<ContentAnnotationHolder<?>> annotations = new ArrayList<>();
+        return new ContentAnnotationContainer(annotations);
+    }
+
+    public static ContentAnnotationContainer createAnnotationsFromSource(Map<String, Object> source) {
+        List<ContentAnnotationHolder<?>> annotations = new ArrayList<>();
+        return new ContentAnnotationContainer(annotations);
     }
 
     public static FileInfo createFileInfo(DirItem dirItem, Optional<MetaData> metaData) throws NoSuchAlgorithmException {
         FileInfoId id = createFileInfoId(dirItem);
         FileSystemInfo fileSystemInfo = createFileSystemInfo(dirItem);
-        FileMetaData mediaInfo = createMetaDataContainer(metaData);
-        return new FileInfo(id, fileSystemInfo, mediaInfo);
+        MetaDataContainer mediaInfo = createMetaDataContainer(metaData);
+        ContentAnnotationContainer annotations = createAnnotations();
+        return new FileInfo(id, fileSystemInfo, mediaInfo, annotations);
     }
 
     public static FileTime createFileTime(String timeStamp) {

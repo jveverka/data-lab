@@ -1,6 +1,6 @@
 package itx.dataserver.services.filescanner.dto.metadata;
 
-public interface MetaDataContainer<T> {
+public interface MetaDataHolder<T> {
 
     String getGroupName();
 

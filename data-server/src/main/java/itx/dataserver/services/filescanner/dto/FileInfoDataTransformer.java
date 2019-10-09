@@ -34,6 +34,8 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         Map<String, Object> source = new HashMap<>();
         source.put("fileSystemInfo", fileSystemInfo);
         source.put("metaData", metaData);
+        Map<String, Object> annotations = new HashMap<>();
+        source.put("annotations", annotations);
         return source;
     }
 
@@ -61,6 +63,10 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                 }
                 builder.endObject();
                 builder.startObject("metaData");
+                {
+                    builder.field("type", "text");
+                }
+                builder.startObject("annotations");
                 {
                     builder.field("type", "text");
                 }
@@ -101,8 +107,9 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                 Long.parseLong(fsInfo.get("size").toString())
         );
 
-        FileMetaData metaData = DataUtils.createMetaDataFromSource((Map<String, Object>)source.get("metaData"));
-        return new FileInfo(fileInfoId, fileSystemInfo, metaData);
+        MetaDataContainer metaData = DataUtils.createMetaDataFromSource((Map<String, Object>)source.get("metaData"));
+        ContentAnnotationContainer annotations = DataUtils.createAnnotationsFromSource((Map<String, Object>) source.get("annotations"));
+        return new FileInfo(fileInfoId, fileSystemInfo, metaData, annotations);
     }
 
 }

@@ -4,12 +4,14 @@ public class FileInfo {
 
     private final FileInfoId id;
     private final FileSystemInfo fileSystemInfo;
-    private final FileMetaData metaData;
+    private final MetaDataContainer metaData;
+    private final ContentAnnotationContainer annotations;
 
-    public FileInfo(FileInfoId id, FileSystemInfo fileSystemInfo, FileMetaData metaData) {
+    public FileInfo(FileInfoId id, FileSystemInfo fileSystemInfo, MetaDataContainer metaData, ContentAnnotationContainer annotations) {
         this.id = id;
         this.fileSystemInfo = fileSystemInfo;
         this.metaData = metaData;
+        this.annotations = annotations;
     }
 
     public FileInfoId getId() {
@@ -20,8 +22,12 @@ public class FileInfo {
         return fileSystemInfo;
     }
 
-    public FileMetaData getMetaData() {
+    public MetaDataContainer getMetaData() {
         return metaData;
+    }
+
+    public ContentAnnotationContainer getAnnotations() {
+        return annotations;
     }
 
 }
