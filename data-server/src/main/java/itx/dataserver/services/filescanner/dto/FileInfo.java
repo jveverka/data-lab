@@ -4,9 +4,9 @@ public class FileInfo {
 
     private final FileInfoId id;
     private final FileSystemInfo fileSystemInfo;
-    private final MetaData metaData;
+    private final FileMetaData metaData;
 
-    public FileInfo(FileInfoId id, FileSystemInfo fileSystemInfo, MetaData metaData) {
+    public FileInfo(FileInfoId id, FileSystemInfo fileSystemInfo, FileMetaData metaData) {
         this.id = id;
         this.fileSystemInfo = fileSystemInfo;
         this.metaData = metaData;
@@ -20,7 +20,7 @@ public class FileInfo {
         return fileSystemInfo;
     }
 
-    public MetaData getMetaData() {
+    public FileMetaData getMetaData() {
         return metaData;
     }
 

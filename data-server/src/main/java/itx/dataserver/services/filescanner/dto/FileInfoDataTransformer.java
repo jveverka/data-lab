@@ -99,9 +99,9 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                 DataUtils.createFileTime(fsInfo.get("lastAccessTime").toString()),
                 FileType.valueOf(fsInfo.get("type").toString()),
                 Long.parseLong(fsInfo.get("size").toString())
-                );
+        );
 
-        MetaData metaData = new MetaData();
+        FileMetaData metaData = DataUtils.createMetaDataFromSource((Map<String, Object>)source.get("metaData"));
         return new FileInfo(fileInfoId, fileSystemInfo, metaData);
     }
 

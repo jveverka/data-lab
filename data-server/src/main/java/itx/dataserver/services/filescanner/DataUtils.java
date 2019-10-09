@@ -2,14 +2,19 @@ package itx.dataserver.services.filescanner;
 
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoId;
+import itx.dataserver.services.filescanner.dto.FileMetaData;
 import itx.dataserver.services.filescanner.dto.FileSystemInfo;
 import itx.dataserver.services.filescanner.dto.FileType;
-import itx.dataserver.services.filescanner.dto.MetaData;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataContainer;
 import itx.fs.service.dto.DirItem;
+import itx.image.service.model.MetaData;
 
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public final class DataUtils {
@@ -48,14 +53,20 @@ public final class DataUtils {
                 dirItem.getAttributes().lastAccessTime(), type, dirItem.getAttributes().size());
     }
 
-    public static MetaData createMediaInfo(Optional<itx.image.service.model.MetaData> metaData) {
-        return new MetaData();
+    public static FileMetaData createMetaDataContainer(Optional<MetaData> metaData) {
+        List<MetaDataContainer<?>> metaDataContainers = new ArrayList<>();
+        return new FileMetaData(metaDataContainers);
     }
 
-    public static FileInfo createFileInfo(DirItem dirItem, Optional<itx.image.service.model.MetaData> metaData) throws NoSuchAlgorithmException {
+    public static FileMetaData createMetaDataFromSource(Map<String, Object> source) {
+        List<MetaDataContainer<?>> metaDataContainers = new ArrayList<>();
+        return new FileMetaData(metaDataContainers);
+    }
+
+    public static FileInfo createFileInfo(DirItem dirItem, Optional<MetaData> metaData) throws NoSuchAlgorithmException {
         FileInfoId id = createFileInfoId(dirItem);
         FileSystemInfo fileSystemInfo = createFileSystemInfo(dirItem);
-        MetaData mediaInfo = createMediaInfo(metaData);
+        FileMetaData mediaInfo = createMetaDataContainer(metaData);
         return new FileInfo(id, fileSystemInfo, mediaInfo);
     }
 
