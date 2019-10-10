@@ -12,6 +12,11 @@ gradle clean installDist distZip test
 # elasticPort - port of lasticsearch server, default=9200
 ```
 
+## ElasticSearch indices
+* __file-info__ - main index containing file info data
+* __meta-data-info__ - index with meta-data for files
+* __*__ - all documents use fileInfoId to match query for single file
+
 ## ElasticSearch queries
 * get data (data from all indices) for single file by fileInfoId
   ```
