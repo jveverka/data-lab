@@ -4,6 +4,8 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoDataTransformer;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfoTransformer;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
@@ -41,20 +43,14 @@ public class FileScannerServiceImpl implements FileScannerService {
         this.dirScanner = new FSServiceImpl(executorService);
         this.elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
         FileInfoDataTransformer fileInfoDataTransformer = new FileInfoDataTransformer();
+        MetaDataInfoTransformer metaDataInfoTransformer = new MetaDataInfoTransformer();
         this.elasticSearchService.registerDataTransformer(FileInfo.class, fileInfoDataTransformer);
+        this.elasticSearchService.registerDataTransformer(MetaDataInfo.class, metaDataInfoTransformer);
         this.imageService = new ImageServiceImpl();
-        try {
-            this.elasticSearchService.deleteIndex(FileInfo.class);
-            LOG.info("index deleted");
-        } catch (IOException e) {
-            LOG.error("ERROR deleting index: {}", e.getMessage());
-        }
-        try {
-            this.elasticSearchService.createIndex(FileInfo.class);
-            LOG.info("index created");
-        } catch (IOException e) {
-            LOG.error("ERROR creating index: {}", e.getMessage());
-        }
+        deleteIndex(FileInfo.class);
+        deleteIndex(MetaDataInfo.class);
+        createIndex(FileInfo.class);
+        createIndex(MetaDataInfo.class);
     }
 
     @Override
@@ -93,4 +89,23 @@ public class FileScannerServiceImpl implements FileScannerService {
         executorService.shutdown();
         elasticSearchService.close();
     }
+
+    private void deleteIndex(Class<?> type) {
+        try {
+            this.elasticSearchService.deleteIndex(type);
+            LOG.info("index deleted");
+        } catch (IOException e) {
+            LOG.error("ERROR deleting index: {}", e.getMessage());
+        }
+    }
+
+    private void createIndex(Class<?> type) {
+        try {
+            this.elasticSearchService.createIndex(type);
+            LOG.info("index created");
+        } catch (IOException e) {
+            LOG.error("ERROR created index: {}", e.getMessage());
+        }
+    }
+
 }

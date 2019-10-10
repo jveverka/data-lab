@@ -1,6 +1,7 @@
 package itx.dataserver.services.filescanner;
 
 import itx.dataserver.services.filescanner.dto.FileInfo;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.ImageService;
@@ -50,8 +51,14 @@ public class FsSubscriber implements Subscriber<DirItem> {
             clRequested.countDown();
             File file = dirItem.getPath().toFile();
             Optional<MetaData> metaData = this.imageService.getMetaData(new FileInputStream(file));
-            FileInfo fileInfo = DataUtils.createFileInfo(dirItem, metaData);
+            FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
             this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
+            if (metaData.isPresent()) {
+                MetaDataInfo metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
+                this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo);
+            } else {
+                LOG.trace("MetaData not present");
+            }
             counter++;
         } catch(Exception e) {
             LOG.info("Exception: {}", e.getMessage());

@@ -3,6 +3,7 @@ package itx.dataserver.services.filescanner;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.ImageService;
@@ -46,8 +47,14 @@ public class FsObserver implements Observer<DirItem> {
             LOG.info("onNext: {} {}", counter.getAndIncrement(), dirItem.getPath().toString());
             File file = dirItem.getPath().toFile();
             Optional<MetaData> metaData = this.imageService.getMetaData(new FileInputStream(file));
-            FileInfo fileInfo = DataUtils.createFileInfo(dirItem, metaData);
+            FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
             this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
+            if (metaData.isPresent()) {
+                MetaDataInfo metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
+                this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo);
+            } else {
+                LOG.trace("MetaData not present");
+            }
         } catch(Exception e) {
             LOG.info("Exception: {}", e.getMessage());
         }

@@ -23,6 +23,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
             checksum.put("algorithm", data.getFileSystemInfo().getChecksum().get().getAlgorithm());
         }
         Map<String, Object> fileSystemInfo = new HashMap<>();
+        fileSystemInfo.put("fileInfoId", data.getId().getId());
         fileSystemInfo.put("path", data.getFileSystemInfo().getPath());
         fileSystemInfo.put("checksum", checksum);
         fileSystemInfo.put("creationTime", data.getFileSystemInfo().getCreationTime().toMillis());
@@ -30,13 +31,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         fileSystemInfo.put("lastAccessTime", data.getFileSystemInfo().getLastAccessTime().toMillis());
         fileSystemInfo.put("type", data.getFileSystemInfo().getType().name());
         fileSystemInfo.put("size", data.getFileSystemInfo().getSize());
-        Map<String, Object> metaData = new HashMap<>();
-        Map<String, Object> source = new HashMap<>();
-        source.put("fileSystemInfo", fileSystemInfo);
-        source.put("metaData", metaData);
-        Map<String, Object> annotations = new HashMap<>();
-        source.put("annotations", annotations);
-        return source;
+        return fileSystemInfo;
     }
 
     @Override
@@ -46,8 +41,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         {
             builder.startObject("properties");
             {
-                builder.startObject("fileSystemInfo");
-                {
+                    builder.field("fileInfoId", "keyword");
                     builder.field("path", "text");
                     builder.field("creationTime", "date");
                     builder.field("lastModifiedTime", "date");
@@ -62,17 +56,6 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                     builder.endObject();
                 }
                 builder.endObject();
-                builder.startObject("metaData");
-                {
-                    builder.field("type", "text");
-                }
-                builder.startObject("annotations");
-                {
-                    builder.field("type", "text");
-                }
-                builder.endObject();
-            }
-            builder.endObject();
         }
         builder.endObject();
         return builder;
@@ -92,24 +75,21 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
     public FileInfo getInstance(DocumentId id, Map<String, Object> source) {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
 
-        Map<String, Object> fsInfo = (Map<String, Object>)source.get("fileSystemInfo");
         Optional<CheckSum> checkSumOptional = Optional.empty();
-        if (fsInfo.get("checksum") != null) {
+        if (source.get("checksum") != null) {
             Map<String, Object> checksum = (Map<String, Object>)source.get("checksum");
             CheckSum checkSum = new CheckSum(checksum.get("checksum").toString(), checksum.get("algorithm").toString());
             checkSumOptional = Optional.of(checkSum);
         }
-        FileSystemInfo fileSystemInfo = new FileSystemInfo(fsInfo.get("path").toString(), checkSumOptional,
-                DataUtils.createFileTime(fsInfo.get("creationTime").toString()),
-                DataUtils.createFileTime(fsInfo.get("lastModifiedTime").toString()),
-                DataUtils.createFileTime(fsInfo.get("lastAccessTime").toString()),
-                FileType.valueOf(fsInfo.get("type").toString()),
-                Long.parseLong(fsInfo.get("size").toString())
+        FileSystemInfo fileSystemInfo = new FileSystemInfo(source.get("path").toString(), checkSumOptional,
+                DataUtils.createFileTime(source.get("creationTime").toString()),
+                DataUtils.createFileTime(source.get("lastModifiedTime").toString()),
+                DataUtils.createFileTime(source.get("lastAccessTime").toString()),
+                FileType.valueOf(source.get("type").toString()),
+                Long.parseLong(source.get("size").toString())
         );
 
-        MetaDataContainer metaData = DataUtils.createMetaDataFromSource((Map<String, Object>)source.get("metaData"));
-        ContentAnnotationContainer annotations = DataUtils.createAnnotationsFromSource((Map<String, Object>) source.get("annotations"));
-        return new FileInfo(fileInfoId, fileSystemInfo, metaData, annotations);
+        return new FileInfo(fileInfoId, fileSystemInfo);
     }
 
 }

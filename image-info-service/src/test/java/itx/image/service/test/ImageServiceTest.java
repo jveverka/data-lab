@@ -23,6 +23,7 @@ public class ImageServiceTest {
         return new Object[][] {
                 { "/IMG_20180827_190350.jpg" },
                 { "/20190930_220954.jpg" },
+                { "/IMG-20171111-WA0007.jpeg" },
         };
     }
 
@@ -34,6 +35,8 @@ public class ImageServiceTest {
         Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
+        Assert.assertTrue(metaDataOptional.get().directoryByName("exif-subifd").isPresent());
+        Assert.assertTrue(metaDataOptional.get().directoryByName("exif-ifd0").isPresent());
         String jsonData = ParsingUtils.printToJson(metaDataOptional.get());
         Assert.assertNotNull(jsonData);
     }

@@ -1,25 +1,26 @@
 package itx.dataserver.services.filescanner;
 
-import itx.dataserver.services.filescanner.dto.ContentAnnotationContainer;
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoId;
-import itx.dataserver.services.filescanner.dto.MetaDataContainer;
 import itx.dataserver.services.filescanner.dto.FileSystemInfo;
 import itx.dataserver.services.filescanner.dto.FileType;
-import itx.dataserver.services.filescanner.dto.content.ContentAnnotationHolder;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataHolder;
+import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
+import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.fs.service.dto.DirItem;
+import itx.image.service.model.DirectoryInfo;
 import itx.image.service.model.MetaData;
+import itx.image.service.model.TagInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public final class DataUtils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DataUtils.class);
 
     private DataUtils() {
     }
@@ -55,37 +56,73 @@ public final class DataUtils {
                 dirItem.getAttributes().lastAccessTime(), type, dirItem.getAttributes().size());
     }
 
-    public static MetaDataContainer createMetaDataContainer(Optional<MetaData> metaData) {
-        List<MetaDataHolder<?>> metaDataHolders = new ArrayList<>();
-        return new MetaDataContainer(metaDataHolders);
-    }
-
-    public static MetaDataContainer createMetaDataFromSource(Map<String, Object> source) {
-        List<MetaDataHolder<?>> metaData = new ArrayList<>();
-        return new MetaDataContainer(metaData);
-    }
-
-    public static ContentAnnotationContainer createAnnotations() {
-        List<ContentAnnotationHolder<?>> annotations = new ArrayList<>();
-        return new ContentAnnotationContainer(annotations);
-    }
-
-    public static ContentAnnotationContainer createAnnotationsFromSource(Map<String, Object> source) {
-        List<ContentAnnotationHolder<?>> annotations = new ArrayList<>();
-        return new ContentAnnotationContainer(annotations);
-    }
-
-    public static FileInfo createFileInfo(DirItem dirItem, Optional<MetaData> metaData) throws NoSuchAlgorithmException {
+    public static FileInfo createFileInfo(DirItem dirItem) throws NoSuchAlgorithmException {
         FileInfoId id = createFileInfoId(dirItem);
         FileSystemInfo fileSystemInfo = createFileSystemInfo(dirItem);
-        MetaDataContainer mediaInfo = createMetaDataContainer(metaData);
-        ContentAnnotationContainer annotations = createAnnotations();
-        return new FileInfo(id, fileSystemInfo, mediaInfo, annotations);
+        return new FileInfo(id, fileSystemInfo);
     }
 
     public static FileTime createFileTime(String timeStamp) {
         long timeStampLong = Long.parseLong(timeStamp);
         return FileTime.fromMillis(timeStampLong);
+    }
+
+    public static MetaDataInfo createMetaDataInfo(FileInfoId id, MetaData metaData) {
+        String imageType = "NA";
+        long imageWidth = 0;
+        long imageHeight = 0;
+        String vendor = "NA";
+        String model = "NA";
+        String timeStamp = "";
+        if (metaData.directoryNames().contains("jpeg")) {
+            imageType = "jpeg";
+        } else {
+            LOG.warn("Image type can't be determined !");
+        }
+        Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
+        if (exifIfd0Info.isPresent()) {
+            Optional<TagInfo> makeTag = exifIfd0Info.get().tagInfoByName("make");
+            if (makeTag.isPresent()) {
+                vendor = (String)makeTag.get().getValue().getValue();
+            } else {
+                LOG.warn("Device vendor can't be determined !");
+            }
+            Optional<TagInfo> modelTag = exifIfd0Info.get().tagInfoByName("model");
+            if (modelTag.isPresent()) {
+                model = (String)modelTag.get().getValue().getValue();
+            } else {
+                LOG.warn("Device model can't be determined !");
+            }
+        } else {
+            LOG.warn("Image exif-ifd0 data not found !");
+        }
+
+        Optional<DirectoryInfo> exifSubifdInfo = metaData.directoryByName("exif-subifd");
+        if (exifSubifdInfo.isPresent()) {
+            Optional<TagInfo> imageWidthTag = exifSubifdInfo.get().tagInfoByName("exif-image-width");
+            if (imageWidthTag.isPresent()) {
+                imageWidth = (Integer)imageWidthTag.get().getValue().getValue();
+            } else {
+                LOG.warn("Image Width can't be determined !");
+            }
+            Optional<TagInfo> imageHeightTag = exifSubifdInfo.get().tagInfoByName("exif-image-height");
+            if (imageHeightTag.isPresent()) {
+                imageHeight = (Integer)imageHeightTag.get().getValue().getValue();
+            } else {
+                LOG.warn("Image Height can't be determined !");
+            }
+            Optional<TagInfo> dateTimeTag = exifSubifdInfo.get().tagInfoByName("date/time-original");
+            if (dateTimeTag.isPresent()) {
+                timeStamp = (String)dateTimeTag.get().getValue().getValue();
+            } else {
+                LOG.warn("Image date/time-original can't be determined !");
+            }
+        } else {
+            LOG.warn("Image exif-subifd data not found !");
+        }
+
+        DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
+        return new MetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp);
     }
 
 }
