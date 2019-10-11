@@ -10,6 +10,7 @@ import itx.fs.service.dto.DirItem;
 import itx.image.service.model.DirectoryInfo;
 import itx.image.service.model.MetaData;
 import itx.image.service.model.TagInfo;
+import itx.image.service.model.values.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +68,7 @@ public final class DataUtils {
         return FileTime.fromMillis(timeStampLong);
     }
 
-    public static MetaDataInfo createMetaDataInfo(FileInfoId id, MetaData metaData) {
+    public static Optional<MetaDataInfo> createMetaDataInfo(FileInfoId id, MetaData metaData) {
         String imageType = "NA";
         long imageWidth = 0;
         long imageHeight = 0;
@@ -78,6 +79,7 @@ public final class DataUtils {
             imageType = "jpeg";
         } else {
             LOG.warn("Image type can't be determined !");
+            return Optional.empty();
         }
         Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
         if (exifIfd0Info.isPresent()) {
@@ -86,43 +88,66 @@ public final class DataUtils {
                 vendor = (String)makeTag.get().getValue().getValue();
             } else {
                 LOG.warn("Device vendor can't be determined !");
+                return Optional.empty();
             }
             Optional<TagInfo> modelTag = exifIfd0Info.get().tagInfoByName("model");
             if (modelTag.isPresent()) {
                 model = (String)modelTag.get().getValue().getValue();
             } else {
                 LOG.warn("Device model can't be determined !");
+                return Optional.empty();
             }
         } else {
             LOG.warn("Image exif-ifd0 data not found !");
+            return Optional.empty();
         }
 
         Optional<DirectoryInfo> exifSubifdInfo = metaData.directoryByName("exif-subifd");
         if (exifSubifdInfo.isPresent()) {
             Optional<TagInfo> imageWidthTag = exifSubifdInfo.get().tagInfoByName("exif-image-width");
             if (imageWidthTag.isPresent()) {
+                if (Type.INTEGER.equals(imageWidthTag.get().getValue().getType())) {
+                    imageWidth = (Integer) imageWidthTag.get().getValue().getValue();
+                } else if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
+                    imageWidth = (Long)imageWidthTag.get().getValue().getValue();
+                } else {
+                    LOG.warn("Image Width type can't be determined !");
+                    return Optional.empty();
+                }
                 imageWidth = (Long)imageWidthTag.get().getValue().getValue();
             } else {
                 LOG.warn("Image Width can't be determined !");
+                return Optional.empty();
             }
             Optional<TagInfo> imageHeightTag = exifSubifdInfo.get().tagInfoByName("exif-image-height");
             if (imageHeightTag.isPresent()) {
-                imageHeight = (Long)imageHeightTag.get().getValue().getValue();
+                if (Type.INTEGER.equals(imageHeightTag.get().getValue().getType())) {
+                    imageHeight = (Integer)imageHeightTag.get().getValue().getValue();
+                } else if (Type.LONG.equals(imageHeightTag.get().getValue().getType())) {
+                    imageHeight = (Long)imageHeightTag.get().getValue().getValue();
+                } else {
+                    LOG.warn("Image Height type can't be determined !");
+                    return Optional.empty();
+                }
             } else {
                 LOG.warn("Image Height can't be determined !");
+                return Optional.empty();
             }
             Optional<TagInfo> dateTimeTag = exifSubifdInfo.get().tagInfoByName("date/time-original");
             if (dateTimeTag.isPresent()) {
                 timeStamp = (String)dateTimeTag.get().getValue().getValue();
             } else {
                 LOG.warn("Image date/time-original can't be determined !");
+                return Optional.empty();
             }
         } else {
             LOG.warn("Image exif-subifd data not found !");
+            return Optional.empty();
         }
 
         DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
-        return new MetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp);
+        MetaDataInfo metaDataInfo = new MetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp);
+        return Optional.of(metaDataInfo);
     }
 
 }

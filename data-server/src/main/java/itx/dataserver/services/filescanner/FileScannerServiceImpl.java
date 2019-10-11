@@ -6,6 +6,8 @@ import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoDataTransformer;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfoTransformer;
+import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
+import itx.dataserver.services.filescanner.dto.unmapped.UnmappedDataTransformer;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
@@ -44,13 +46,17 @@ public class FileScannerServiceImpl implements FileScannerService {
         this.elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
         FileInfoDataTransformer fileInfoDataTransformer = new FileInfoDataTransformer();
         MetaDataInfoTransformer metaDataInfoTransformer = new MetaDataInfoTransformer();
+        UnmappedDataTransformer unmappedDataTransformer = new UnmappedDataTransformer();
         this.elasticSearchService.registerDataTransformer(FileInfo.class, fileInfoDataTransformer);
         this.elasticSearchService.registerDataTransformer(MetaDataInfo.class, metaDataInfoTransformer);
+        this.elasticSearchService.registerDataTransformer(UnmappedData.class, unmappedDataTransformer);
         this.imageService = new ImageServiceImpl();
         deleteIndex(FileInfo.class);
         deleteIndex(MetaDataInfo.class);
+        deleteIndex(UnmappedData.class);
         createIndex(FileInfo.class);
         createIndex(MetaDataInfo.class);
+        createIndex(UnmappedData.class);
     }
 
     @Override

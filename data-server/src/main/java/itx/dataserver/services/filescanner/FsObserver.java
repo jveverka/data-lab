@@ -4,9 +4,11 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.ImageService;
+import itx.image.service.ParsingUtils;
 import itx.image.service.model.MetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +52,13 @@ public class FsObserver implements Observer<DirItem> {
             FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
             this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
             if (metaData.isPresent()) {
-                MetaDataInfo metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
-                this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo);
+                Optional<MetaDataInfo> metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
+                if (metaDataInfo.isPresent()) {
+                    this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo.get());
+                } else {
+                    String jsonData = ParsingUtils.printToJson(metaData.get());
+                    this.elasticSearchService.saveDocument(UnmappedData.class, new UnmappedData(fileInfo.getId(), "MetaData", jsonData));
+                }
             } else {
                 LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
             }

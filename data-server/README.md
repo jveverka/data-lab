@@ -15,6 +15,7 @@ gradle clean installDist distZip test
 ## ElasticSearch indices
 * __file-info__ - main index containing file info data
 * __meta-data-info__ - index with meta-data for files
+* __unmapped-data__ - unmapped objects serialized in JSON form for particular files 
 * __*__ - all documents use fileInfoId to match query for single file
 
 ## ElasticSearch queries
@@ -22,4 +23,8 @@ gradle clean installDist distZip test
   ```
   GET http://127.0.0.1:9200/_search?q=fileInfoId:<fileInfoId>
   ```
+* list all indices
+  ```
+  GET http://127.0.0.1:9200/_cat/indices?format=json&pretty=true
+  ```  
   

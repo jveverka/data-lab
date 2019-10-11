@@ -46,6 +46,11 @@ public final class ParsingUtils {
     private ParsingUtils() {
     }
 
+    private final static ObjectMapper mapper = new ObjectMapper();
+    static {
+        mapper.registerModule(new Jdk8Module());
+    }
+
     public static MetaData createModel(InputStream is) throws ImageProcessingException, IOException {
         List<DirectoryInfo> directories = new ArrayList<>();
         Metadata metadata = ImageMetadataReader.readMetadata(is);
@@ -70,8 +75,6 @@ public final class ParsingUtils {
     }
 
     public static String printToJson(MetaData metaData) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new Jdk8Module());
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(metaData);
     }
 

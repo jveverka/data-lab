@@ -64,23 +64,15 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
 
     @Override
     public MetaDataInfo getInstance(DocumentId id, Map<String, Object> source) {
-
-        String imageType = "NA";
-        long imageWidth = 0;
-        long imageHeight = 0;
-        String vendor = "NA";
-        String model = "NA";
-        String timeStamp = "";
-
         FileInfoId fileInfoId = new FileInfoId(id.getId());
-        imageType = (String)source.get("imageType");
-        imageWidth = (Long)source.get("imageWidth");
-        imageHeight = (Long)source.get("imageHeight");
+        String imageType = (String)source.get("imageType");
+        long imageWidth = (Long)source.get("imageWidth");
+        long imageHeight = (Long)source.get("imageHeight");
         Map<String, Object> deviceInfoSource = (Map<String, Object>)source.get("deviceInfo");
-        vendor = (String)deviceInfoSource.get("vendor");
-        model = (String)deviceInfoSource.get("model");
+        String vendor = (String)deviceInfoSource.get("vendor");
+        String model = (String)deviceInfoSource.get("model");
         DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
-        timeStamp = (String)source.get("timeStamp");
+        String timeStamp = (String)source.get("timeStamp");
         return new MetaDataInfo(fileInfoId, imageType, imageWidth, imageHeight, deviceInfo, timeStamp);
 
     }
