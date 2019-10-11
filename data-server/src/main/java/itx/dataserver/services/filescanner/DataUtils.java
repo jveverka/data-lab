@@ -101,13 +101,13 @@ public final class DataUtils {
         if (exifSubifdInfo.isPresent()) {
             Optional<TagInfo> imageWidthTag = exifSubifdInfo.get().tagInfoByName("exif-image-width");
             if (imageWidthTag.isPresent()) {
-                imageWidth = (Integer)imageWidthTag.get().getValue().getValue();
+                imageWidth = (Long)imageWidthTag.get().getValue().getValue();
             } else {
                 LOG.warn("Image Width can't be determined !");
             }
             Optional<TagInfo> imageHeightTag = exifSubifdInfo.get().tagInfoByName("exif-image-height");
             if (imageHeightTag.isPresent()) {
-                imageHeight = (Integer)imageHeightTag.get().getValue().getValue();
+                imageHeight = (Long)imageHeightTag.get().getValue().getValue();
             } else {
                 LOG.warn("Image Height can't be determined !");
             }

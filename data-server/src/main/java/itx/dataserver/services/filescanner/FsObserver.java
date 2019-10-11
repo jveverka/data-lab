@@ -53,10 +53,10 @@ public class FsObserver implements Observer<DirItem> {
                 MetaDataInfo metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
                 this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo);
             } else {
-                LOG.trace("MetaData not present");
+                LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
             }
         } catch(Exception e) {
-            LOG.info("Exception: {}", e.getMessage());
+            LOG.error("Exception: ", e);
         }
     }
 
