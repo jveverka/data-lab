@@ -19,7 +19,7 @@ public class ImageServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(ImageServiceTest.class);
 
     @DataProvider(name = "testMetaDataReadProvider")
-    public static Object[][] primeNumbers() {
+    public static Object[][] getImagePaths() {
         return new Object[][] {
                 { "/IMG_20180827_190350.jpg" },
                 { "/20190930_220954.jpg" },
@@ -41,9 +41,35 @@ public class ImageServiceTest {
         Assert.assertNotNull(jsonData);
     }
 
-    @Test
-    public void testNoMetaDataRead() {
-        InputStream imageStream = this.getClass().getResourceAsStream("/TEXT-FILE.txt");
+    @DataProvider(name = "testVideoMetaDataReadProvider")
+    public static Object[][] getVideoPaths() {
+        return new Object[][] {
+                { "/GH010624.MP4" },
+                { "/GH010624.THM" },
+                { "/Untitled-Diagram.png" }
+        };
+    }
+
+    @Test(dataProvider = "testVideoMetaDataReadProvider")
+    public void testVideoMetaDataRead(String resourcePath) throws IOException {
+        LOG.info("reading video {}", resourcePath);
+        InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
+        ImageService imageService = new ImageServiceImpl();
+        Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
+        Assert.assertNotNull(metaDataOptional);
+        Assert.assertTrue(metaDataOptional.isPresent());
+    }
+
+    @DataProvider(name = "testNoMetaDataProvider")
+    public static Object[][] getPaths() {
+        return new Object[][] {
+                { "/TEXT-FILE.txt" },
+                { "/GH010624.LRV" },
+        };
+    }
+    @Test(dataProvider = "testNoMetaDataProvider")
+    public void testNoMetaDataRead(String resourcePath) {
+        InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
         ImageService imageService = new ImageServiceImpl();
         Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
