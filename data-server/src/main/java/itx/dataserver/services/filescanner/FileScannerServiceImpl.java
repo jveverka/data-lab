@@ -1,6 +1,5 @@
 package itx.dataserver.services.filescanner;
 
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoDataTransformer;
@@ -60,24 +59,6 @@ public class FileScannerServiceImpl implements FileScannerService {
     }
 
     @Override
-    public void scanAndStoreRoot() throws InterruptedException {
-        LOG.info("scanning ...");
-        DirQuery query = new DirQuery(rootPath);
-        FsSubscriber subscriber = new FsSubscriber(elasticSearchService, imageService);
-        Flowable<DirItem> dirItemFlowable = dirScanner.scanDirectory(query);
-        dirItemFlowable.subscribe(subscriber);
-        subscriber.awaitSubscribed(10, TimeUnit.SECONDS);
-        LOG.info("subscription completed");
-        while(!subscriber.isComplete()) {
-            LOG.info("scanning 100");
-            subscriber.requestData(100);
-            subscriber.awaitRequested();
-        }
-        subscriber.getSubscription().cancel();
-        LOG.info("scan completed.");
-    }
-
-    @Override
     public void scanAndStoreRootAsync() throws InterruptedException {
         LOG.info("scanning ...");
         DirQuery query = new DirQuery(rootPath, executorSize);
@@ -88,6 +69,18 @@ public class FileScannerServiceImpl implements FileScannerService {
         LOG.info("subscription completed");
         fsObserver.awaitCompleted();
         LOG.info("scan completed.");
+    }
+
+    @Override
+    public void scanAbdStoreSubDirAsync(Path relativePath) throws InterruptedException {
+        LOG.info("scanning subdirectory ...");
+        //TBD: implement method body
+        LOG.info("subdirectory scan completed.");
+    }
+
+    @Override
+    public Path getRoot() {
+        return rootPath;
     }
 
     @Override
