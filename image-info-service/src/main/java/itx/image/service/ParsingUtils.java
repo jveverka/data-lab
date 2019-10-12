@@ -113,6 +113,7 @@ public final class ParsingUtils {
         return Optional.empty();
     }
 
+    @SuppressWarnings("unchecked")
     public static TagValue resolveObjectValue(Object value, Optional<String> unit) {
         if (value instanceof Integer) {
             Integer intValue = (Integer)value;

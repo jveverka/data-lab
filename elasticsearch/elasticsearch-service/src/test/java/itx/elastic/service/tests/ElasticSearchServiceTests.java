@@ -18,6 +18,7 @@ import static org.mockito.Mockito.mock;
 public class ElasticSearchServiceTests {
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testElasticSearchServiceInitAndShutdown() throws Exception {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         DataTransformer<Object> dataTransformer = mock(DataTransformer.class);

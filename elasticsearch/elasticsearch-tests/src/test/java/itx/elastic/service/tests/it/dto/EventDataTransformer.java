@@ -80,6 +80,7 @@ public class EventDataTransformer implements DataTransformer<EventData> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public EventData getInstance(DocumentId id, Map<String, Object> source) {
         Map<String, Object> geoLocationMap = (Map<String, Object>)source.get("location");
         Location geoLocation = new Location(Float.parseFloat(geoLocationMap.get("lon").toString()), Float.parseFloat(geoLocationMap.get("lat").toString()));

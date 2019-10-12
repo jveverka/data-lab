@@ -61,6 +61,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> boolean createIndex(Class<T> type) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -79,6 +80,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> boolean deleteIndex(Class<T> type) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -96,6 +98,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> boolean hasIndex(Class<T> type) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -107,6 +110,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> boolean flushIndex(Class<T> type) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -121,6 +125,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> boolean saveDocument(Class<T> type, T data) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -135,6 +140,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -150,6 +156,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> void getDocuments(Class<T> type, Observer<T> observer, int searchSize) {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
@@ -164,6 +171,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> boolean deleteDocumentById(Class<T> type, DocumentId id) throws IOException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
