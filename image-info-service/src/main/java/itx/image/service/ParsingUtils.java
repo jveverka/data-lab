@@ -87,6 +87,7 @@ public final class ParsingUtils {
     }
 
     public static Optional<String> extractUnit(String tagName, String tagDescription) {
+        if (tagDescription == null) return Optional.empty();
         if (tagDescription.endsWith(" bits")) {
             return Optional.of("bits");
         } else if (tagDescription.endsWith(" pixels")) {
@@ -99,16 +100,18 @@ public final class ParsingUtils {
             return Optional.of("inch");
         } else if (tagDescription.endsWith(" sec")) {
             return Optional.of("sec");
-        } else if (tagName.contains("Date/Time")) {
-            return Optional.of("timestamp");
-        } else if (tagName.contains("ISO")) {
-            return Optional.of("iso");
         } else if (tagDescription.endsWith(" EV")) {
             return Optional.of("EV");
         } else if (tagDescription.endsWith(" mm")) {
             return Optional.of("mm");
         } else if (tagDescription.endsWith(" bytes")) {
             return Optional.of("bytes");
+        }
+        if (tagName == null) return Optional.empty();
+        if (tagName.contains("Date/Time")) {
+            return Optional.of("timestamp");
+        } else if (tagName.contains("ISO")) {
+            return Optional.of("iso");
         }
         return Optional.empty();
     }
