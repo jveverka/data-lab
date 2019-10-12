@@ -119,7 +119,6 @@ public final class DataUtils {
                     LOG.warn("Image Width type can't be determined !");
                     return Optional.empty();
                 }
-                imageWidth = (Long)imageWidthTag.get().getValue().getValue();
             } else {
                 LOG.warn("Image Width can't be determined !");
                 return Optional.empty();
