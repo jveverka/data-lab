@@ -72,6 +72,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public FileInfo getInstance(DocumentId id, Map<String, Object> source) {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
 

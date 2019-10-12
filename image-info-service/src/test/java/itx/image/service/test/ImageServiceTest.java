@@ -21,9 +21,9 @@ public class ImageServiceTest {
     @DataProvider(name = "testMetaDataReadProvider")
     public static Object[][] getImagePaths() {
         return new Object[][] {
-                { "/IMG_20180827_190350.jpg" },
-                { "/20190930_220954.jpg" },
-                { "/IMG-20171111-WA0007.jpeg" },
+                { "/media/IMG_20180827_190350.jpg" },
+                { "/media/20190930_220954.jpg" },
+                { "/media/IMG-20171111-WA0007.jpeg" },
         };
     }
 
@@ -44,9 +44,9 @@ public class ImageServiceTest {
     @DataProvider(name = "testVideoMetaDataReadProvider")
     public static Object[][] getVideoPaths() {
         return new Object[][] {
-                { "/GH010624.MP4" },
-                { "/GH010624.THM" },
-                { "/Untitled-Diagram.png" }
+                { "/media/GH010624.MP4" },
+                { "/media/GH010624.THM" },
+                { "/media/Untitled-Diagram.png" }
         };
     }
 
@@ -63,8 +63,8 @@ public class ImageServiceTest {
     @DataProvider(name = "testNoMetaDataProvider")
     public static Object[][] getPaths() {
         return new Object[][] {
-                { "/TEXT-FILE.txt" },
-                { "/GH010624.LRV" },
+                { "/media/TEXT-FILE.txt" },
+                { "/media/GH010624.LRV" },
         };
     }
     @Test(dataProvider = "testNoMetaDataProvider")

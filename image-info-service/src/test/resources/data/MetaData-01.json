@@ -1,0 +1,583 @@
+{
+  "directories" : [ {
+    "name" : "exif-subifd",
+    "tags" : [ {
+      "name" : "components-configuration",
+      "description" : "YCbCr",
+      "value" : {
+        "value" : "AQIDAA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "sub-sec-time-digitized",
+      "description" : "27",
+      "value" : {
+        "value" : "27",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "sub-sec-time",
+      "description" : "27",
+      "value" : {
+        "value" : "27",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "iso-speed-ratings",
+      "description" : "933",
+      "value" : {
+        "value" : 933,
+        "unit" : "iso",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "sub-sec-time-original",
+      "description" : "27",
+      "value" : {
+        "value" : "27",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "focal-length",
+      "description" : "3.5 mm",
+      "value" : {
+        "value" : {
+          "numerator" : 350,
+          "denominator" : 100,
+          "floatValue" : 3.5
+        },
+        "unit" : "mm",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-time",
+      "description" : "40001/500000 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 80002,
+          "denominator" : 1000000,
+          "floatValue" : 0.080002
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "white-balance-mode",
+      "description" : "Auto white balance",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exif-version",
+      "description" : "2.20",
+      "value" : {
+        "value" : "MDIyMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "scene-capture-type",
+      "description" : "Standard",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "flashpix-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "digital-zoom-ratio",
+      "description" : "1",
+      "value" : {
+        "value" : {
+          "numerator" : 100,
+          "denominator" : 100,
+          "floatValue" : 1.0
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exif-image-width",
+      "description" : "2448 pixels",
+      "value" : {
+        "value" : 2448,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "exposure-program",
+      "description" : "Unknown (0)",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exposure-mode",
+      "description" : "Auto exposure",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "f-number",
+      "description" : "f/2.2",
+      "value" : {
+        "value" : {
+          "numerator" : 22,
+          "denominator" : 10,
+          "floatValue" : 2.2
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "date/time-original",
+      "description" : "2018:08:27 19:03:51",
+      "value" : {
+        "value" : "2018:08:27 19:03:51",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "metering-mode",
+      "description" : "Center weighted average",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exposure-bias-value",
+      "description" : "0 EV",
+      "value" : {
+        "value" : {
+          "numerator" : 0,
+          "denominator" : 10,
+          "floatValue" : 0.0
+        },
+        "unit" : "EV",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "white-balance",
+      "description" : "(Other)",
+      "value" : {
+        "value" : 255,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exif-image-height",
+      "description" : "3264 pixels",
+      "value" : {
+        "value" : 3264,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "date/time-digitized",
+      "description" : "2018:08:27 19:03:51",
+      "value" : {
+        "value" : "2018:08:27 19:03:51",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "flash",
+      "description" : "Flash did not fire",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "color-space",
+      "description" : "sRGB",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-thumbnail",
+    "tags" : [ {
+      "name" : "orientation",
+      "description" : "Top, left side (Horizontal / normal)",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "thumbnail-length",
+      "description" : "9523 bytes",
+      "value" : {
+        "value" : 9523,
+        "unit" : "bytes",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "thumbnail-offset",
+      "description" : "1268 bytes",
+      "value" : {
+        "value" : 1268,
+        "unit" : "bytes",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "ycbcr-positioning",
+      "description" : "Datum point",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "compression",
+      "description" : "JPEG (old-style)",
+      "value" : {
+        "value" : 6,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "huffman",
+    "tags" : [ {
+      "name" : "number-of-tables",
+      "description" : "4 Huffman tables",
+      "value" : {
+        "value" : 4,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "file-type",
+    "tags" : [ {
+      "name" : "detected-file-type-long-name",
+      "description" : "Joint Photographic Experts Group",
+      "value" : {
+        "value" : "Joint Photographic Experts Group",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "expected-file-name-extension",
+      "description" : "jpg",
+      "value" : {
+        "value" : "jpg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-file-type-name",
+      "description" : "JPEG",
+      "value" : {
+        "value" : "JPEG",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-mime-type",
+      "description" : "image/jpeg",
+      "value" : {
+        "value" : "image/jpeg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-ifd0",
+    "tags" : [ {
+      "name" : "unknown-tag-(0x0223)",
+      "description" : "0",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "unknown-tag-(0x0222)",
+      "description" : "0",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "image-description",
+      "description" : "",
+      "value" : {
+        "value" : "",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "orientation",
+      "description" : "Top, left side (Horizontal / normal)",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "unknown-tag-(0x0221)",
+      "description" : "0",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "unknown-tag-(0x0220)",
+      "description" : "0",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "software",
+      "description" : "MediaTek Camera Application\n",
+      "value" : {
+        "value" : "MediaTek Camera Application\n",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "unknown-tag-(0x0225)",
+      "description" : "",
+      "value" : {
+        "value" : "",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "unknown-tag-(0x0224)",
+      "description" : "0",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "date/time",
+      "description" : "2018:08:27 19:03:51",
+      "value" : {
+        "value" : "2018:08:27 19:03:51",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "ycbcr-positioning",
+      "description" : "Datum point",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "model",
+      "description" : "Lenovo K10a40",
+      "value" : {
+        "value" : "Lenovo K10a40",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "make",
+      "description" : "LENOVO",
+      "value" : {
+        "value" : "LENOVO",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "jpeg",
+    "tags" : [ {
+      "name" : "number-of-components",
+      "description" : "3",
+      "value" : {
+        "value" : 3,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "2448 pixels",
+      "value" : {
+        "value" : 2448,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "compression-type",
+      "description" : "Baseline",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "3264 pixels",
+      "value" : {
+        "value" : 3264,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "component-3",
+      "description" : "Cr component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cr",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-2",
+      "description" : "Cb component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cb",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-1",
+      "description" : "Y component: Quantization table 0, Sampling factors 2 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Y",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 0
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "data-precision",
+      "description" : "8 bits",
+      "value" : {
+        "value" : 8,
+        "unit" : "bits",
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "interoperability",
+    "tags" : [ {
+      "name" : "interoperability-index",
+      "description" : "Recommended Exif Interoperability Rules (ExifR98)",
+      "value" : {
+        "value" : "R98",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "interoperability-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    } ],
+    "errors" : [ ]
+  } ]
+}

@@ -1,0 +1,643 @@
+{
+  "directories" : [ {
+    "name" : "exif-subifd",
+    "tags" : [ {
+      "name" : "components-configuration",
+      "description" : "YCbCr",
+      "value" : {
+        "value" : "AQIDAA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "sub-sec-time-digitized",
+      "description" : "940739",
+      "value" : {
+        "value" : "940739",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "sensing-method",
+      "description" : "(Not defined)",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "sub-sec-time-original",
+      "description" : "940739",
+      "value" : {
+        "value" : "940739",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "focal-length",
+      "description" : "3.9 mm",
+      "value" : {
+        "value" : {
+          "numerator" : 3920,
+          "denominator" : 1000,
+          "floatValue" : 3.92
+        },
+        "unit" : "mm",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-time",
+      "description" : "0.04 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 1,
+          "denominator" : 25,
+          "floatValue" : 0.04
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "scene-capture-type",
+      "description" : "Standard",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "unique-image-id",
+      "description" : "B32QLLA01MM B32QLLA01MM",
+      "value" : {
+        "value" : "B32QLLA01MM B32QLLA01MM",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "exif-image-width",
+      "description" : "4032 pixels",
+      "value" : {
+        "value" : 4032,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "brightness-value",
+      "description" : "-2.82",
+      "value" : {
+        "value" : {
+          "numerator" : -282,
+          "denominator" : 100,
+          "floatValue" : -2.82
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-program",
+      "description" : "Program normal",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "scene-type",
+      "description" : "Directly photographed image",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "f-number",
+      "description" : "f/1.7",
+      "value" : {
+        "value" : {
+          "numerator" : 170,
+          "denominator" : 100,
+          "floatValue" : 1.7
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "metering-mode",
+      "description" : "Center weighted average",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exif-image-height",
+      "description" : "2268 pixels",
+      "value" : {
+        "value" : 2268,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "date/time-digitized",
+      "description" : "2019:09:30 22:09:54",
+      "value" : {
+        "value" : "2019:09:30 22:09:54",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "aperture-value",
+      "description" : "f/1.7",
+      "value" : {
+        "value" : {
+          "numerator" : 153,
+          "denominator" : 100,
+          "floatValue" : 1.53
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "sub-sec-time",
+      "description" : "940739",
+      "value" : {
+        "value" : "940739",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "iso-speed-ratings",
+      "description" : "800",
+      "value" : {
+        "value" : 800,
+        "unit" : "iso",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "white-balance-mode",
+      "description" : "Auto white balance",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "shutter-speed-value",
+      "description" : "1/24 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 4643,
+          "denominator" : 1000,
+          "floatValue" : 4.643
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "max-aperture-value",
+      "description" : "f/1.7",
+      "value" : {
+        "value" : {
+          "numerator" : 153,
+          "denominator" : 100,
+          "floatValue" : 1.53
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exif-version",
+      "description" : "2.20",
+      "value" : {
+        "value" : "MDIyMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "focal-length-35",
+      "description" : "26 mm",
+      "value" : {
+        "value" : 26,
+        "unit" : "mm",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "flashpix-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "exposure-mode",
+      "description" : "Auto exposure",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "date/time-original",
+      "description" : "2019:09:30 22:09:54",
+      "value" : {
+        "value" : "2019:09:30 22:09:54",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "exposure-bias-value",
+      "description" : "0 EV",
+      "value" : {
+        "value" : {
+          "numerator" : 0,
+          "denominator" : 10,
+          "floatValue" : 0.0
+        },
+        "unit" : "EV",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "flash",
+      "description" : "Flash did not fire",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "color-space",
+      "description" : "sRGB",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "huffman",
+    "tags" : [ {
+      "name" : "number-of-tables",
+      "description" : "4 Huffman tables",
+      "value" : {
+        "value" : 4,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "file-type",
+    "tags" : [ {
+      "name" : "detected-file-type-long-name",
+      "description" : "Joint Photographic Experts Group",
+      "value" : {
+        "value" : "Joint Photographic Experts Group",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "expected-file-name-extension",
+      "description" : "jpg",
+      "value" : {
+        "value" : "jpg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-file-type-name",
+      "description" : "JPEG",
+      "value" : {
+        "value" : "JPEG",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-mime-type",
+      "description" : "image/jpeg",
+      "value" : {
+        "value" : "image/jpeg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-ifd0",
+    "tags" : [ {
+      "name" : "orientation",
+      "description" : "Top, left side (Horizontal / normal)",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "4032 pixels",
+      "value" : {
+        "value" : 4032,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "software",
+      "description" : "A705FNXXU3ASG6",
+      "value" : {
+        "value" : "A705FNXXU3ASG6",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "2268 pixels",
+      "value" : {
+        "value" : 2268,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "date/time",
+      "description" : "2019:09:30 22:09:54",
+      "value" : {
+        "value" : "2019:09:30 22:09:54",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "model",
+      "description" : "SM-A705FN",
+      "value" : {
+        "value" : "SM-A705FN",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "ycbcr-positioning",
+      "description" : "Center of pixel array",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "make",
+      "description" : "samsung",
+      "value" : {
+        "value" : "samsung",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "jpeg",
+    "tags" : [ {
+      "name" : "number-of-components",
+      "description" : "3",
+      "value" : {
+        "value" : 3,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "4032 pixels",
+      "value" : {
+        "value" : 4032,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "compression-type",
+      "description" : "Baseline",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "2268 pixels",
+      "value" : {
+        "value" : 2268,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "component-3",
+      "description" : "Cr component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cr",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-2",
+      "description" : "Cb component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cb",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-1",
+      "description" : "Y component: Quantization table 0, Sampling factors 2 horiz/2 vert",
+      "value" : {
+        "value" : {
+          "name" : "Y",
+          "samplingFactorByte" : 2,
+          "quantizationTableNumber" : 0
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "data-precision",
+      "description" : "8 bits",
+      "value" : {
+        "value" : 8,
+        "unit" : "bits",
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "interoperability",
+    "tags" : [ {
+      "name" : "interoperability-index",
+      "description" : "Recommended Exif Interoperability Rules (ExifR98)",
+      "value" : {
+        "value" : "R98",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "interoperability-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "gps",
+    "tags" : [ {
+      "name" : "gps-longitude-ref",
+      "description" : "E",
+      "value" : {
+        "value" : "E",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-latitude-ref",
+      "description" : "N",
+      "value" : {
+        "value" : "N",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-time-stamp",
+      "description" : "20:09:14.000 UTC",
+      "value" : {
+        "value" : [ {
+          "numerator" : 20,
+          "denominator" : 1,
+          "floatValue" : 20.0
+        }, {
+          "numerator" : 9,
+          "denominator" : 1,
+          "floatValue" : 9.0
+        }, {
+          "numerator" : 14,
+          "denominator" : 1,
+          "floatValue" : 14.0
+        } ],
+        "unit" : null,
+        "type" : "FRACTIONS"
+      }
+    }, {
+      "name" : "gps-altitude",
+      "description" : "0 metres",
+      "value" : {
+        "value" : {
+          "numerator" : 0,
+          "denominator" : 1000,
+          "floatValue" : 0.0
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "gps-processing-method",
+      "description" : "CELLID",
+      "value" : {
+        "value" : "QVNDSUkAAABDRUxMSUQA",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "gps-latitude",
+      "description" : "49° 12' 31\"",
+      "value" : {
+        "value" : [ {
+          "numerator" : 49,
+          "denominator" : 1,
+          "floatValue" : 49.0
+        }, {
+          "numerator" : 12,
+          "denominator" : 1,
+          "floatValue" : 12.0
+        }, {
+          "numerator" : 310032,
+          "denominator" : 10000,
+          "floatValue" : 31.0032
+        } ],
+        "unit" : null,
+        "type" : "FRACTIONS"
+      }
+    }, {
+      "name" : "gps-date-stamp",
+      "description" : "2019:09:30",
+      "value" : {
+        "value" : "2019:09:30",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-longitude",
+      "description" : "18° 42' 41.63\"",
+      "value" : {
+        "value" : [ {
+          "numerator" : 18,
+          "denominator" : 1,
+          "floatValue" : 18.0
+        }, {
+          "numerator" : 42,
+          "denominator" : 1,
+          "floatValue" : 42.0
+        }, {
+          "numerator" : 416340,
+          "denominator" : 10000,
+          "floatValue" : 41.634
+        } ],
+        "unit" : null,
+        "type" : "FRACTIONS"
+      }
+    }, {
+      "name" : "gps-altitude-ref",
+      "description" : "Sea level",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  } ]
+}

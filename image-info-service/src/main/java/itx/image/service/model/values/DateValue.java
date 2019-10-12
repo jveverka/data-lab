@@ -15,7 +15,7 @@ public class DateValue implements TagValue<Date> {
 
     @Override
     public Type getType() {
-        return Type.DOUBLE;
+        return Type.DATE;
     }
 
     @Override

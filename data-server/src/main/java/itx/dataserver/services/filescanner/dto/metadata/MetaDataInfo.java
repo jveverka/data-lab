@@ -24,17 +24,18 @@ public class MetaDataInfo {
     private final boolean flash;
     private final float focalLenght35mm;
     private final String colorSpace;
-    private final GPS gps;
     */
+    private final GPS gps;
 
     public MetaDataInfo(FileInfoId id, String imageType, long imageWidth, long imageHeight,
-                        DeviceInfo deviceInfo, String timeStamp) {
+                        DeviceInfo deviceInfo, String timeStamp, GPS gps) {
         this.id = id;
         this.imageType = imageType;
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
         this.deviceInfo = deviceInfo;
         this.timeStamp = timeStamp;
+        this.gps = gps;
     }
 
 
@@ -60,6 +61,10 @@ public class MetaDataInfo {
 
     public String getTimeStamp() {
         return timeStamp;
+    }
+
+    public GPS getGps() {
+        return gps;
     }
 
 }

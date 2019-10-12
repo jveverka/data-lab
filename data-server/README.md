@@ -26,5 +26,9 @@ gradle clean installDist distZip test
 * list all indices
   ```
   GET http://127.0.0.1:9200/_cat/indices?format=json&pretty=true
+  ```
+* get all documents from index __file-info__
+  ```
+  GET http://localhost:9200/file-info/_search?pretty=true
   ```  
   

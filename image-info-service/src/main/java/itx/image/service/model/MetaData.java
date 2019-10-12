@@ -1,5 +1,8 @@
 package itx.image.service.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +13,8 @@ public class MetaData {
 
     private final Map<String, DirectoryInfo> directories;
 
-    public MetaData(Collection<DirectoryInfo> directories) {
+    @JsonCreator
+    public MetaData(@JsonProperty("directories") Collection<DirectoryInfo> directories) {
         this.directories = new HashMap<>();
         directories.forEach(d->{
             this.directories.put(d.getName(), d);

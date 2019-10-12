@@ -9,6 +9,7 @@ public enum Type {
     FRACTION,
     FRACTIONS,
     LONG,
+    LONGS,
     BYTES,
     SHORTS,
     INTEGERS,

@@ -1,0 +1,647 @@
+{
+  "directories" : [ {
+    "name" : "exif-subifd",
+    "tags" : [ {
+      "name" : "components-configuration",
+      "description" : "YCbCr",
+      "value" : {
+        "value" : "AQIDAA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "sub-sec-time-digitized",
+      "description" : "359",
+      "value" : {
+        "value" : "359",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "sensing-method",
+      "description" : "One-chip color area sensor",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "sub-sec-time-original",
+      "description" : "359",
+      "value" : {
+        "value" : "359",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "focal-length",
+      "description" : "4.8 mm",
+      "value" : {
+        "value" : {
+          "numerator" : 480,
+          "denominator" : 100,
+          "floatValue" : 4.8
+        },
+        "unit" : "mm",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-time",
+      "description" : "1/17 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 1,
+          "denominator" : 17,
+          "floatValue" : 0.05882353
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "user-comment",
+      "description" : "JKJK'\u0003�\\P\u0007\u0001\u0000o\u0002\u0001\u0000\u0000\u0000\u0000\u0000;\u0001\u0000\u0000\u0000\u0001\u0000�k\u0001\u0000\u0001\u0000\u0000\u0000\u0000\u000F\u0004\u0000\u0000�\u0007\u0000\u0000���L\u001D\u0000\u0000��\u0001\u0000\u0000\u0000\u0001\u0000�0\u0001\u0000\u000E�\u0001\u0000\u0000\u0000\u0001\u0000�/\u0001\u0000��\u0001\u0000=j��1��������)\u0001\u0000g\u0001\u0000\u0000�\u0005\u0000\u0000�z��~\u0001\u0000�\u0011\u0001\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000\u0002�\b\u0000\u0002�\b\u0000��\t\u0000��\t\u0000��\t\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000��\t\u0000��\t\u0000��\t\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000��\t\u0000��\t\u0000��\t\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000��\t\u0000\u0002�\b\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000��\t\u0000\u0002�\b\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0002�\b\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000��\t\u0000�\u0011\u0001\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000��\t\u0000��\t\u0000�\u0011\u0001\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0002�\b\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000�\u0011\u0001\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000��\t\u0000\u0001\"\u0002\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000��\t\u0000�\u0011\u0001\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000��\t\u0000��\t\u0000\u0001\"\u0002\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000��\t\u0000\u0001\"\u0002\u0000��\t\u0000�\u0011\u0001\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0002�\b\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000��\t\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000\u0001\"\u0002\u0000�\u0010\u0002\u0000��\u0000\u0000jH\u0001\u0000\u000E�\u0001\u0000��\u0000\u0000�/\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000R�\u0001\u0000\u0000\u0000\u0001\u0000�v\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001D�\u0001\u0000\u0018\u0000\u0001\u0000�0\u0001\u0000\u0017�\u0001\u0000\u0018\u0000\u0001\u0000�0\u0001\u0000\u0017�\u0001\u0000\u0018\u0000\u0001\u0000�0\u0001\u0000\u0017�\u0001\u0000\u0018\u0000\u0001\u0000�0\u0001\u0000\u0017�\u0001\u0000\u0018\u0000\u0001\u0000�0\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000FAFA\u0003\u0000�\u0000�\u0001\u00000\u0001\u0000\u0003\u0001\u0010\u0000\u0000\u0000FAFAe\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000Z\u0000?\u0015\u0001�\u0000\u0000\u0000\u0000\u0000\u0000l\u0000{�\u0001�\u0000\u0000\u0000\u0000\u0000\u0000|\u0000��\u0001�\u0000\u0000\u0000\u0000\u0000\u0000�\u0000�.\u0002\t\u0000\u0000\u0000\u0000\u0000\u0000�\u0000�\r\u0001�\u0000\u0000\u0000\u0000\u0000\u0000�\u0000\u0011\u000E\u0002\f\u0000\u0000\u0000\u0000\u0000\u0000�\u0000��\u0002=\u0000\u0000\u0000\u0000\u0000\u0000�\u0000c\u001B\u0002�\u0000\u0000\u0000\u0000\u0000\u0000\u0007\u0001�K\u0002�\u0000\u0000\u0000\u0000\u0000\u00001\u0001�M\u0002~\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0003\u0001�\\\u0004-\u0000\u0000\u0000\u0000\u0000\u0000\u0003\u0001�\\\u0004-\u0000\u0000\u0000\u0000\u0000\u0000\u0003\u0001�\\\u0004-\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00001\u0001�)\u0006�\u0000\u0000\u0000\u0000\u0000\u00001\u0001�)\u0006�\u0000\u0000\u0000\u0000\u0000\u00001\u0001�)\u0006�\u0000\u0000\u0000\u0000\u0000\u0000FAFA\u0000\u0000�\u0003Z\t�\u0000\u0000\u0000�\u0003\u0000\u0000\u0000\u0000f\u000B\u0000\u0000���\u00071\u0001\u0000\u0000T\b\u0000\u0000\u0000\u0000�\u0003\u0000\u0000F\u0002l\f\u0003\u0001\u0000\u0000(\b\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000F\u0004\u0000\u0000\u0003\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0007\u0000\u00003\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000ZP\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0003\u0001�\u0001FAFA\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000����F\u0002\u0000\u0000\u000F\u0004\u0000\u0000�\u0007\u0000\u0000�\u0003\u0000\u0000����\u0001\u0000\u0000\u0000\t\u0006�\u001B\u0003\u0000\u0000\u0000g\t\u0000\u0000i\t\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00005\u0000\u000055\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0018\u0000\u0000\u0000�\u0003\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\"\u0000\u0000\u0000\u0002\u0000\u0000\u00000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000�\u0001\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000#���\u000F\u0004\u0000\u0000\u0018\u0018\u0018\u0018l\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000R\u0016\u0000\u0000X\f\u0000\u0000\u0000\u0001\u0000\u0000R\u0016\u0000\u0000\u0000\u0001\u0000\u0000P02011165F16QLGB00GB51FFEFDDFA4",
+      "value" : {
+        "value" : "QVNDSUkAAAAKAAAASktKSycDq1xQBwEAbwIBAAAAAAA7fwEAAAABALdrAQABAAAAAA8EAACgBwAAs/7/TB0AAOj1AQAAAAEA0TABAA71AQAAAAEAuy8BAJKZAQA9av//Mfz///TU//+lKQEAZwEAAPAFAACSev//fn8BAJERAQABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAKICAACiAgAAogIAAKICACSmQkAkpkJAJKZCQCSmQkAASICAAEiAgABIgIAASICAAEiAgABIgIAAogIAAEiAgABIgIAASICAAKICAACiAgAkpkJAJKZCQCSmQkAkpkJAAEiAgABIgIAASICAAKICAABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAAogIAAKICACSmQkAkpkJAJKZCQACiAgAASICAAKICAABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgACiAgAkpkJAAKICACSmQkAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAAogIAJKZCQACiAgAkpkJAAEiAgABIgIAASICAAEiAgABIgIAASICAAKICAABIgIAASICAAEiAgABIgIAASICAAKICAABIgIAAogIAJKZCQABIgIAASICAAEiAgABIgIAASICAAKICAACiAgAASICAAEiAgABIgIAASICAAEiAgABIgIAAogIAAEiAgCSmQkAASICAAEiAgABIgIAASICAAEiAgACiAgAAogIAAKICAABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAkpkJAJERAQABIgIAASICAAEiAgABIgIAAogIAAKICAACiAgAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAJKZCQCSmQkAkREBAAEiAgABIgIAASICAAKICAACiAgAAogIAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgCREQEAASICAAEiAgABIgIAASICAAEiAgABIgIAAogIAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAkpkJAAEiAgCSmQkAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAJKZCQCREQEAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgCSmQkAkpkJAAEiAgCSmQkAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAAogIAJKZCQABIgIAkpkJAJERAQABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAKICACSmQkAASICAAEiAgCSmQkAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgABIgIAASICAAEiAgCtEAIA/v8AAGpIAQAO9QEAwP8AANUvAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSjQEAAAABAKt2AQAAAAAAAAAAAAAAAAAd9gEAGAABAOowAQAX9gEAGAABAO4wAQAX9gEAGAABAO4wAQAX9gEAGAABAO4wAQAX9gEAGAABAO4wAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZBRkEDAIwAgAEAMAEAAwEQAAAARkFGQWUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWgA/FQHYAAAAAAAAbAB7tQHZAAAAAAAAfAD9kgHdAAAAAAAAjACgLgIJAAAAAAAAoQCpDQH6AAAAAAAAtwARDgIMAAAAAAAAzAD9rgI9AAAAAAAA5wBjGwKQAAAAAAAABwHMSwKnAAAAAAAAMQH4TQJ+AAAAAAAAAAAAAAAAAAAAAAAAAwGOXAQtAAAAAAAAAwGOXAQtAAAAAAAAAwGOXAQtAAAAAAAAAAAAAAAAAAAAAAAAMQGMKQbfAAAAAAAAMQGMKQbfAAAAAAAAMQGMKQbfAAAAAAAARkFGQQAAtQNaCcwAAADXAwAAAABmCwAAs/7TBzEBAABUCAAAAACCAwAARgJsDAMBAAAoCAAAAAAAAAAADwQAAAMAAAAAAAAAAAAAAAAAoAcAADMBAAAAAAAAAAAAAAAAAAAAAFpQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAf8BRkFGQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArq6urkYCAAAPBAAAoAcAALUDAACz/v//AQAAAAkGuxsDAAAAZwkAAGkJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAANTUAAAAAAAAAAAAAAAAAAAAAAAAYAAAAswMAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAACAAAAMAAAAAAAAAAAAAAAAAAAAIUBAAAAAAAAAAAAAAAAAAAgAAAA9AEAABEAAAAAAAAAAAAAAAAAAAAj////DwQAABgYGBhsAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSFgAAWAwAAAABAABSFgAAAAEAAFAwMjAxMTE2NUYxNlFMR0IwMEdCNTFGRkVGRERGQTQA",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "scene-capture-type",
+      "description" : "Standard",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "unique-image-id",
+      "description" : "F16QLHF01GB",
+      "value" : {
+        "value" : "F16QLHF01GB",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "exif-image-width",
+      "description" : "3264 pixels",
+      "value" : {
+        "value" : 3264,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "brightness-value",
+      "description" : "-0.86",
+      "value" : {
+        "value" : {
+          "numerator" : -86,
+          "denominator" : 100,
+          "floatValue" : -0.86
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-program",
+      "description" : "Program normal",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "scene-type",
+      "description" : "Directly photographed image",
+      "value" : {
+        "value" : "AQ==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "f-number",
+      "description" : "f/2.2",
+      "value" : {
+        "value" : {
+          "numerator" : 220,
+          "denominator" : 100,
+          "floatValue" : 2.2
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "metering-mode",
+      "description" : "Center weighted average",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exif-image-height",
+      "description" : "1836 pixels",
+      "value" : {
+        "value" : 1836,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "date/time-digitized",
+      "description" : "2017:11:11 10:21:25",
+      "value" : {
+        "value" : "2017:11:11 10:21:25",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "aperture-value",
+      "description" : "f/2.2",
+      "value" : {
+        "value" : {
+          "numerator" : 227,
+          "denominator" : 100,
+          "floatValue" : 2.27
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "sub-sec-time",
+      "description" : "359",
+      "value" : {
+        "value" : "359",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "iso-speed-ratings",
+      "description" : "500",
+      "value" : {
+        "value" : 500,
+        "unit" : "iso",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "white-balance-mode",
+      "description" : "Auto white balance",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "shutter-speed-value",
+      "description" : "1/16 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 405,
+          "denominator" : 100,
+          "floatValue" : 4.05
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "max-aperture-value",
+      "description" : "f/2.2",
+      "value" : {
+        "value" : {
+          "numerator" : 228,
+          "denominator" : 100,
+          "floatValue" : 2.28
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exif-version",
+      "description" : "2.20",
+      "value" : {
+        "value" : "MDIyMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "focal-length-35",
+      "description" : "31 mm",
+      "value" : {
+        "value" : 31,
+        "unit" : "mm",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "flashpix-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "makernote",
+      "description" : "[98 values]",
+      "value" : {
+        "value" : "BwABAAcABAAAADAxMDACAAQAAQAAAAAgAQAMAAQAAQAAAAAAAAAQAAUAAQAAAFoAAABAAAQAAQAAAAAAAABQAAQAAQAAAAEAAAAAAQMAAQAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "exposure-mode",
+      "description" : "Auto exposure",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "date/time-original",
+      "description" : "2017:11:11 10:21:25",
+      "value" : {
+        "value" : "2017:11:11 10:21:25",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "exposure-bias-value",
+      "description" : "0 EV",
+      "value" : {
+        "value" : {
+          "numerator" : 0,
+          "denominator" : 10,
+          "floatValue" : 0.0
+        },
+        "unit" : "EV",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "white-balance",
+      "description" : "Unknown",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "flash",
+      "description" : "Flash did not fire",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "color-space",
+      "description" : "sRGB",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-thumbnail",
+    "tags" : [ {
+      "name" : "orientation",
+      "description" : "Right side, top (Rotate 90 CW)",
+      "value" : {
+        "value" : 6,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "512 pixels",
+      "value" : {
+        "value" : 512,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "thumbnail-length",
+      "description" : "14312 bytes",
+      "value" : {
+        "value" : 14312,
+        "unit" : "bytes",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "288 pixels",
+      "value" : {
+        "value" : 288,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "thumbnail-offset",
+      "description" : "3300 bytes",
+      "value" : {
+        "value" : 3300,
+        "unit" : "bytes",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "compression",
+      "description" : "JPEG (old-style)",
+      "value" : {
+        "value" : 6,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "huffman",
+    "tags" : [ {
+      "name" : "number-of-tables",
+      "description" : "4 Huffman tables",
+      "value" : {
+        "value" : 4,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "file-type",
+    "tags" : [ {
+      "name" : "detected-file-type-long-name",
+      "description" : "Joint Photographic Experts Group",
+      "value" : {
+        "value" : "Joint Photographic Experts Group",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "expected-file-name-extension",
+      "description" : "jpg",
+      "value" : {
+        "value" : "jpg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-file-type-name",
+      "description" : "JPEG",
+      "value" : {
+        "value" : "JPEG",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-mime-type",
+      "description" : "image/jpeg",
+      "value" : {
+        "value" : "image/jpeg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-ifd0",
+    "tags" : [ {
+      "name" : "orientation",
+      "description" : "Right side, top (Rotate 90 CW)",
+      "value" : {
+        "value" : 6,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "3264 pixels",
+      "value" : {
+        "value" : 3264,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "software",
+      "description" : "G900FXXS1CQD1",
+      "value" : {
+        "value" : "G900FXXS1CQD1",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "1836 pixels",
+      "value" : {
+        "value" : 1836,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "date/time",
+      "description" : "2017:11:11 10:21:25",
+      "value" : {
+        "value" : "2017:11:11 10:21:25",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "model",
+      "description" : "SM-G900F",
+      "value" : {
+        "value" : "SM-G900F",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "ycbcr-positioning",
+      "description" : "Center of pixel array",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "make",
+      "description" : "samsung",
+      "value" : {
+        "value" : "samsung",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "jpeg",
+    "tags" : [ {
+      "name" : "number-of-components",
+      "description" : "3",
+      "value" : {
+        "value" : 3,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "3264 pixels",
+      "value" : {
+        "value" : 3264,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "compression-type",
+      "description" : "Baseline",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "1836 pixels",
+      "value" : {
+        "value" : 1836,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "component-3",
+      "description" : "Cr component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cr",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-2",
+      "description" : "Cb component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cb",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-1",
+      "description" : "Y component: Quantization table 0, Sampling factors 2 horiz/2 vert",
+      "value" : {
+        "value" : {
+          "name" : "Y",
+          "samplingFactorByte" : 2,
+          "quantizationTableNumber" : 0
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "data-precision",
+      "description" : "8 bits",
+      "value" : {
+        "value" : 8,
+        "unit" : "bits",
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "interoperability",
+    "tags" : [ {
+      "name" : "interoperability-index",
+      "description" : "Recommended Exif Interoperability Rules (ExifR98)",
+      "value" : {
+        "value" : "R98",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "interoperability-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "gps",
+    "tags" : [ {
+      "name" : "gps-version-id",
+      "description" : "2.200",
+      "value" : {
+        "value" : [ 2, 2, 0, 0 ],
+        "unit" : null,
+        "type" : "SHORTS"
+      }
+    } ],
+    "errors" : [ ]
+  } ]
+}

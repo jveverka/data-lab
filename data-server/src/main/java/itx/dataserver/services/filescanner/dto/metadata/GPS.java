@@ -5,15 +5,13 @@ public class GPS {
     private final Coordinates coordinates;
     private final int altitude;
     private final String timeStamp;
-    private final String procesingMethod;
-    private final String dateStamp;
+    private final String processingMethod;
 
-    public GPS(Coordinates coordinates, int altitude, String timeStamp, String procesingMethod, String dateStamp) {
+    public GPS(Coordinates coordinates, int altitude, String timeStamp, String processingMethod) {
         this.coordinates = coordinates;
         this.altitude = altitude;
         this.timeStamp = timeStamp;
-        this.procesingMethod = procesingMethod;
-        this.dateStamp = dateStamp;
+        this.processingMethod = processingMethod;
     }
 
     public Coordinates getCoordinates() {
@@ -28,12 +26,8 @@ public class GPS {
         return timeStamp;
     }
 
-    public String getProcesingMethod() {
-        return procesingMethod;
-    }
-
-    public String getDateStamp() {
-        return dateStamp;
+    public String getProcessingMethod() {
+        return processingMethod;
     }
 
 }

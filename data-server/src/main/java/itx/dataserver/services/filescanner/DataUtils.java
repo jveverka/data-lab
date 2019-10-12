@@ -4,7 +4,9 @@ import itx.dataserver.services.filescanner.dto.FileInfo;
 import itx.dataserver.services.filescanner.dto.FileInfoId;
 import itx.dataserver.services.filescanner.dto.FileSystemInfo;
 import itx.dataserver.services.filescanner.dto.FileType;
+import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
 import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
+import itx.dataserver.services.filescanner.dto.metadata.GPS;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.model.DirectoryInfo;
@@ -69,12 +71,15 @@ public final class DataUtils {
     }
 
     public static Optional<MetaDataInfo> createMetaDataInfo(FileInfoId id, MetaData metaData) {
+
         String imageType = "NA";
         long imageWidth = 0;
         long imageHeight = 0;
         String vendor = "NA";
         String model = "NA";
         String timeStamp = "";
+        GPS gps = null;
+
         if (metaData.directoryNames().contains("jpeg")) {
             imageType = "jpeg";
         } else {
@@ -145,9 +150,37 @@ public final class DataUtils {
             return Optional.empty();
         }
 
+        Optional<GPS> gpsInfo = createGPS(metaData);
+        if (gpsInfo.isPresent()) {
+            gps = gpsInfo.get();
+        } else {
+            LOG.warn("GPS data not found !");
+            return Optional.empty();
+        }
+
         DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
-        MetaDataInfo metaDataInfo = new MetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp);
+        MetaDataInfo metaDataInfo = new MetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
         return Optional.of(metaDataInfo);
+    }
+
+    private static Optional<GPS> createGPS(MetaData metaData) {
+
+        float lon = 0F;
+        float lat = 0F;
+        int altitude = 0;
+        String timeStamp = "";
+        String processingMethod = "";
+
+        Optional<DirectoryInfo> gpsInfo = metaData.directoryByName("gps");
+        if (gpsInfo.isPresent()) {
+
+        } else {
+            LOG.warn("GPS data directory not found !");
+            return Optional.empty();
+        }
+
+        Coordinates coordinates = new Coordinates(lon, lat);
+        return Optional.of(new GPS(coordinates, altitude, timeStamp, processingMethod));
     }
 
 }

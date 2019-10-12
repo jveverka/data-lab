@@ -14,7 +14,7 @@ public class Longs implements TagValue<long[]> {
 
     @Override
     public Type getType() {
-        return Type.BYTES;
+        return Type.LONGS;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class Fractions implements TagValue<Fraction.Value[]> {
 
     @Override
     public Type getType() {
-        return Type.FRACTION;
+        return Type.FRACTIONS;
     }
 
     @Override

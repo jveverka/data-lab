@@ -1,5 +1,8 @@
 package itx.image.service.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +15,10 @@ public class DirectoryInfo {
     private final Map<String, TagInfo> tags;
     private final Collection<ErrorInfo> errors;
 
-    public DirectoryInfo( String name, Collection<TagInfo> tags, Collection<ErrorInfo> errors) {
+    @JsonCreator
+    public DirectoryInfo(@JsonProperty("name") String name,
+                         @JsonProperty("tags") Collection<TagInfo> tags,
+                         @JsonProperty("errors") Collection<ErrorInfo> errors) {
         this.name = name;
         this.tags = new HashMap<>();
         tags.forEach(t->{
