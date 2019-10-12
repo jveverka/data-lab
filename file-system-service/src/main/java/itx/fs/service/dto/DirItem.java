@@ -1,5 +1,7 @@
 package itx.fs.service.dto;
 
+import itx.fs.service.FSUtils;
+
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
@@ -10,6 +12,7 @@ public class DirItem {
     private final Path path;
     private final BasicFileAttributes attributes;
     private final CheckSum checkSum;
+    private final Optional<String> extension;
 
     public DirItem(Path path, BasicFileAttributes attributes, CheckSum checkSum) {
         Objects.requireNonNull(path);
@@ -17,6 +20,7 @@ public class DirItem {
         this.path = path;
         this.attributes = attributes;
         this.checkSum = checkSum;
+        this.extension = FSUtils.getFileExtension(path, attributes.isRegularFile());
     }
 
     public DirItem(Path path, BasicFileAttributes attributes) {
@@ -25,6 +29,7 @@ public class DirItem {
         this.path = path;
         this.attributes = attributes;
         this.checkSum = null;
+        this.extension = Optional.empty();
     }
 
     public Path getPath() {
@@ -37,6 +42,10 @@ public class DirItem {
 
     public Optional<CheckSum> getCheckSum() {
         return Optional.ofNullable(checkSum);
+    }
+
+    public Optional<String> getExtension() {
+        return extension;
     }
 
 }

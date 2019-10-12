@@ -13,10 +13,11 @@ public class FileSystemInfo {
     private final FileTime lastModifiedTime;
     private final FileTime lastAccessTime;
     private final FileType type;
+    private final Optional<String> extension;
     private final long size;
 
 
-    public FileSystemInfo(String path, Optional<CheckSum> checksum, FileTime creationTime, FileTime lastModifiedTime, FileTime lastAccessTime, FileType type, long size) {
+    public FileSystemInfo(String path, Optional<CheckSum> checksum, FileTime creationTime, FileTime lastModifiedTime, FileTime lastAccessTime, FileType type, long size, Optional<String> extension) {
         this.path = path;
         this.checksum = checksum;
         this.creationTime = creationTime;
@@ -24,6 +25,7 @@ public class FileSystemInfo {
         this.lastAccessTime = lastAccessTime;
         this.type = type;
         this.size = size;
+        this.extension = extension;
     }
 
     public String getPath() {
@@ -52,6 +54,10 @@ public class FileSystemInfo {
 
     public long getSize() {
         return size;
+    }
+
+    public Optional<String> getExtension() {
+        return extension;
     }
 
 }

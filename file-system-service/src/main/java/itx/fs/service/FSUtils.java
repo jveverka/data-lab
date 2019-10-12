@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
+
 import itx.fs.service.dto.CheckSum;
 
 public class FSUtils {
@@ -29,6 +31,21 @@ public class FSUtils {
             result.append(String.format("%02x", b));
         }
         return new CheckSum(result.toString(), algorithm);
+    }
+
+
+    public static Optional<String> getFileExtension(Path path, boolean isRegularFile) {
+        if (!isRegularFile) {
+            return Optional.empty();
+        }
+        String pathStr = path.toString();
+        int i = pathStr.lastIndexOf('.');
+        if (i==-1) {
+            return Optional.empty();
+        } else {
+            String extension = pathStr.substring(i + 1, pathStr.length());
+            return Optional.ofNullable("".equals(extension) ? null : extension);
+        }
     }
 
 }

@@ -30,6 +30,9 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         fileSystemInfo.put("lastModifiedTime", data.getFileSystemInfo().getLastModifiedTime().toMillis());
         fileSystemInfo.put("lastAccessTime", data.getFileSystemInfo().getLastAccessTime().toMillis());
         fileSystemInfo.put("type", data.getFileSystemInfo().getType().name());
+        if (data.getFileSystemInfo().getExtension().isPresent()) {
+            fileSystemInfo.put("extension", data.getFileSystemInfo().getExtension().get());
+        }
         fileSystemInfo.put("size", data.getFileSystemInfo().getSize());
         return fileSystemInfo;
     }
@@ -41,21 +44,22 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         {
             builder.startObject("properties");
             {
-                    builder.field("fileInfoId", "keyword");
-                    builder.field("path", "text");
-                    builder.field("creationTime", "date");
-                    builder.field("lastModifiedTime", "date");
-                    builder.field("lastAccessTime", "date");
-                    builder.field("type", "keyword");
-                    builder.field("size", "long");
-                    builder.startObject("checksum");
-                    {
-                        builder.field("checksum", "keyword");
-                        builder.field("algorithm", "keyword");
-                    }
-                    builder.endObject();
+                builder.field("fileInfoId", "keyword");
+                builder.field("path", "text");
+                builder.field("creationTime", "date");
+                builder.field("lastModifiedTime", "date");
+                builder.field("lastAccessTime", "date");
+                builder.field("type", "keyword");
+                builder.field("size", "long");
+                builder.field("extension", "keyword");
+                builder.startObject("checksum");
+                {
+                    builder.field("checksum", "keyword");
+                    builder.field("algorithm", "keyword");
                 }
                 builder.endObject();
+            }
+            builder.endObject();
         }
         builder.endObject();
         return builder;
@@ -82,12 +86,16 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
             CheckSum checkSum = new CheckSum(checksum.get("checksum").toString(), checksum.get("algorithm").toString());
             checkSumOptional = Optional.of(checkSum);
         }
+        Optional<String> extension = Optional.empty();
+        if (source.get("extension") != null) {
+            extension = Optional.of(source.get("extension").toString());
+        }
         FileSystemInfo fileSystemInfo = new FileSystemInfo(source.get("path").toString(), checkSumOptional,
                 DataUtils.createFileTime(source.get("creationTime").toString()),
                 DataUtils.createFileTime(source.get("lastModifiedTime").toString()),
                 DataUtils.createFileTime(source.get("lastAccessTime").toString()),
                 FileType.valueOf(source.get("type").toString()),
-                Long.parseLong(source.get("size").toString())
+                Long.parseLong(source.get("size").toString()), extension
         );
 
         return new FileInfo(fileInfoId, fileSystemInfo);

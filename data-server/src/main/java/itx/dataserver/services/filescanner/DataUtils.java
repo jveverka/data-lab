@@ -16,6 +16,7 @@ import itx.image.service.model.values.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -56,7 +57,7 @@ public final class DataUtils {
         FileType type = createFileType(dirItem);
         return new FileSystemInfo(dirItem.getPath().toString(), dirItem.getCheckSum(),
                 dirItem.getAttributes().creationTime(), dirItem.getAttributes().lastModifiedTime(),
-                dirItem.getAttributes().lastAccessTime(), type, dirItem.getAttributes().size());
+                dirItem.getAttributes().lastAccessTime(), type, dirItem.getAttributes().size(), dirItem.getExtension());
     }
 
     public static FileInfo createFileInfo(DirItem dirItem) throws NoSuchAlgorithmException {
