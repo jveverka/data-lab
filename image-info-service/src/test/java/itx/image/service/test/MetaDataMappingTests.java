@@ -1,6 +1,6 @@
 package itx.image.service.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import itx.image.service.ParsingUtils;
 import itx.image.service.model.MetaData;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -22,9 +22,8 @@ public class MetaDataMappingTests {
 
     @Test(dataProvider = "mappingTestProvider")
     public void mappingTest(String metaDataPath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
         InputStream data = this.getClass().getResourceAsStream(metaDataPath);
-        MetaData metaData = mapper.readValue(data, MetaData.class);
+        MetaData metaData = ParsingUtils.readFromJsonStream(data);
         Assert.assertNotNull(metaData);
     }
 

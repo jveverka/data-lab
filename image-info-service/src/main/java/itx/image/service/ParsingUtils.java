@@ -74,8 +74,16 @@ public final class ParsingUtils {
         return new MetaData(directories);
     }
 
-    public static String printToJson(MetaData metaData) throws JsonProcessingException {
+    public static String writeAsJsonString(MetaData metaData) throws JsonProcessingException {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(metaData);
+    }
+
+    public static MetaData readFromJsonStream(InputStream is) throws IOException {
+        return mapper.readValue(is, MetaData.class);
+    }
+
+    public static MetaData readFromJsonString(String data) throws IOException {
+        return mapper.readValue(data, MetaData.class);
     }
 
     public static String normalizeName(String name) {

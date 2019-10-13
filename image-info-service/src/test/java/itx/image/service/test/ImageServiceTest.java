@@ -37,7 +37,7 @@ public class ImageServiceTest {
         Assert.assertTrue(metaDataOptional.isPresent());
         Assert.assertTrue(metaDataOptional.get().directoryByName("exif-subifd").isPresent());
         Assert.assertTrue(metaDataOptional.get().directoryByName("exif-ifd0").isPresent());
-        String jsonData = ParsingUtils.printToJson(metaDataOptional.get());
+        String jsonData = ParsingUtils.writeAsJsonString(metaDataOptional.get());
         Assert.assertNotNull(jsonData);
     }
 

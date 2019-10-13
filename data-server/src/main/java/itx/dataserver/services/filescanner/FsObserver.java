@@ -56,7 +56,7 @@ public class FsObserver implements Observer<DirItem> {
                 if (metaDataInfo.isPresent()) {
                     this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo.get());
                 } else {
-                    String jsonData = ParsingUtils.printToJson(metaData.get());
+                    String jsonData = ParsingUtils.writeAsJsonString(metaData.get());
                     this.elasticSearchService.saveDocument(UnmappedData.class, new UnmappedData(fileInfo.getId(), "MetaData", jsonData));
                 }
             } else {
