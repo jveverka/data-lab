@@ -72,7 +72,7 @@ public class FileScannerServiceImpl implements FileScannerService {
     }
 
     @Override
-    public void scanAbdStoreSubDirAsync(Path relativePath) throws InterruptedException {
+    public void scanAndStoreSubDirAsync(Path relativePath) throws InterruptedException {
         LOG.info("scanning subdirectory ...");
         //TBD: implement method body
         LOG.info("subdirectory scan completed.");

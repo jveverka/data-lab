@@ -17,7 +17,7 @@ public interface FileScannerService extends AutoCloseable {
      * @param relativePath path within root directory.
      * @throws InterruptedException
      */
-    void scanAbdStoreSubDirAsync(Path relativePath) throws InterruptedException;
+    void scanAndStoreSubDirAsync(Path relativePath) throws InterruptedException;
 
     /**
      * Fet root path of managed directory.
