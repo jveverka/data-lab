@@ -31,4 +31,8 @@ gradle clean installDist distZip test
   ```
   GET http://localhost:9200/file-info/_search?pretty=true
   ```  
+* get number of jpeg files
+  ```
+  GET http://127.0.0.1:9200/file-info/_count?q=extension:jpg
+  ```
   
