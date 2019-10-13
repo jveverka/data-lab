@@ -1,4 +1,5 @@
-# Image Info Service
+# Media Info Service
+This service extract meta-data from media files like jpge/png images, video files and similar.
 
 ### Build and Run
 ```
@@ -6,10 +7,10 @@ gradle clean build test publishToMavenLocal
 ```
 
 ### Use in your project
-* Use ``Imageservice`` to get MetaData about media files.
+* Use ``MediaService`` to get MetaData about media files.
   ```
-  ImageService imageService = new ImageServiceImpl();
-  Optional<MetaData> metaData = imageService.getMetaData(inputStream);
+  MediaService mediaService = new MediaServiceImpl();
+  Optional<MetaData> metaData = mediaService.getMetaData(inputStream);
   ```
 * Use ``ParsingUtils`` to serialize and deserialize MetaData to / from json.
   ```

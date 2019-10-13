@@ -28,8 +28,8 @@ repositories {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'itx.image.service'
-            artifactId = 'image-info-service'
+            groupId = 'itx.media.service'
+            artifactId = 'media-info-service'
             version = '1.0.0'
 
             from components.java

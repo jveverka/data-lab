@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
-public class ImageServiceImpl implements ImageService {
+public class MediaServiceImpl implements MediaService {
 
     @Override
     public Optional<MetaData> getMetaData(InputStream stream) {

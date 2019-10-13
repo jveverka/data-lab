@@ -1,5 +1,5 @@
 include "file-system-service"
-include "image-info-service"
+include "media-info-service"
 include "data-server"
 
 include "elasticsearch-service"

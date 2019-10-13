@@ -5,7 +5,7 @@ import itx.image.service.model.MetaData;
 import java.io.InputStream;
 import java.util.Optional;
 
-public interface ImageService {
+public interface MediaService {
 
     Optional<MetaData> getMetaData(InputStream stream);
 

@@ -1,7 +1,7 @@
 package itx.image.service.test;
 
-import itx.image.service.ImageService;
-import itx.image.service.ImageServiceImpl;
+import itx.image.service.MediaService;
+import itx.image.service.MediaServiceImpl;
 import itx.image.service.ParsingUtils;
 import itx.image.service.model.MetaData;
 import org.slf4j.Logger;
@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
-public class ImageServiceTest {
+public class MediaServiceTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImageServiceTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MediaServiceTest.class);
 
     @DataProvider(name = "testMetaDataReadProvider")
     public static Object[][] getImagePaths() {
@@ -31,8 +31,8 @@ public class ImageServiceTest {
     public void testMetaDataRead(String resourcePath) throws IOException {
         LOG.info("reading image {}", resourcePath);
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
-        ImageService imageService = new ImageServiceImpl();
-        Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
+        MediaService mediaService = new MediaServiceImpl();
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
         Assert.assertTrue(metaDataOptional.get().directoryByName("exif-subifd").isPresent());
@@ -54,8 +54,8 @@ public class ImageServiceTest {
     public void testVideoMetaDataRead(String resourcePath) throws IOException {
         LOG.info("reading video {}", resourcePath);
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
-        ImageService imageService = new ImageServiceImpl();
-        Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
+        MediaService mediaService = new MediaServiceImpl();
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
     }
@@ -70,8 +70,8 @@ public class ImageServiceTest {
     @Test(dataProvider = "testNoMetaDataProvider")
     public void testNoMetaDataRead(String resourcePath) {
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
-        ImageService imageService = new ImageServiceImpl();
-        Optional<MetaData> metaDataOptional = imageService.getMetaData(imageStream);
+        MediaService mediaService = new MediaServiceImpl();
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isEmpty());
     }
