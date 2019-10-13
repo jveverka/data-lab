@@ -14,7 +14,7 @@ subprojects {
     }
 }
 
-project(':data-server') {
+project(':data-scanner-service') {
     dependencies {
         compile project(':elasticsearch-service')
         compile project(':media-info-service')

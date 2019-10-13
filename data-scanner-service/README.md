@@ -1,4 +1,4 @@
-# Data Server
+# Data Scanner Service
 
 ### Run and Build
 ```

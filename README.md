@@ -4,7 +4,15 @@
 # Data Lab
 Big Data Lab
 
+### Components
+* file-system-service
+* elasticsearch-service
+* data-scanner-service
+
+### Architecture
+
 ### Run and build
 ```
 gradle clean build test
 ```
+
