@@ -154,7 +154,6 @@ public final class DataUtils {
             gps = gpsInfo.get();
         } else {
             LOG.warn("GPS data not found !");
-            return Optional.empty();
         }
 
         DeviceInfo deviceInfo = new DeviceInfo(vendor, model);

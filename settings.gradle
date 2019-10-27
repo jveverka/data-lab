@@ -1,6 +1,10 @@
 include "file-system-service"
-include "media-info-service"
 include "data-scanner-service"
+
+include "media-info-service"
+project(":media-info-service").projectDir = new File("media-info/media-info-service")
+include "media-data"
+project(":media-data").projectDir = new File("media-info/media-data")
 
 include "elasticsearch-service"
 project(":elasticsearch-service").projectDir = new File("elasticsearch/elasticsearch-service")

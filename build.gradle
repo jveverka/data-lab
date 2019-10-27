@@ -19,11 +19,20 @@ project(':data-scanner-service') {
         compile project(':elasticsearch-service')
         compile project(':media-info-service')
         compile project(':file-system-service')
+        testCompile project(':media-data')
     }
 }
 
 project(':file-system-service') {}
-project(':media-info-service') {}
+
+project(':media-info-service') {
+    dependencies {
+        testCompile project(':media-data')
+    }
+}
+
+project(':media-data') {}
+
 project(':elasticsearch-service') {}
 project(':elasticsearch-tests') {
     dependencies {
