@@ -5,7 +5,7 @@
 gradle clean installDist distZip test
 ```
 ```
-./build/install/data-server/bin/data-server -e <n> -p <path> -eh <elasstiHost> -ep <elasticPort>
+./build/install/data-scanner-service/bin/data-scanner-service -e <n> -p <path> -eh <elasstiHost> -ep <elasticPort>
 # n - optional, thread pool size, default=1
 # path - mandatory, /path/to/root/dir
 # elasticHost - hostname of elasticsearch server, default="127.0.0.1"

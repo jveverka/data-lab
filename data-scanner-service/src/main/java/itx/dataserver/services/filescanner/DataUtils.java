@@ -12,6 +12,9 @@ import itx.fs.service.dto.DirItem;
 import itx.image.service.model.DirectoryInfo;
 import itx.image.service.model.MetaData;
 import itx.image.service.model.TagInfo;
+import itx.image.service.model.values.Fraction;
+import itx.image.service.model.values.Fractions;
+import itx.image.service.model.values.StringValue;
 import itx.image.service.model.values.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,7 +174,15 @@ public final class DataUtils {
 
         Optional<DirectoryInfo> gpsInfo = metaData.directoryByName("gps");
         if (gpsInfo.isPresent()) {
-
+            DirectoryInfo gpsDirectoryInfo = gpsInfo.get();
+            lon = getLongitude(gpsDirectoryInfo);
+            lat = getLatitude(gpsDirectoryInfo);
+            timeStamp = getTimeStamp(gpsDirectoryInfo);
+            altitude = getAltitude(gpsDirectoryInfo);
+            Optional<TagInfo> gpsProcessingMethodTag = gpsDirectoryInfo.tagInfoByName("gps-processing-method");
+            if (gpsProcessingMethodTag.isPresent()) {
+                processingMethod = gpsProcessingMethodTag.get().getDescription();
+            }
         } else {
             LOG.warn("GPS data directory not found !");
             return Optional.empty();
@@ -179,6 +190,73 @@ public final class DataUtils {
 
         Coordinates coordinates = new Coordinates(lon, lat);
         return Optional.of(new GPS(coordinates, altitude, timeStamp, processingMethod));
+    }
+
+    private static float getLongitude(DirectoryInfo gpsDirectoryInfo) {
+        float longitude = 0F;
+        Optional<TagInfo> gpsLongitudeTag = gpsDirectoryInfo.tagInfoByName("gps-longitude");
+        if (gpsLongitudeTag.isPresent()) {
+            Fractions fractions = (Fractions)gpsLongitudeTag.get().getValue();
+            Fraction.Value[] values = fractions.getValue();
+            longitude = values[0].getFloatValue();
+            longitude = longitude + values[1].getFloatValue()/60;
+            longitude = longitude + values[2].getFloatValue()/3600;
+        }
+        Optional<TagInfo> gpsLongitudeRefTag = gpsDirectoryInfo.tagInfoByName("gps-longitude-ref");
+        if (gpsLongitudeRefTag.isPresent()) {
+            StringValue stringValue = (StringValue)gpsLongitudeRefTag.get().getValue();
+            if ("W".equals(stringValue.getValue())) {
+                longitude = longitude * -1;
+            }
+        }
+        return longitude;
+    }
+
+    private static float getLatitude(DirectoryInfo gpsDirectoryInfo) {
+        float latitude = 0F;
+        Optional<TagInfo> gpsLatitudeTag = gpsDirectoryInfo.tagInfoByName("gps-latitude");
+        if (gpsLatitudeTag.isPresent()) {
+            Fractions fractions = (Fractions)gpsLatitudeTag.get().getValue();
+            Fraction.Value[] values = fractions.getValue();
+            latitude = values[0].getFloatValue();
+            latitude = latitude + values[1].getFloatValue()/60;
+            latitude = latitude + values[2].getFloatValue()/3600;
+        }
+        Optional<TagInfo> gpsLatitudeRefTag = gpsDirectoryInfo.tagInfoByName("gps-latitude-ref");
+        if (gpsLatitudeRefTag.isPresent()) {
+            StringValue stringValue = (StringValue)gpsLatitudeRefTag.get().getValue();
+            if ("S".equals(stringValue.getValue())) {
+                latitude = latitude * -1;
+            }
+        }
+        return latitude;
+    }
+
+    private static String getTimeStamp(DirectoryInfo gpsDirectoryInfo) {
+        String result = "";
+        Optional<TagInfo> gpsDateStampTag = gpsDirectoryInfo.tagInfoByName("gps-date-stamp");
+        if (gpsDateStampTag.isPresent()) {
+            result = gpsDateStampTag.get().getValue().getValue().toString();
+        }
+        Optional<TagInfo> gpsTimeStampTag = gpsDirectoryInfo.tagInfoByName("gps-time-stamp");
+        if (gpsTimeStampTag.isPresent()) {
+            result = result + " " + gpsTimeStampTag.get().getDescription();
+        }
+        return result;
+    }
+
+    private static int getAltitude(DirectoryInfo gpsDirectoryInfo) {
+        int altitude = 0;
+        Optional<TagInfo> gpsAltitudeTag = gpsDirectoryInfo.tagInfoByName("gps-altitude");
+        if (gpsAltitudeTag.isPresent()) {
+            Fraction alt = (Fraction)gpsAltitudeTag.get().getValue();
+            altitude = (int)alt.getValue().getFloatValue();
+        }
+        Optional<TagInfo> gpsAltitudeRefTag = gpsDirectoryInfo.tagInfoByName("gps-altitude-ref");
+        if (gpsAltitudeRefTag.isPresent()) {
+
+        }
+        return altitude;
     }
 
 }

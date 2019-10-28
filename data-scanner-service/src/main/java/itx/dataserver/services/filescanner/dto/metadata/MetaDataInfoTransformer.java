@@ -27,12 +27,16 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
 
         Map<String, Object> gps = new HashMap<>();
         Map<String, Object> coordinates = new HashMap<>();
-        coordinates.put("lon", data.getGps().getCoordinates().getLon());
-        coordinates.put("lat", data.getGps().getCoordinates().getLat());
-        gps.put("coordinates", coordinates);
-        gps.put("altitude", data.getGps().getAltitude());
-        gps.put("timeStamp", data.getGps().getTimeStamp());
-        gps.put("processingMethod", data.getGps().getProcessingMethod());
+        if (data.getGps() != null) {
+            if (data.getGps().getCoordinates() != null) {
+                coordinates.put("lon", data.getGps().getCoordinates().getLon());
+                coordinates.put("lat", data.getGps().getCoordinates().getLat());
+            }
+            gps.put("coordinates", coordinates);
+            gps.put("altitude", data.getGps().getAltitude());
+            gps.put("timeStamp", data.getGps().getTimeStamp());
+            gps.put("processingMethod", data.getGps().getProcessingMethod());
+        }
 
         metaDataInfo.put("gps", gps);
         return metaDataInfo;

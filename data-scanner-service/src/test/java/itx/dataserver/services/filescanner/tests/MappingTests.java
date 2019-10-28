@@ -29,6 +29,10 @@ public class MappingTests {
         Assert.assertTrue(metaDataInfoOptional.isPresent());
 
         MetaDataInfo metaDataInfo = metaDataInfoOptional.get();
+        Assert.assertNotNull(metaDataInfo);
+        Assert.assertEquals(metaDataInfo.getImageType(), "jpeg");
+        Assert.assertNotNull(metaDataInfo.getGps());
+        Assert.assertEquals(metaDataInfo.getGps().getTimeStamp(), "2019:09:30 20:09:14.000 UTC");
     }
 
 }
