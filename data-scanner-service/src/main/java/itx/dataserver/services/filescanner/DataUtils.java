@@ -1,9 +1,9 @@
 package itx.dataserver.services.filescanner;
 
-import itx.dataserver.services.filescanner.dto.FileInfo;
-import itx.dataserver.services.filescanner.dto.FileInfoId;
-import itx.dataserver.services.filescanner.dto.FileSystemInfo;
-import itx.dataserver.services.filescanner.dto.FileType;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileSystemInfo;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileType;
 import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
 import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
 import itx.dataserver.services.filescanner.dto.metadata.GPS;

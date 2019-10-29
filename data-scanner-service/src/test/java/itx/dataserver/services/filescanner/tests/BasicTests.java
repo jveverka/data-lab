@@ -1,6 +1,6 @@
 package itx.dataserver.services.filescanner.tests;
 
-import itx.dataserver.services.filescanner.dto.FileInfoDataTransformer;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoDataTransformer;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfoTransformer;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.testng.Assert;

@@ -1,6 +1,6 @@
 package itx.dataserver.services.filescanner.dto.metadata;
 
-import itx.dataserver.services.filescanner.dto.FileInfoId;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import org.elasticsearch.common.xcontent.XContentBuilder;

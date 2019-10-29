@@ -1,4 +1,4 @@
-package itx.dataserver.services.filescanner.dto;
+package itx.dataserver.services.filescanner.dto.fileinfo;
 
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.elastic.service.DataTransformer;

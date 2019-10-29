@@ -2,7 +2,7 @@ package itx.dataserver.services.filescanner;
 
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
-import itx.dataserver.services.filescanner.dto.FileInfo;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.elastic.service.ElasticSearchService;

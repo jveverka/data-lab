@@ -1,8 +1,8 @@
 package itx.dataserver.services.filescanner;
 
 import io.reactivex.rxjava3.core.Observable;
-import itx.dataserver.services.filescanner.dto.FileInfo;
-import itx.dataserver.services.filescanner.dto.FileInfoDataTransformer;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoDataTransformer;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfoTransformer;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;

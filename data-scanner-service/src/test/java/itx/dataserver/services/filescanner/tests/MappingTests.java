@@ -1,7 +1,7 @@
 package itx.dataserver.services.filescanner.tests;
 
 import itx.dataserver.services.filescanner.DataUtils;
-import itx.dataserver.services.filescanner.dto.FileInfoId;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.image.service.MediaService;
 import itx.image.service.MediaServiceImpl;

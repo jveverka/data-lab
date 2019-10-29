@@ -1,6 +1,6 @@
 package itx.dataserver.services.filescanner.dto.unmapped;
 
-import itx.dataserver.services.filescanner.dto.FileInfoId;
+import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 
 public class UnmappedData {
 
