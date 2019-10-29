@@ -16,9 +16,11 @@ import itx.image.service.model.values.Fraction;
 import itx.image.service.model.values.Fractions;
 import itx.image.service.model.values.StringValue;
 import itx.image.service.model.values.Type;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +31,12 @@ public final class DataUtils {
     private static final Logger LOG = LoggerFactory.getLogger(DataUtils.class);
 
     private DataUtils() {
+    }
+
+    public static void addMappingField(XContentBuilder builder, String fieldName, String type) throws IOException {
+        builder.startObject(fieldName);
+        builder.field("type", type);
+        builder.endObject();
     }
 
     public static FileInfoId createFileInfoId(DirItem dirItem) throws NoSuchAlgorithmException {

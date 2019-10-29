@@ -1,5 +1,6 @@
 package itx.dataserver.services.filescanner.dto.unmapped;
 
+import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
@@ -28,20 +29,9 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
         {
             builder.startObject("properties");
             {
-                builder.startObject("fileInfoId"); {
-                    builder.field("type", "keyword");
-                }
-                builder.endObject();
-
-                builder.startObject("type"); {
-                    builder.field("type", "keyword");
-                }
-                builder.endObject();
-
-                builder.startObject("jsonData"); {
-                    builder.field("type", "text");
-                }
-                builder.endObject();
+                DataUtils.addMappingField(builder, "fileInfoId", "keyword");
+                DataUtils.addMappingField(builder, "type", "keyword");
+                DataUtils.addMappingField(builder, "jsonData", "text");
             }
             builder.endObject();
         }

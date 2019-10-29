@@ -22,19 +22,19 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
             checksum.put("checksum", data.getFileSystemInfo().getChecksum().get().getChecksum());
             checksum.put("algorithm", data.getFileSystemInfo().getChecksum().get().getAlgorithm());
         }
-        Map<String, Object> fileSystemInfo = new HashMap<>();
-        fileSystemInfo.put("fileInfoId", data.getId().getId());
-        fileSystemInfo.put("path", data.getFileSystemInfo().getPath());
-        fileSystemInfo.put("checksum", checksum);
-        fileSystemInfo.put("creationTime", data.getFileSystemInfo().getCreationTime().toMillis());
-        fileSystemInfo.put("lastModifiedTime", data.getFileSystemInfo().getLastModifiedTime().toMillis());
-        fileSystemInfo.put("lastAccessTime", data.getFileSystemInfo().getLastAccessTime().toMillis());
-        fileSystemInfo.put("type", data.getFileSystemInfo().getType().name());
+        Map<String, Object> source = new HashMap<>();
+        source.put("fileInfoId", data.getId().getId());
+        source.put("path", data.getFileSystemInfo().getPath());
+        source.put("checksum", checksum);
+        source.put("creationTime", data.getFileSystemInfo().getCreationTime().toMillis());
+        source.put("lastModifiedTime", data.getFileSystemInfo().getLastModifiedTime().toMillis());
+        source.put("lastAccessTime", data.getFileSystemInfo().getLastAccessTime().toMillis());
+        source.put("type", data.getFileSystemInfo().getType().name());
         if (data.getFileSystemInfo().getExtension().isPresent()) {
-            fileSystemInfo.put("extension", data.getFileSystemInfo().getExtension().get());
+            source.put("extension", data.getFileSystemInfo().getExtension().get());
         }
-        fileSystemInfo.put("size", data.getFileSystemInfo().getSize());
-        return fileSystemInfo;
+        source.put("size", data.getFileSystemInfo().getSize());
+        return source;
     }
 
     @Override
@@ -44,18 +44,19 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
         {
             builder.startObject("properties");
             {
-                builder.field("fileInfoId", "keyword");
-                builder.field("path", "text");
-                builder.field("creationTime", "date");
-                builder.field("lastModifiedTime", "date");
-                builder.field("lastAccessTime", "date");
-                builder.field("type", "keyword");
-                builder.field("size", "long");
-                builder.field("extension", "keyword");
+                DataUtils.addMappingField(builder, "fileInfoId", "keyword");
+                DataUtils.addMappingField(builder, "path", "text");
+                DataUtils.addMappingField(builder, "creationTime", "date");
+                DataUtils.addMappingField(builder, "lastModifiedTime", "date");
+                DataUtils.addMappingField(builder, "lastAccessTime", "date");
+                DataUtils.addMappingField(builder, "type", "keyword");
+                DataUtils.addMappingField(builder, "size", "long");
+                DataUtils.addMappingField(builder, "extension", "keyword");
+
                 builder.startObject("checksum");
                 {
-                    builder.field("checksum", "keyword");
-                    builder.field("algorithm", "keyword");
+                    DataUtils.addMappingField(builder, "checksum", "keyword");
+                    DataUtils.addMappingField(builder, "algorithm", "keyword");
                 }
                 builder.endObject();
             }

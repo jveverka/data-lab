@@ -1,5 +1,6 @@
 package itx.dataserver.services.filescanner.dto.metadata;
 
+import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
@@ -14,16 +15,16 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
 
     @Override
     public Map<String, Object> getSource(MetaDataInfo data) {
-        Map<String, Object> metaDataInfo = new HashMap<>();
-        metaDataInfo.put("fileInfoId", data.getId().getId());
-        metaDataInfo.put("imageType", data.getImageType());
-        metaDataInfo.put("imageWidth", data.getImageWidth());
-        metaDataInfo.put("imageHeight", data.getImageHeight());
+        Map<String, Object> source = new HashMap<>();
+        source.put("fileInfoId", data.getId().getId());
+        source.put("imageType", data.getImageType());
+        source.put("imageWidth", data.getImageWidth());
+        source.put("imageHeight", data.getImageHeight());
         Map<String, Object> deviceInfo = new HashMap<>();
         deviceInfo.put("vendor", data.getDeviceInfo().getVendor());
         deviceInfo.put("model", data.getDeviceInfo().getModel());
-        metaDataInfo.put("deviceInfo", deviceInfo);
-        metaDataInfo.put("timeStamp", data.getTimeStamp());
+        source.put("deviceInfo", deviceInfo);
+        source.put("timeStamp", data.getTimeStamp());
 
         Map<String, Object> gps = new HashMap<>();
         Map<String, Object> coordinates = new HashMap<>();
@@ -38,8 +39,8 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
             gps.put("processingMethod", data.getGps().getProcessingMethod());
         }
 
-        metaDataInfo.put("gps", gps);
-        return metaDataInfo;
+        source.put("gps", gps);
+        return source;
     }
 
     @Override
@@ -49,23 +50,25 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
         {
             builder.startObject("properties");
             {
-                builder.field("fileInfoId", "keyword");
-                builder.field("imageType", "keyword");
-                builder.field("imageWidth", "long");
-                builder.field("imageHeight", "long");
+                DataUtils.addMappingField(builder, "fileInfoId", "keyword");
+                DataUtils.addMappingField(builder, "imageType", "keyword");
+                DataUtils.addMappingField(builder, "imageWidth", "long");
+                DataUtils.addMappingField(builder, "imageHeight", "long");
+                DataUtils.addMappingField(builder, "timeStamp", "date");
+
                 builder.startObject("deviceInfo");
                 {
-                    builder.field("vendor", "keyword");
-                    builder.field("model", "keyword");
+                    DataUtils.addMappingField(builder, "vendor", "keyword");
+                    DataUtils.addMappingField(builder, "model", "keyword");
                 }
                 builder.endObject();
-                builder.field("timeStamp", "date");
+
                 builder.startObject("gps");
                 {
-                    builder.field("coordinates", "geo_point");
-                    builder.field("altitude", "long");
-                    builder.field("timeStamp", "date");
-                    builder.field("processingMethod", "keyword");
+                    DataUtils.addMappingField(builder, "coordinates", "geo_point");
+                    DataUtils.addMappingField(builder, "altitude", "long");
+                    DataUtils.addMappingField(builder, "timeStamp", "date");
+                    DataUtils.addMappingField(builder, "processingMethod", "keyword");
                 }
                 builder.endObject();
             }
