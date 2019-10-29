@@ -35,4 +35,15 @@ gradle clean installDist distZip test
   ```
   GET http://127.0.0.1:9200/file-info/_count?q=extension:jpg
   ```
-  
+* filter by deviceInfo and vendor  
+  ```
+  GET http://localhost:9200/meta-data-info/_search?pretty=true&q=deviceInfo.vendor:Canon
+  ```
+* count query count deviceInfo of specific vendor
+  ```
+  GET http://localhost:9200/meta-data-info/_count?q=deviceInfo.vendor:Canon
+  ```
+* get index mapping
+  ```
+  GET http://127.0.0.1:9200/meta-data-info/_mapping
+  ```  

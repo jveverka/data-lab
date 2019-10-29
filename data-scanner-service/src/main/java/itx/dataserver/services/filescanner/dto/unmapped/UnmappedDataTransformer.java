@@ -28,9 +28,20 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
         {
             builder.startObject("properties");
             {
-                builder.field("fileInfoId", "keyword");
-                builder.field("type", "keyword");
-                builder.field("jsonData", "text");
+                builder.startObject("fileInfoId"); {
+                    builder.field("type", "keyword");
+                }
+                builder.endObject();
+
+                builder.startObject("type"); {
+                    builder.field("type", "keyword");
+                }
+                builder.endObject();
+
+                builder.startObject("jsonData"); {
+                    builder.field("type", "text");
+                }
+                builder.endObject();
             }
             builder.endObject();
         }
