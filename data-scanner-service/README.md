@@ -61,4 +61,18 @@ gradle clean installDist distZip test
       }
   }
   ```
+* get aggregated data, how many different file extensions is in index
+  ```
+  POST http://127.0.0.1:9200/file-info/_search?size=0
+  {
+      "aggs" : {
+  			"fileExtensions" : {
+  				"terms": {
+  				"field": "extension",
+  				"size": 10
+  				}
+  			}
   
+      }
+  }
+  ```

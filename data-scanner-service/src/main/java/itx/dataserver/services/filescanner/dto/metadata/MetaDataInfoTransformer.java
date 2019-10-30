@@ -56,21 +56,13 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
                 DataUtils.addMappingField(builder, "imageHeight", "long");
                 DataUtils.addMappingField(builder, "timeStamp", "date");
 
-                builder.startObject("deviceInfo");
-                {
-                    DataUtils.addMappingField(builder, "vendor", "keyword");
-                    DataUtils.addMappingField(builder, "model", "keyword");
-                }
-                builder.endObject();
+                DataUtils.addMappingField(builder, "deviceInfo.vendor", "keyword");
+                DataUtils.addMappingField(builder, "deviceInfo.model", "keyword");
 
-                builder.startObject("gps");
-                {
-                    DataUtils.addMappingField(builder, "coordinates", "geo_point");
-                    DataUtils.addMappingField(builder, "altitude", "long");
-                    DataUtils.addMappingField(builder, "timeStamp", "date");
-                    DataUtils.addMappingField(builder, "processingMethod", "keyword");
-                }
-                builder.endObject();
+                DataUtils.addMappingField(builder, "gps.coordinates", "geo_point");
+                DataUtils.addMappingField(builder, "gps.altitude", "long");
+                DataUtils.addMappingField(builder, "gps.timeStamp", "date");
+                DataUtils.addMappingField(builder, "gps.processingMethod", "keyword");
             }
             builder.endObject();
         }

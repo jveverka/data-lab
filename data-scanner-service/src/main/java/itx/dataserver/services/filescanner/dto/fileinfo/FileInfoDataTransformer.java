@@ -52,13 +52,8 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
                 DataUtils.addMappingField(builder, "type", "keyword");
                 DataUtils.addMappingField(builder, "size", "long");
                 DataUtils.addMappingField(builder, "extension", "keyword");
-
-                builder.startObject("checksum");
-                {
-                    DataUtils.addMappingField(builder, "checksum", "keyword");
-                    DataUtils.addMappingField(builder, "algorithm", "keyword");
-                }
-                builder.endObject();
+                DataUtils.addMappingField(builder, "checksum.checksum", "keyword");
+                DataUtils.addMappingField(builder, "checksum.algorithm", "keyword");
             }
             builder.endObject();
         }
