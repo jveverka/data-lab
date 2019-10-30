@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.Optional;
 
 public class MappingTests {
@@ -32,7 +33,26 @@ public class MappingTests {
         Assert.assertNotNull(metaDataInfo);
         Assert.assertEquals(metaDataInfo.getImageType(), "jpeg");
         Assert.assertNotNull(metaDataInfo.getGps());
-        Assert.assertEquals(metaDataInfo.getGps().getTimeStamp(), "2019:09:30 20:09:14.000 UTC");
+        Assert.assertEquals(metaDataInfo.getTimeStamp(), "2019-09-30 22:09:54");
+        Assert.assertEquals(metaDataInfo.getGps().getTimeStamp(), "20190930T200914.000+0000");
+    }
+
+    @Test
+    public void testDateMapping() throws ParseException {
+        String result = DataUtils.normalizeDateTime("2019:09:30 22:09:54");
+        Assert.assertEquals(result, "2019-09-30 22:09:54");
+        result = DataUtils.normalizeDateTime("2019:09:30 20:09:14.000 UTC");
+        Assert.assertEquals(result, "2019-09-30 20:09:14");
+    }
+
+    @Test
+    public void testDateMappingWithTimeZone() {
+        String result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.000 UTC");
+        Assert.assertEquals(result, "20190930T200914.000+0000");
+        result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.012 UTC");
+        Assert.assertEquals(result, "20190930T200914.000+0000");
+        result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.012 CET");
+        Assert.assertEquals(result, "20190930T200914.000+0200");
     }
 
 }

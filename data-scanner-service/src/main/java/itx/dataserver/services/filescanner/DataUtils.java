@@ -8,6 +8,7 @@ import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
 import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
 import itx.dataserver.services.filescanner.dto.metadata.GPS;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.elastic.service.impl.ESUtils;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.model.DirectoryInfo;
 import itx.image.service.model.MetaData;
@@ -24,11 +25,22 @@ import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 
 public final class DataUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataUtils.class);
+
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    private static final SimpleDateFormat dateFormatIn01 = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+    private static final SimpleDateFormat dateFormatOut = new SimpleDateFormat(DATE_TIME_FORMAT);
+    private static final DateTimeFormatter formatterWithTimeZoneIn01 = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss.n z");
 
     private DataUtils() {
     }
@@ -36,6 +48,13 @@ public final class DataUtils {
     public static void addMappingField(XContentBuilder builder, String fieldName, String type) throws IOException {
         builder.startObject(fieldName);
         builder.field("type", type);
+        builder.endObject();
+    }
+
+    public static void addDateMappingField(XContentBuilder builder, String fieldName, String dateFormat) throws IOException {
+        builder.startObject(fieldName);
+        builder.field("type", "date");
+        builder.field("format", dateFormat);
         builder.endObject();
     }
 
@@ -83,11 +102,11 @@ public final class DataUtils {
 
     public static Optional<MetaDataInfo> createMetaDataInfo(FileInfoId id, MetaData metaData) {
 
-        String imageType = "NA";
+        String imageType = "";
         long imageWidth = 0;
         long imageHeight = 0;
-        String vendor = "NA";
-        String model = "NA";
+        String vendor = "";
+        String model = "";
         String timeStamp = "";
         GPS gps = null;
 
@@ -151,6 +170,12 @@ public final class DataUtils {
             Optional<TagInfo> dateTimeTag = exifSubifdInfo.get().tagInfoByName("date/time-original");
             if (dateTimeTag.isPresent()) {
                 timeStamp = (String)dateTimeTag.get().getValue().getValue();
+                try {
+                    timeStamp = normalizeDateTime(timeStamp);
+                } catch (ParseException e) {
+                    LOG.warn("Image date/time-original can't be parsed !");
+                    return Optional.empty();
+                }
             } else {
                 LOG.warn("Image date/time-original can't be determined !");
                 return Optional.empty();
@@ -250,7 +275,7 @@ public final class DataUtils {
         if (gpsTimeStampTag.isPresent()) {
             result = result + " " + gpsTimeStampTag.get().getDescription();
         }
-        return result;
+        return normalizeDateTimeWithTimeZone(result);
     }
 
     private static int getAltitude(DirectoryInfo gpsDirectoryInfo) {
@@ -265,6 +290,26 @@ public final class DataUtils {
 
         }
         return altitude;
+    }
+
+    /**
+     * Normalizes datetime String.
+     * @param dateTime input datetime string in format "yyyy:MM:dd HH:mm:ss".
+     * @return dateTime String in "yyyy-MM-dd HH:mm:ss" format.
+     */
+    public static String normalizeDateTime(String dateTime) throws ParseException {
+        Date parsedDate = dateFormatIn01.parse(dateTime);
+        return dateFormatOut.format(parsedDate);
+    }
+
+    /**
+     * Normalizes datetime String.
+     * @param dateTimeWithTimeZone input datetime string in format "yyyy:MM:dd HH:mm:ss Z".
+     * @return dateTime string in "yyyyMMdd'T'HHmmss.SSSZ" format.
+     */
+    public static String normalizeDateTimeWithTimeZone(String dateTimeWithTimeZone) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeWithTimeZone, formatterWithTimeZoneIn01);
+        return ESUtils.toString(zonedDateTime);
     }
 
 }

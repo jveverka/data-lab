@@ -4,6 +4,7 @@ import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
+import itx.elastic.service.impl.ESUtils;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
@@ -54,14 +55,14 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
                 DataUtils.addMappingField(builder, "imageType", "keyword");
                 DataUtils.addMappingField(builder, "imageWidth", "long");
                 DataUtils.addMappingField(builder, "imageHeight", "long");
-                DataUtils.addMappingField(builder, "timeStamp", "date");
+                DataUtils.addDateMappingField(builder, "timeStamp", DataUtils.DATE_TIME_FORMAT);
 
                 DataUtils.addMappingField(builder, "deviceInfo.vendor", "keyword");
                 DataUtils.addMappingField(builder, "deviceInfo.model", "keyword");
 
                 DataUtils.addMappingField(builder, "gps.coordinates", "geo_point");
                 DataUtils.addMappingField(builder, "gps.altitude", "long");
-                DataUtils.addMappingField(builder, "gps.timeStamp", "date");
+                DataUtils.addDateMappingField(builder, "gps.timeStamp", ESUtils.DATE_FORMAT);
                 DataUtils.addMappingField(builder, "gps.processingMethod", "keyword");
             }
             builder.endObject();
