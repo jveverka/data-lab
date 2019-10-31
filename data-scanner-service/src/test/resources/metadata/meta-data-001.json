@@ -1,0 +1,679 @@
+{
+  "directories" : [ {
+    "name" : "exif-subifd",
+    "tags" : [ {
+      "name" : "sensing-method",
+      "description" : "One-chip color area sensor",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "sub-sec-time-digitized",
+      "description" : "707760",
+      "value" : {
+        "value" : "707760",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "components-configuration",
+      "description" : "YCbCr",
+      "value" : {
+        "value" : "AQIDAA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "sub-sec-time-original",
+      "description" : "707760",
+      "value" : {
+        "value" : "707760",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "focal-length",
+      "description" : "3.9 mm",
+      "value" : {
+        "value" : {
+          "numerator" : 3940,
+          "denominator" : 1000,
+          "floatValue" : 3.94
+        },
+        "unit" : "mm",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-time",
+      "description" : "1/414 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 1,
+          "denominator" : 414,
+          "floatValue" : 0.002415459
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "scene-capture-type",
+      "description" : "Standard",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "unknown-tag-(0x8889)",
+      "description" : "HHT",
+      "value" : {
+        "value" : "HHT",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "exif-image-width",
+      "description" : "4000 pixels",
+      "value" : {
+        "value" : 4000,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "brightness-value",
+      "description" : "6.28",
+      "value" : {
+        "value" : {
+          "numerator" : 628,
+          "denominator" : 100,
+          "floatValue" : 6.28
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exposure-program",
+      "description" : "Unknown (0)",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "scene-type",
+      "description" : "Directly photographed image",
+      "value" : {
+        "value" : "AQ==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "f-number",
+      "description" : "f/1.9",
+      "value" : {
+        "value" : {
+          "numerator" : 190,
+          "denominator" : 100,
+          "floatValue" : 1.9
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "metering-mode",
+      "description" : "Center weighted average",
+      "value" : {
+        "value" : 2,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "exif-image-height",
+      "description" : "2250 pixels",
+      "value" : {
+        "value" : 2250,
+        "unit" : "pixels",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "date/time-digitized",
+      "description" : "2019:08:28 19:12:10",
+      "value" : {
+        "value" : "2019:08:28 19:12:10",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "aperture-value",
+      "description" : "f/1.9",
+      "value" : {
+        "value" : {
+          "numerator" : 185,
+          "denominator" : 100,
+          "floatValue" : 1.85
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "unknown-tag-(0x9999)",
+      "description" : "{ \"sensor_type\":\"rear\",\"mirror\":false}",
+      "value" : {
+        "value" : "{ \"sensor_type\":\"rear\",\"mirror\":false}",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "sub-sec-time",
+      "description" : "707760",
+      "value" : {
+        "value" : "707760",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "iso-speed-ratings",
+      "description" : "100",
+      "value" : {
+        "value" : 100,
+        "unit" : "iso",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "white-balance-mode",
+      "description" : "Auto white balance",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "shutter-speed-value",
+      "description" : "1/414 sec",
+      "value" : {
+        "value" : {
+          "numerator" : 8694,
+          "denominator" : 1000,
+          "floatValue" : 8.694
+        },
+        "unit" : "sec",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "exif-version",
+      "description" : "2.20",
+      "value" : {
+        "value" : "MDIyMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "focal-length-35",
+      "description" : "24 mm",
+      "value" : {
+        "value" : 24,
+        "unit" : "mm",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "flashpix-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    }, {
+      "name" : "exposure-mode",
+      "description" : "Auto exposure",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "date/time-original",
+      "description" : "2019:08:28 19:12:10",
+      "value" : {
+        "value" : "2019:08:28 19:12:10",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "flash",
+      "description" : "Flash did not fire",
+      "value" : {
+        "value" : 16,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "color-space",
+      "description" : "sRGB",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-thumbnail",
+    "tags" : [ {
+      "name" : "orientation",
+      "description" : "Top, left side (Horizontal / normal)",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "thumbnail-length",
+      "description" : "5020 bytes",
+      "value" : {
+        "value" : 5020,
+        "unit" : "bytes",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "thumbnail-offset",
+      "description" : "1132 bytes",
+      "value" : {
+        "value" : 1132,
+        "unit" : "bytes",
+        "type" : "LONG"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "compression",
+      "description" : "JPEG (old-style)",
+      "value" : {
+        "value" : 6,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "huffman",
+    "tags" : [ {
+      "name" : "number-of-tables",
+      "description" : "4 Huffman tables",
+      "value" : {
+        "value" : 4,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "file-type",
+    "tags" : [ {
+      "name" : "detected-file-type-long-name",
+      "description" : "Joint Photographic Experts Group",
+      "value" : {
+        "value" : "Joint Photographic Experts Group",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "expected-file-name-extension",
+      "description" : "jpg",
+      "value" : {
+        "value" : "jpg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-file-type-name",
+      "description" : "JPEG",
+      "value" : {
+        "value" : "JPEG",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "detected-mime-type",
+      "description" : "image/jpeg",
+      "value" : {
+        "value" : "image/jpeg",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "exif-ifd0",
+    "tags" : [ {
+      "name" : "orientation",
+      "description" : "Top, left side (Horizontal / normal)",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "software",
+      "description" : "tulip-user 9 PKQ1.180904.001 V10.3.5.0.PEKMIXM release-keys",
+      "value" : {
+        "value" : "tulip-user 9 PKQ1.180904.001 V10.3.5.0.PEKMIXM release-keys",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "date/time",
+      "description" : "2019:08:28 19:12:10",
+      "value" : {
+        "value" : "2019:08:28 19:12:10",
+        "unit" : "timestamp",
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "resolution-unit",
+      "description" : "Inch",
+      "value" : {
+        "value" : 2,
+        "unit" : "inch",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "model",
+      "description" : "Redmi Note 6 Pro",
+      "value" : {
+        "value" : "Redmi Note 6 Pro",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "ycbcr-positioning",
+      "description" : "Center of pixel array",
+      "value" : {
+        "value" : 1,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "x-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "y-resolution",
+      "description" : "72 dots per inch",
+      "value" : {
+        "value" : {
+          "numerator" : 72,
+          "denominator" : 1,
+          "floatValue" : 72.0
+        },
+        "unit" : "dots/inch",
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "make",
+      "description" : "Xiaomi",
+      "value" : {
+        "value" : "Xiaomi",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "jpeg",
+    "tags" : [ {
+      "name" : "number-of-components",
+      "description" : "3",
+      "value" : {
+        "value" : 3,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-width",
+      "description" : "4000 pixels",
+      "value" : {
+        "value" : 4000,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "compression-type",
+      "description" : "Baseline",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "image-height",
+      "description" : "2250 pixels",
+      "value" : {
+        "value" : 2250,
+        "unit" : "pixels",
+        "type" : "INTEGER"
+      }
+    }, {
+      "name" : "component-3",
+      "description" : "Cr component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cr",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-2",
+      "description" : "Cb component: Quantization table 1, Sampling factors 1 horiz/1 vert",
+      "value" : {
+        "value" : {
+          "name" : "Cb",
+          "samplingFactorByte" : 1,
+          "quantizationTableNumber" : 1
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "component-1",
+      "description" : "Y component: Quantization table 0, Sampling factors 2 horiz/2 vert",
+      "value" : {
+        "value" : {
+          "name" : "Y",
+          "samplingFactorByte" : 2,
+          "quantizationTableNumber" : 0
+        },
+        "unit" : null,
+        "type" : "JPEG_COMPONENT"
+      }
+    }, {
+      "name" : "data-precision",
+      "description" : "8 bits",
+      "value" : {
+        "value" : 8,
+        "unit" : "bits",
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "interoperability",
+    "tags" : [ {
+      "name" : "interoperability-index",
+      "description" : "Recommended Exif Interoperability Rules (ExifR98)",
+      "value" : {
+        "value" : "R98",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "interoperability-version",
+      "description" : "1.00",
+      "value" : {
+        "value" : "MDEwMA==",
+        "unit" : null,
+        "type" : "BYTES"
+      }
+    } ],
+    "errors" : [ ]
+  }, {
+    "name" : "gps",
+    "tags" : [ {
+      "name" : "gps-longitude-ref",
+      "description" : "E",
+      "value" : {
+        "value" : "E",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-latitude-ref",
+      "description" : "N",
+      "value" : {
+        "value" : "N",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-time-stamp",
+      "description" : "16:12:10.000 UTC",
+      "value" : {
+        "value" : [ {
+          "numerator" : 16,
+          "denominator" : 1,
+          "floatValue" : 16.0
+        }, {
+          "numerator" : 12,
+          "denominator" : 1,
+          "floatValue" : 12.0
+        }, {
+          "numerator" : 10,
+          "denominator" : 1,
+          "floatValue" : 10.0
+        } ],
+        "unit" : null,
+        "type" : "FRACTIONS"
+      }
+    }, {
+      "name" : "gps-altitude",
+      "description" : "86.47 metres",
+      "value" : {
+        "value" : {
+          "numerator" : 86469,
+          "denominator" : 1000,
+          "floatValue" : 86.469
+        },
+        "unit" : null,
+        "type" : "FRACTION"
+      }
+    }, {
+      "name" : "gps-processing-method",
+      "description" : "ASCII",
+      "value" : {
+        "value" : "ASCII",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-latitude",
+      "description" : "36° 5' 30.73",
+      "value" : {
+        "value" : [ {
+          "numerator" : 36,
+          "denominator" : 1,
+          "floatValue" : 36.0
+        }, {
+          "numerator" : 5,
+          "denominator" : 1,
+          "floatValue" : 5.0
+        }, {
+          "numerator" : 307287,
+          "denominator" : 10000,
+          "floatValue" : 30.7287
+        } ],
+        "unit" : null,
+        "type" : "FRACTIONS"
+      }
+    }, {
+      "name" : "gps-date-stamp",
+      "description" : "2019:08:28",
+      "value" : {
+        "value" : "2019:08:28",
+        "unit" : null,
+        "type" : "STRING"
+      }
+    }, {
+      "name" : "gps-longitude",
+      "description" : "28° 4' 51.33",
+      "value" : {
+        "value" : [ {
+          "numerator" : 28,
+          "denominator" : 1,
+          "floatValue" : 28.0
+        }, {
+          "numerator" : 4,
+          "denominator" : 1,
+          "floatValue" : 4.0
+        }, {
+          "numerator" : 513310,
+          "denominator" : 10000,
+          "floatValue" : 51.331
+        } ],
+        "unit" : null,
+        "type" : "FRACTIONS"
+      }
+    }, {
+      "name" : "gps-altitude-ref",
+      "description" : "Sea level",
+      "value" : {
+        "value" : 0,
+        "unit" : null,
+        "type" : "INTEGER"
+      }
+    } ],
+    "errors" : [ ]
+  } ]
+}
