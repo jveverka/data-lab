@@ -47,7 +47,7 @@ gradle clean installDist distZip test
   ```
   GET http://127.0.0.1:9200/meta-data-info/_mapping
   ```
-* get aggregated data
+* get aggregated data, count unmapped-data documents by type
   ```
   POST http://127.0.0.1:9200/unmapped-data/_search?size=0
   {

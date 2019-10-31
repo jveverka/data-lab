@@ -324,6 +324,10 @@ public final class DataUtils {
         if (dateTimeWithTimeZone == null) return Optional.empty();
         if (dateTimeWithTimeZone.isBlank()) return Optional.empty();
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeWithTimeZone, formatterWithTimeZoneIn01);
+        int year = zonedDateTime.getYear();
+        if (year < 1900 || year > 2200) {
+            return Optional.empty();
+        }
         return Optional.of(ESUtils.toString(zonedDateTime));
     }
 

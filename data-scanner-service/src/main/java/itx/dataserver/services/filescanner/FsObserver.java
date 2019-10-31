@@ -51,16 +51,24 @@ public class FsObserver implements Observer<DirItem> {
             Optional<MetaData> metaData = this.mediaService.getMetaData(new FileInputStream(file));
             FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
             this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
-            if (metaData.isPresent()) {
-                Optional<MetaDataInfo> metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
-                if (metaDataInfo.isPresent()) {
-                    this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo.get());
+            try {
+                if (metaData.isPresent()) {
+                    Optional<MetaDataInfo> metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
+                    if (metaDataInfo.isPresent()) {
+                        this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo.get());
+                    } else {
+                        String jsonData = ParsingUtils.writeAsJsonString(metaData.get());
+                        this.elasticSearchService.saveDocument(UnmappedData.class, new UnmappedData(fileInfo.getId(), "MetaData", jsonData));
+                    }
                 } else {
+                    LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
+                }
+            } catch (Exception e) {
+                if (metaData.isPresent()) {
                     String jsonData = ParsingUtils.writeAsJsonString(metaData.get());
                     this.elasticSearchService.saveDocument(UnmappedData.class, new UnmappedData(fileInfo.getId(), "MetaData", jsonData));
                 }
-            } else {
-                LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
+                LOG.warn("onNext File: {} Exception: {}", dirItem.getPath().toString(), e.getMessage());
             }
         } catch(Exception e) {
             LOG.error("Exception: ", e);
