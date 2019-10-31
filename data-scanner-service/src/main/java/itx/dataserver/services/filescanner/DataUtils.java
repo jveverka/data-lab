@@ -169,10 +169,11 @@ public final class DataUtils {
             }
             Optional<TagInfo> dateTimeTag = exifSubifdInfo.get().tagInfoByName("date/time-original");
             if (dateTimeTag.isPresent()) {
-                timeStamp = (String)dateTimeTag.get().getValue().getValue();
-                try {
-                    timeStamp = normalizeDateTime(timeStamp);
-                } catch (ParseException e) {
+                String timeStampTagValue = (String)dateTimeTag.get().getValue().getValue();
+                Optional<String> normalizedTimeStamp = normalizeDateTime(timeStampTagValue);
+                if (normalizedTimeStamp.isPresent()) {
+                    timeStamp = normalizedTimeStamp.get();
+                } else {
                     LOG.warn("Image date/time-original can't be parsed !");
                     return Optional.empty();
                 }
@@ -210,7 +211,13 @@ public final class DataUtils {
             DirectoryInfo gpsDirectoryInfo = gpsInfo.get();
             lon = getLongitude(gpsDirectoryInfo);
             lat = getLatitude(gpsDirectoryInfo);
-            timeStamp = getTimeStamp(gpsDirectoryInfo);
+            Optional<String> timeStampOptional = getTimeStamp(gpsDirectoryInfo);
+            if (timeStampOptional.isPresent()) {
+                timeStamp = timeStampOptional.get();
+            } else {
+                LOG.warn("GPS timestamp cannot be parsed !");
+                return Optional.empty();
+            }
             altitude = getAltitude(gpsDirectoryInfo);
             Optional<TagInfo> gpsProcessingMethodTag = gpsDirectoryInfo.tagInfoByName("gps-processing-method");
             if (gpsProcessingMethodTag.isPresent()) {
@@ -265,7 +272,7 @@ public final class DataUtils {
         return latitude;
     }
 
-    private static String getTimeStamp(DirectoryInfo gpsDirectoryInfo) {
+    private static Optional<String> getTimeStamp(DirectoryInfo gpsDirectoryInfo) {
         String result = "";
         Optional<TagInfo> gpsDateStampTag = gpsDirectoryInfo.tagInfoByName("gps-date-stamp");
         if (gpsDateStampTag.isPresent()) {
@@ -297,9 +304,15 @@ public final class DataUtils {
      * @param dateTime input datetime string in format "yyyy:MM:dd HH:mm:ss".
      * @return dateTime String in "yyyy-MM-dd HH:mm:ss" format.
      */
-    public static String normalizeDateTime(String dateTime) throws ParseException {
-        Date parsedDate = dateFormatIn01.parse(dateTime);
-        return dateFormatOut.format(parsedDate);
+    public static Optional<String> normalizeDateTime(String dateTime) {
+        try {
+            if (dateTime == null) return Optional.empty();
+            if (dateTime.isBlank()) return Optional.empty();
+            Date parsedDate = dateFormatIn01.parse(dateTime);
+            return Optional.of(dateFormatOut.format(parsedDate));
+        } catch (ParseException e) {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -307,9 +320,11 @@ public final class DataUtils {
      * @param dateTimeWithTimeZone input datetime string in format "yyyy:MM:dd HH:mm:ss Z".
      * @return dateTime string in "yyyyMMdd'T'HHmmss.SSSZ" format.
      */
-    public static String normalizeDateTimeWithTimeZone(String dateTimeWithTimeZone) {
+    public static Optional<String> normalizeDateTimeWithTimeZone(String dateTimeWithTimeZone) {
+        if (dateTimeWithTimeZone == null) return Optional.empty();
+        if (dateTimeWithTimeZone.isBlank()) return Optional.empty();
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeWithTimeZone, formatterWithTimeZoneIn01);
-        return ESUtils.toString(zonedDateTime);
+        return Optional.of(ESUtils.toString(zonedDateTime));
     }
 
 }

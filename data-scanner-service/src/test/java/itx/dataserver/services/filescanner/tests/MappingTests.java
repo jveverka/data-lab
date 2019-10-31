@@ -16,6 +16,14 @@ import java.util.Optional;
 public class MappingTests {
 
     @Test
+    public void testMetaDataMappingNew() {
+        InputStream imageStream = this.getClass().getResourceAsStream("/media/20190206_113018.jpg");
+        MediaService mediaService = new MediaServiceImpl();
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
+        Assert.assertNotNull(metaDataOptional);
+    }
+
+    @Test
     public void testMetaDataMapping() {
         InputStream imageStream = this.getClass().getResourceAsStream("/media/20190930_220954.jpg");
         MediaService mediaService = new MediaServiceImpl();
@@ -39,20 +47,25 @@ public class MappingTests {
 
     @Test
     public void testDateMapping() throws ParseException {
-        String result = DataUtils.normalizeDateTime("2019:09:30 22:09:54");
-        Assert.assertEquals(result, "2019-09-30 22:09:54");
+        Optional<String> result = DataUtils.normalizeDateTime("2019:09:30 22:09:54");
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(result.get(), "2019-09-30 22:09:54");
         result = DataUtils.normalizeDateTime("2019:09:30 20:09:14.000 UTC");
-        Assert.assertEquals(result, "2019-09-30 20:09:14");
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(result.get(), "2019-09-30 20:09:14");
     }
 
     @Test
     public void testDateMappingWithTimeZone() {
-        String result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.000 UTC");
-        Assert.assertEquals(result, "20190930T200914.000+0000");
+        Optional<String> result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.000 UTC");
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(result.get(), "20190930T200914.000+0000");
         result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.012 UTC");
-        Assert.assertEquals(result, "20190930T200914.000+0000");
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(result.get(), "20190930T200914.000+0000");
         result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.012 CET");
-        Assert.assertEquals(result, "20190930T200914.000+0200");
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(result.get(), "20190930T200914.000+0200");
     }
 
 }

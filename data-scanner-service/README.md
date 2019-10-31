@@ -80,14 +80,18 @@ gradle clean installDist distZip test
   ```
   POST http://127.0.0.1:9200/meta-data-info/_search?size=0
   {
-      "aggs" : {
-  			"vendorTypes" : {
-  				"terms": {
-  				"field": "deviceInfo.vendor",
-  				"size": 10
-  				}
-  			}
-      }
-  }
+    "aggs" : {
+			"vendorTypes" : {
+				"terms": {
+				  "field": "deviceInfo.vendor"
+				}
+			},
+			"vendorModels" : {
+				"terms": {
+				  "field": "deviceInfo.model"
+				}
+			}
+    }
+  }	
   ```  
   
