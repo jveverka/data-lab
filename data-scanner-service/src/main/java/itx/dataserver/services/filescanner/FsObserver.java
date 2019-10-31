@@ -45,30 +45,35 @@ public class FsObserver implements Observer<DirItem> {
 
     @Override
     public void onNext(DirItem dirItem) {
-        try {
+        File file = dirItem.getPath().toFile();
+        try (FileInputStream fis = new FileInputStream(file)) {
             LOG.info("onNext: {} {}", counter.getAndIncrement(), dirItem.getPath().toString());
-            File file = dirItem.getPath().toFile();
-            Optional<MetaData> metaData = this.mediaService.getMetaData(new FileInputStream(file));
+            Optional<MetaData> metaData = this.mediaService.getMetaData(fis);
             FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
             this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
-            try {
-                if (metaData.isPresent()) {
-                    Optional<MetaDataInfo> metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
-                    if (metaDataInfo.isPresent()) {
+
+            if (metaData.isPresent()) {
+
+                Optional<MetaDataInfo> metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
+
+                if (metaDataInfo.isPresent()) {
+                    try {
                         this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo.get());
-                    } else {
+                    } catch (Exception e) {
                         String jsonData = ParsingUtils.writeAsJsonString(metaData.get());
-                        this.elasticSearchService.saveDocument(UnmappedData.class, new UnmappedData(fileInfo.getId(), "MetaData", jsonData, dirItem.getPath().toString()));
+                        UnmappedData unmappedData =
+                                new UnmappedData(fileInfo.getId(), MetaDataInfo.class.getTypeName(), jsonData, dirItem.getPath().toString(), "ElasticSearch_write_failed");
+                        this.elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
                     }
                 } else {
-                    LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
-                }
-            } catch (Exception e) {
-                if (metaData.isPresent()) {
                     String jsonData = ParsingUtils.writeAsJsonString(metaData.get());
-                    this.elasticSearchService.saveDocument(UnmappedData.class, new UnmappedData(fileInfo.getId(), "MetaData", jsonData, dirItem.getPath().toString()));
+                    UnmappedData unmappedData =
+                               new UnmappedData(fileInfo.getId(), MetaDataInfo.class.getTypeName(), jsonData, dirItem.getPath().toString(), "MetaDataInfo_mapping_failed");
+                    this.elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
                 }
-                LOG.warn("onNext File: {} Exception: {}", dirItem.getPath().toString(), e.getMessage());
+
+            } else {
+                LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
             }
         } catch(Exception e) {
             LOG.error("Exception: ", e);

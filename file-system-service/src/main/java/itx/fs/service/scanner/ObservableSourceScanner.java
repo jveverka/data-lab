@@ -51,7 +51,7 @@ public class ObservableSourceScanner implements Disposable, Cancellable, Observa
                         }
                     });
                     executorService.shutdown();
-                    executorService.awaitTermination(1, TimeUnit.HOURS);
+                    executorService.awaitTermination(24, TimeUnit.HOURS);
                     emitter.onComplete();
                 } catch (Exception e) {
                     emitter.onError(e);

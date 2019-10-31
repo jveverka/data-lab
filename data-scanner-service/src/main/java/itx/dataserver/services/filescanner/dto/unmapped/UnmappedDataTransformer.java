@@ -20,6 +20,7 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
         source.put("type", data.getType());
         source.put("jsonData", data.getJsonData());
         source.put("filePath", data.getFilePath());
+        source.put("reason", data.getReason());
         return source;
     }
 
@@ -34,6 +35,7 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
                 DataUtils.addMappingField(builder, "type", "keyword");
                 DataUtils.addMappingField(builder, "jsonData", "text");
                 DataUtils.addMappingField(builder, "filePath", "text");
+                DataUtils.addMappingField(builder, "reason", "keyword");
             }
             builder.endObject();
         }
@@ -57,7 +59,8 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
         String type = (String)source.get("type");
         String jsonData = (String)source.get("jsonData");
         String filePath = (String)source.get("filePath");
-        return new UnmappedData(fileInfoId, type, jsonData, filePath);
+        String reason = (String)source.get("reason");
+        return new UnmappedData(fileInfoId, type, jsonData, filePath, reason);
     }
 
 }

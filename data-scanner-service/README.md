@@ -52,10 +52,14 @@ gradle clean installDist distZip test
   POST http://127.0.0.1:9200/unmapped-data/_search?size=0
   {
       "aggs" : {
-          "vendorName" : {
+          "unmappedTypes" : {
               "terms": {
-                 "field": "type",
-                 "size": 10
+                 "field": "type"
+              }
+          },
+          "unmappedReasons" : {
+              "terms": {
+                 "field": "reason"
               }
           }
       }
