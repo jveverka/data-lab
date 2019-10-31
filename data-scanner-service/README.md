@@ -18,6 +18,12 @@ gradle clean installDist distZip test
 * __unmapped-data__ - unmapped objects serialized in JSON form for particular files 
 * __*__ - all documents use fileInfoId to match query for single file
 
+## Script utils
+* count files in the directory
+  ```
+  find ${ROOT_DIR_NAME} -type f | wc -l
+  ```
+
 ## ElasticSearch queries
 * get data (data from all indices) for single file by fileInfoId
   ```
@@ -51,6 +57,7 @@ gradle clean installDist distZip test
   ```
   POST http://127.0.0.1:9200/unmapped-data/_search?size=0
   {
+      "track_total_hits": 100000,
       "aggs" : {
           "unmappedTypes" : {
               "terms": {
@@ -69,14 +76,13 @@ gradle clean installDist distZip test
   ```
   POST http://127.0.0.1:9200/file-info/_search?size=0
   {
+      "track_total_hits": 100000,
       "aggs" : {
-  			"fileExtensions" : {
-  				"terms": {
-  				"field": "extension",
-  				"size": 10
-  				}
-  			}
-  
+          "fileExtensions" : {
+              "terms": {
+                  "field": "extension",
+              }
+          }
       }
   }
   ```
@@ -84,18 +90,19 @@ gradle clean installDist distZip test
   ```
   POST http://127.0.0.1:9200/meta-data-info/_search?size=0
   {
-    "aggs" : {
-			"vendorTypes" : {
-				"terms": {
-				  "field": "deviceInfo.vendor"
-				}
-			},
-			"vendorModels" : {
-				"terms": {
-				  "field": "deviceInfo.model"
-				}
-			}
-    }
+      "track_total_hits": 100000,
+      "aggs" : {
+          "vendorTypes" : {
+              "terms": {
+                  "field": "deviceInfo.vendor"
+              }
+          },
+          "vendorModels" : {
+              "terms": {
+                  "field": "deviceInfo.model"
+              }
+          }
+      }
   }	
   ```  
   
