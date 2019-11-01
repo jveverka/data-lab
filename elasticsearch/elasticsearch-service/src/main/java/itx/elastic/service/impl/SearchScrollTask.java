@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
-
 public class SearchScrollTask<T> implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(SearchScrollTask.class);
@@ -26,12 +24,15 @@ public class SearchScrollTask<T> implements Runnable {
     private final RestHighLevelClient client;
     private final DataTransformer<T> dataTransformer;
     private final int searchSize;
+    private final SearchSourceBuilder searchSourceBuilder;
 
-    public SearchScrollTask(Observer<T> observer, RestHighLevelClient client, DataTransformer<T> dataTransformer, int searchSize) {
+    public SearchScrollTask(Observer<T> observer, RestHighLevelClient client, DataTransformer<T> dataTransformer,
+                            int searchSize, SearchSourceBuilder searchSourceBuilder) {
         this.observer = observer;
         this.client = client;
         this.dataTransformer = dataTransformer;
         this.searchSize = searchSize;
+        this.searchSourceBuilder = searchSourceBuilder;
     }
 
     @Override
@@ -41,9 +42,6 @@ public class SearchScrollTask<T> implements Runnable {
             observer.onSubscribe(new DisposableNoop());
 
             SearchRequest searchRequest = new SearchRequest(dataTransformer.getIndexName());
-            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-            searchSourceBuilder.query(matchAllQuery());
-            searchSourceBuilder.size(searchSize);
             searchRequest.scroll(TimeValue.timeValueMinutes(5L));
             searchRequest.source(searchSourceBuilder);
 

@@ -2,6 +2,7 @@ package itx.elastic.service;
 
 import io.reactivex.rxjava3.core.Observer;
 import itx.elastic.service.dto.DocumentId;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -35,5 +36,7 @@ public interface ElasticSearchService extends AutoCloseable {
     <T> void getDocuments(Class<T> type, Observer<T> observer, int searchSize);
 
     <T> boolean deleteDocumentById(Class<T> type, DocumentId id) throws IOException;
+
+    <T> void searchIndex(Class<T> type, Observer<T> observer, int searchSize, SearchSourceBuilder searchSourceBuilder);
 
 }
