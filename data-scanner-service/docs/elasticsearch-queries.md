@@ -39,7 +39,7 @@
   ```
   POST http://127.0.0.1:9200/unmapped-data/_search?size=0
   {
-      "track_total_hits": 100000,
+      "track_total_hits": 1000000,
       "aggs" : {
           "unmappedTypes" : {
               "terms": {
@@ -54,15 +54,20 @@
       }
   }
   ```
-* get aggregated data, how many different file extensions is in index
+* get aggregated data, how many different file extensions and types is in index __file-info__
   ```
   POST http://127.0.0.1:9200/file-info/_search?size=0
   {
-      "track_total_hits": 100000,
+      "track_total_hits": 1000000,
       "aggs" : {
           "fileExtensions" : {
               "terms": {
                   "field": "extension",
+              }
+          }
+          "filetypes" : {
+              "terms": {
+                  "field": "type",
               }
           }
       }
@@ -72,7 +77,7 @@
   ```
   POST http://127.0.0.1:9200/meta-data-info/_search?size=0
   {
-      "track_total_hits": 100000,
+      "track_total_hits": 1000000,
       "aggs" : {
           "vendorTypes" : {
               "terms": {
