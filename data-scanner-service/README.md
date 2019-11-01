@@ -1,4 +1,6 @@
 # Data Scanner Service
+This service is responsible for scanning file system and writing meta-data about scanned files into 
+ElasticSearch database.
 
 ### Run and Build
 ```
