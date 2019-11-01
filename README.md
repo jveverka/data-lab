@@ -5,8 +5,8 @@
 Big Data Lab
 
 ### Components
-* __file-system-service__ - simple service for scanning file system
-* __elasticsearch-service__ - service for easy elasticsearch read/write access
+* [__file-system-service__](file-system-service) - simple service for scanning file system
+* [__elasticsearch-service__](elasticsearch) - service for easy elasticsearch read/write access
 * __data-scanner-service__ - service for scanning data directory and annotating data files
 
 ### Architecture

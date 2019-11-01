@@ -34,7 +34,8 @@ public class ObservableSourceScanner implements Disposable, Cancellable, Observa
     }
 
     @Override
-    public void subscribe(ObservableEmitter<DirItem> emitter) throws Throwable {
+    public void subscribe(ObservableEmitter<DirItem> emitter) {
+        LOG.info("subscribe: {}",  query.getPath());
         dispose = false;
         emitter.setCancellable(this);
         emitter.setDisposable(this);
@@ -51,8 +52,11 @@ public class ObservableSourceScanner implements Disposable, Cancellable, Observa
                         }
                     });
                     executorService.shutdown();
-                    executorService.awaitTermination(24, TimeUnit.HOURS);
+                    while(!executorService.isTerminated()) {
+                        Thread.sleep(1000);
+                    }
                     emitter.onComplete();
+                    LOG.info("done.");
                 } catch (Exception e) {
                     emitter.onError(e);
                 }
