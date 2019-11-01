@@ -45,7 +45,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
             builder.startObject("properties");
             {
                 DataUtils.addMappingField(builder, "fileInfoId", "keyword");
-                DataUtils.addMappingField(builder, "path", "text");
+                DataUtils.addMappingField(builder, "path", "keyword");
                 DataUtils.addMappingField(builder, "creationTime", "date");
                 DataUtils.addMappingField(builder, "lastModifiedTime", "date");
                 DataUtils.addMappingField(builder, "lastAccessTime", "date");
