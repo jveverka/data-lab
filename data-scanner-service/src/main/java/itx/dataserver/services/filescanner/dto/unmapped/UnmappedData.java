@@ -11,26 +11,30 @@ public class UnmappedData {
     private final String jsonData;
     private final String filePath;
     private final String reason;
+    private final String stackTrace;
 
     @JsonCreator
     public UnmappedData(@JsonProperty("fileInfoId") String id,
                         @JsonProperty("type") String type,
                         @JsonProperty("jsonData") String jsonData,
                         @JsonProperty("filePath") String filePath,
-                        @JsonProperty("reason") String reason) {
+                        @JsonProperty("reason") String reason,
+                        @JsonProperty("stackTrace") String stackTrace) {
         this.id = new FileInfoId(id);
         this.type = type;
         this.jsonData = jsonData;
         this.filePath = filePath;
         this.reason = reason;
+        this.stackTrace = stackTrace;
     }
 
-    public UnmappedData(FileInfoId id, String type, String jsonData, String filePath, String reason) {
+    public UnmappedData(FileInfoId id, String type, String jsonData, String filePath, String reason, String stackTrace) {
         this.id = id;
         this.type = type;
         this.jsonData = jsonData;
         this.filePath = filePath;
         this.reason = reason;
+        this.stackTrace = stackTrace;
     }
 
     /**
@@ -72,4 +76,13 @@ public class UnmappedData {
     public String getReason() {
         return reason;
     }
+
+    /**
+     * Pretty printed stacktrace.
+     * @return
+     */
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
 }

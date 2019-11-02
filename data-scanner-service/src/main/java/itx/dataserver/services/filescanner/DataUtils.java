@@ -22,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -56,6 +58,14 @@ public final class DataUtils {
         builder.field("type", "date");
         builder.field("format", dateFormat);
         builder.endObject();
+    }
+
+    public static String getStackTraceAsString(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        sw.flush();
+        return sw.toString();
     }
 
     public static FileInfoId createFileInfoId(DirItem dirItem) throws NoSuchAlgorithmException {
