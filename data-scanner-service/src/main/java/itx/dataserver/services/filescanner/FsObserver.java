@@ -26,12 +26,14 @@ public class FsObserver implements Observer<DirItem> {
     private final MediaService mediaService;
     private final CountDownLatch subscribed;
     private final CountDownLatch completed;
-    private AtomicLong counter;
+    private long counter;
+    private long records;
 
     public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService) {
         this.subscribed = new CountDownLatch(1);
         this.completed = new CountDownLatch(1);
-        this.counter = new AtomicLong(1);
+        this.counter = 1;
+        this.records = 0;
         this.elasticSearchService = elasticSearchService;
         this.mediaService = mediaService;
     }
@@ -44,13 +46,15 @@ public class FsObserver implements Observer<DirItem> {
     @Override
     public void onNext(DirItem dirItem) {
         File file = dirItem.getPath().toFile();
+        counter++;
 
         try (FileInputStream fis = new FileInputStream(file)) {
 
-            LOG.info("onNext: {} {}", counter.getAndIncrement(), dirItem.getPath().toString());
+            LOG.info("onNext: {} {}", counter, dirItem.getPath().toString());
             Optional<MetaData> metaData = this.mediaService.getMetaData(fis);
             FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
             this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
+            this.records++;
 
             if (metaData.isPresent()) {
 
@@ -102,6 +106,10 @@ public class FsObserver implements Observer<DirItem> {
 
     public void awaitCompleted() throws InterruptedException {
         completed.await();
+    }
+
+    public long getRecords() {
+        return records;
     }
 
 }

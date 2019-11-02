@@ -1,29 +1,21 @@
 package itx.dataserver.services.filescanner;
 
-import java.nio.file.Path;
+import itx.dataserver.services.filescanner.dto.ScanResponse;
+import itx.fs.service.dto.DirQuery;
 
 public interface FileScannerService extends AutoCloseable {
 
     /**
-     * Scans root path and save results into ElasticSearch.
-     * This method deletes old indices in elastic search and create new ones.
-     * All documents in indices from previous scan is destroyed.
-     * @throws InterruptedException
+     * Init ElasticSearch indices.
      */
-    void scanAndStoreRootAsync() throws InterruptedException;
+    void initIndices();
 
     /**
-     * Scans subdirectory of root path.
-     * @param relativePath path within root directory.
+     * re-scan directory.
+     * @param query containing root path to target directory.
      * @throws InterruptedException
      */
-    void scanAndStoreSubDirAsync(Path relativePath) throws InterruptedException;
-
-    /**
-     * Fet root path of managed directory.
-     * @return
-     */
-    Path getRoot();
+    ScanResponse scanAndStoreSubDirAsync(DirQuery query) throws InterruptedException;
 
     /**
      * Close executors and wait until all jobs are finished.

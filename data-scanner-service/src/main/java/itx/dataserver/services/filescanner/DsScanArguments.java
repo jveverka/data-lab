@@ -16,6 +16,9 @@ public class DsScanArguments {
     @Parameter(names = {"-ep", "--elastic-port" }, description = "Port number of ElasticSearch server.")
     private int elasticPort = 9200;
 
+    @Parameter(names = {"-i", "--init-indices" }, description = "Initialize ElasticSearch indices, this will delete and create empty indices.")
+    private boolean initIndices = false;
+
     public int getExecutorSize() {
         return executorSize;
     }
@@ -30,6 +33,10 @@ public class DsScanArguments {
 
     public int getElasticPort() {
         return elasticPort;
+    }
+
+    public boolean isInitIndices() {
+        return initIndices;
     }
 
 }
