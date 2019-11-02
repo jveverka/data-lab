@@ -8,8 +8,11 @@ import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
 import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
 import itx.dataserver.services.filescanner.dto.metadata.GPS;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
+import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.impl.ESUtils;
 import itx.fs.service.dto.DirItem;
+import itx.image.service.ParsingUtils;
 import itx.image.service.model.DirectoryInfo;
 import itx.image.service.model.MetaData;
 import itx.image.service.model.TagInfo;
@@ -24,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,6 +37,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 public final class DataUtils {
 
@@ -45,6 +50,27 @@ public final class DataUtils {
     private static final DateTimeFormatter formatterWithTimeZoneIn01 = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss.n z");
 
     private DataUtils() {
+    }
+
+    public static void logESError(ElasticSearchService elasticSearchService, FileInfoId id, MetaData metaData, Path path, String reason) throws IOException {
+        logESError(elasticSearchService, id, metaData, null, path, reason);
+    }
+
+    public static void logESError(ElasticSearchService elasticSearchService, FileInfoId id, MetaData metaData, Exception e, Path path, String reason) throws IOException {
+        String jsonData = ParsingUtils.writeAsJsonString(metaData);
+        String stackTrace = e != null ? DataUtils.getStackTraceAsString(e) : "";
+        UnmappedData unmappedData =
+                new UnmappedData(id, MetaDataInfo.class.getTypeName(), jsonData, path.toString(), reason, stackTrace);
+        elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
+    }
+
+    public static void ligESErrorDirMapping(ElasticSearchService elasticSearchService, Path path, Exception e) throws IOException {
+        String id = UUID.randomUUID().toString();
+        String jsonData = path.toString();
+        String stackTrace = DataUtils.getStackTraceAsString(e);
+        UnmappedData unmappedData =
+                new UnmappedData(id, DirItem.class.getTypeName(), jsonData, path.toString(), "DirItem_mapping_failed", stackTrace);
+        elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
     }
 
     public static void addMappingField(XContentBuilder builder, String fieldName, String type) throws IOException {
