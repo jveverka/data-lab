@@ -1,6 +1,6 @@
 package itx.fs.service.scanner;
 
-import io.reactivex.rxjava3.core.Emitter;
+import io.reactivex.rxjava3.core.SingleEmitter;
 import itx.fs.service.FSUtils;
 import itx.fs.service.dto.CheckSum;
 import itx.fs.service.dto.DirItem;
@@ -12,15 +12,15 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.NoSuchAlgorithmException;
 
-public class FileScannerTask implements Runnable {
+public class SingleScannerTask implements Runnable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FileScannerTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SingleScannerTask.class);
 
-    private final Emitter<DirItem> emitter;
+    private final SingleEmitter<DirItem> emitter;
     private final Path path;
     private final BasicFileAttributes attributes;
 
-    public FileScannerTask(Emitter<DirItem> emitter, Path path, BasicFileAttributes attributes) {
+    public SingleScannerTask(SingleEmitter<DirItem> emitter, Path path, BasicFileAttributes attributes) {
         this.emitter = emitter;
         this.path = path;
         this.attributes = attributes;
@@ -31,7 +31,7 @@ public class FileScannerTask implements Runnable {
         if (attributes.isRegularFile()) {
             try {
                 CheckSum checkSum = FSUtils.calculateChecksum(path, FSUtils.SHA256);
-                emitter.onNext(new DirItem(path, attributes, checkSum));
+                emitter.onSuccess(new DirItem(path, attributes, checkSum));
             } catch (NoSuchAlgorithmException e) {
                 emitter.onError(e);
                 LOG.error("Checksum exception: ", e);
@@ -40,7 +40,7 @@ public class FileScannerTask implements Runnable {
                 LOG.error("IOException exception: ", e);
             }
         } else {
-            emitter.onNext(new DirItem(path, attributes));
+            emitter.onSuccess(new DirItem(path, attributes));
         }
     }
 

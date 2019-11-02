@@ -5,6 +5,8 @@ import itx.fs.service.FSService;
 import itx.fs.service.FSServiceImpl;
 import itx.fs.service.dto.DirItem;
 import itx.fs.service.dto.DirQuery;
+import itx.fs.service.test.mocks.DirScannerMock;
+import itx.fs.service.test.mocks.SynchronousDataSubscriber;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

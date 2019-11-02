@@ -1,4 +1,4 @@
-package itx.fs.service.test;
+package itx.fs.service.test.mocks;
 
 import itx.fs.service.dto.DirItem;
 import org.reactivestreams.Subscriber;

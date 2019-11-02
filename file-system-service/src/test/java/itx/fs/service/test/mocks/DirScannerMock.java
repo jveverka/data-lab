@@ -1,4 +1,4 @@
-package itx.fs.service.test;
+package itx.fs.service.test.mocks;
 
 import io.reactivex.rxjava3.core.FlowableEmitter;
 import itx.fs.service.dto.DirItem;
