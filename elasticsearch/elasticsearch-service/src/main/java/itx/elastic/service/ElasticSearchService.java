@@ -6,6 +6,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 public interface ElasticSearchService extends AutoCloseable {
 
@@ -38,5 +39,10 @@ public interface ElasticSearchService extends AutoCloseable {
     <T> boolean deleteDocumentById(Class<T> type, DocumentId id) throws IOException;
 
     <T> void searchIndex(Class<T> type, Observer<T> observer, int searchSize, SearchSourceBuilder searchSourceBuilder);
+
+    /**
+     * Close internal {@link ExecutorService} and wait until all it's jobs are finished.
+     */
+    void closeAndWaitForExecutors() throws Exception;
 
 }

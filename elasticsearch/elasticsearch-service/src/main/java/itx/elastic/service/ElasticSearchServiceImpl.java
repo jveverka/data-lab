@@ -34,6 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
@@ -197,9 +198,19 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
-    public void close() throws Exception {
-        executorService.shutdown();
+    public void closeAndWaitForExecutors() throws Exception {
         client.close();
+        executorService.shutdown();
+        while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
+        }
     }
+
+    @Override
+    public void close() throws Exception {
+        client.close();
+        executorService.shutdown();
+    }
+
+
 
 }

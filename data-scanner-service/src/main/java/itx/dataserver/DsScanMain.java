@@ -34,7 +34,7 @@ public class DsScanMain {
         scanner.scanAndStoreRootAsync();
         float durationSec = (System.nanoTime() - startTime)/1_000_000_000F;
         LOG.info("DsMain: done in {} s", durationSec);
-        scanner.close();
+        scanner.closeAndWaitForExecutors();
     }
 
 }

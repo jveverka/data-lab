@@ -84,6 +84,14 @@ public class FileScannerServiceImpl implements FileScannerService {
     }
 
     @Override
+    public void closeAndWaitForExecutors() throws Exception {
+        executorService.shutdown();
+        while(!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
+        }
+        elasticSearchService.closeAndWaitForExecutors();
+    }
+
+    @Override
     public void close() throws Exception {
         executorService.shutdown();
         elasticSearchService.close();

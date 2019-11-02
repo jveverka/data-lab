@@ -25,4 +25,9 @@ public interface FileScannerService extends AutoCloseable {
      */
     Path getRoot();
 
+    /**
+     * Close executors and wait until all jobs are finished.
+     */
+    void closeAndWaitForExecutors() throws Exception;
+
 }
