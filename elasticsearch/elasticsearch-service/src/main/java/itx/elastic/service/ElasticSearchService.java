@@ -27,18 +27,27 @@ public interface ElasticSearchService extends AutoCloseable {
     <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) throws IOException;
 
     /**
+     * Get all documents in the index. {@link Observer} receives asynchronously documents. This method is suitable to
+     * retrieve large amounts of data from index.
      * https://www.elastic.co/guide/en/elasticsearch/client/java-rest/master/java-rest-high-search-scroll.html
-     * @param type
-     * @param observer
-     * @param searchSize
+     * @param type the type of document.
+     * @param observer receives asynchronously documents.
+     * @param searchSize size of one search page. It is reasonable to keep search page size between 100 and 1000 documents.
      * @param <T>
      * @throws IOException
      */
     <T> void getDocuments(Class<T> type, Observer<T> observer, int searchSize);
 
-    <T> boolean deleteDocumentById(Class<T> type, DocumentId id) throws IOException;
+    /**
+     * Get all documents in the index matching search query.
+     * @param type the type of document.
+     * @param observer receives asynchronously documents matching search query.
+     * @param searchSourceBuilder search query.
+     * @param <T>
+     */
+    <T> void getDocuments(Class<T> type, Observer<T> observer, SearchSourceBuilder searchSourceBuilder);
 
-    <T> void searchIndex(Class<T> type, Observer<T> observer, int searchSize, SearchSourceBuilder searchSourceBuilder);
+    <T> boolean deleteDocumentById(Class<T> type, DocumentId id) throws IOException;
 
     /**
      * Close internal {@link ExecutorService} and wait until all it's jobs are finished.

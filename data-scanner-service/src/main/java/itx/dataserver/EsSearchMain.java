@@ -10,12 +10,18 @@ import itx.dataserver.services.query.TestObserver;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
 public class EsSearchMain {
 
@@ -35,16 +41,24 @@ public class EsSearchMain {
         elasticSearchService.registerDataTransformer(MetaDataInfo.class, metaDataInfoTransformer);
         elasticSearchService.registerDataTransformer(UnmappedData.class, unmappedDataTransformer);
 
+        //MatchAllQueryBuilder matchAllQueryBuilder = matchAllQuery();
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.regexpQuery("path", "/datapool/juraj/Photos/2015_Photo-Album/.*"));
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(boolQueryBuilder);
+        searchSourceBuilder.size(1_000);
+
         TestObserver testObserver = new TestObserver();
-        elasticSearchService.getDocuments(FileInfo.class, testObserver, 1_000);
+        elasticSearchService.getDocuments(FileInfo.class, testObserver, searchSourceBuilder);
 
         testObserver.await(10, TimeUnit.HOURS);
         int documentCount = testObserver.getDocumentCount();
 
         LOG.info("EsSearch: docs {}", documentCount);
 
-        executorService.awaitTermination(10, TimeUnit.HOURS);
         elasticSearchService.closeAndWaitForExecutors();
+        LOG.info("EsSearch: done.");
     }
 
 }

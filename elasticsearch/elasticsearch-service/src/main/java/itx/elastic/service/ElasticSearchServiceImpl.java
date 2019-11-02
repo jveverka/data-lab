@@ -167,7 +167,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(matchAllQuery());
         searchSourceBuilder.size(searchSize);
-        searchIndex(type, observer, searchSize, searchSourceBuilder);
+        getDocuments(type, observer, searchSourceBuilder);
     }
 
     @Override
@@ -184,10 +184,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
-    public <T> void searchIndex(Class<T> type, Observer<T> observer, int searchSize, SearchSourceBuilder searchSourceBuilder) {
+    public <T> void getDocuments(Class<T> type, Observer<T> observer, SearchSourceBuilder searchSourceBuilder) {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
-            SearchScrollTask<T> searchScrollTask = new SearchScrollTask<>(observer, client, dataTransformer, searchSize, searchSourceBuilder);
+            SearchScrollTask<T> searchScrollTask = new SearchScrollTask<>(observer, client, dataTransformer, searchSourceBuilder.size(), searchSourceBuilder);
             executorService.submit(searchScrollTask);
         } else {
             UnsupportedOperationException exception = new UnsupportedOperationException(ERRROR_MESSAGE + type.getCanonicalName());

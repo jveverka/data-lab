@@ -29,7 +29,7 @@ public class TestObserver implements Observer<FileInfo> {
 
     @Override
     public void onNext(FileInfo fileInfo) {
-        LOG.info("onNext: {} {}", ac.incrementAndGet(), fileInfo.getId().getId());
+        LOG.info("onNext: {} {}", ac.incrementAndGet(), fileInfo.getFileSystemInfo().getPath());
     }
 
     @Override
