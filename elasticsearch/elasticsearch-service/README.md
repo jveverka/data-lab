@@ -1,4 +1,5 @@
 # ElasticSearch Service
+Library implementing easier access to ElasticSearch data.
 
 ### Build and Run
 ```

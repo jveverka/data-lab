@@ -1,5 +1,5 @@
 # FileSystem service
-This service scans file system and gets meta-data about files and directories.
+This service library scans file system and gets meta-data about files and directories.
 
 ### Build and Run
 ```

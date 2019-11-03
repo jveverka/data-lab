@@ -1,5 +1,5 @@
 # Data Scanner Service
-This service is responsible for scanning file system and writing meta-data about scanned files into 
+This micro service is responsible for scanning file system and writing meta-data about scanned files into 
 ElasticSearch database.
 * Internal APIs: ``itx.dataserver.services.filescanner.FileScannerService``
 * External APis: work in progress.
