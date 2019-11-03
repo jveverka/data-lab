@@ -127,6 +127,13 @@ public class FileScannerServiceImpl implements FileScannerService {
     }
 
     @Override
+    public void cleanUnmappedData() {
+        LOG.info("deleting unmapped-data ...");
+        deleteIndex(UnmappedData.class);
+        createIndex(UnmappedData.class);
+    }
+
+    @Override
     public void closeAndWaitForExecutors() throws Exception {
         executorService.shutdown();
         while(!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
