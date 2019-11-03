@@ -21,9 +21,9 @@ Indices have fields in documents which are unique and may be used for query docu
 ![indices-relations](docs/indices-relations.svg)
 
 ElasticSearch indices:
-* __file-info__ - main index containing file info data. 
+* __file-info__ - main index containing file info data obtained from filesystem. 
   This is primary data index, other indices contain complementary information to file-info. 
-* __meta-data-info__ - index with meta-data-info for files, mostly bitmap images.
+* __meta-data-info__ - index with meta-data-info for files, mostly bitmap images like JPEG photos.
 * __unmapped-data__ - unmapped objects serialized in JSON or other file scanning errors.
   In case file scanning or other data mapping fails for particular file, data about this 
   incident is recorded for later analysis as document in unmapped-data index.  
