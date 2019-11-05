@@ -1,14 +1,19 @@
 package itx.dataserver.services.filescanner.tests;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
 import itx.image.service.MediaService;
 import itx.image.service.MediaServiceImpl;
+import itx.image.service.ParsingUtils;
 import itx.image.service.model.MetaData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.Optional;
@@ -66,6 +71,19 @@ public class MappingTests {
         result = DataUtils.normalizeDateTimeWithTimeZone("2019:09:30 20:09:14.012 CET");
         Assert.assertTrue(result.isPresent());
         Assert.assertEquals(result.get(), "20190930T200914.000+0200");
+    }
+
+
+    public static void main(String[] args) throws FileNotFoundException, JsonProcessingException {
+        String path = "/datapool/juraj/Photos/2019_Photo-Album/2019-04-04_ONS-SanJose-USA/GX010427.MP4";
+        MediaService mediaService = new MediaServiceImpl();
+        File initialFile = new File(path);
+        InputStream targetStream = new FileInputStream(initialFile);
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(targetStream);
+
+        Assert.assertTrue(metaDataOptional.isPresent());
+        String jsonData = ParsingUtils.writeAsJsonString(metaDataOptional.get());
+        Assert.assertNotNull(jsonData);
     }
 
 }

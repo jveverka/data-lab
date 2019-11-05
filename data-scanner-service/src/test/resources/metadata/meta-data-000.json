@@ -4,5 +4,5 @@
   "filePath": "/datafile/image.jpg",
   "type": "itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo",
   "stackTrace": "",
-  "fileInfoId": "some-file-info-id"
+  "fileInfoId": "some-file-info-id-000"
 }
