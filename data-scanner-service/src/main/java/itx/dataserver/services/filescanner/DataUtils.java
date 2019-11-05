@@ -153,6 +153,14 @@ public final class DataUtils {
                 LOG.warn("Image type can't be determined !");
                 return Optional.empty();
             }
+
+            Optional<String> timeStampOptional = getTimeStamp(metaData);
+            if (timeStampOptional.isPresent()) {
+                timeStamp = timeStampOptional.get();
+            } else {
+                return Optional.empty();
+            }
+
             Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
             if (exifIfd0Info.isPresent()) {
                 Optional<TagInfo> makeTag = exifIfd0Info.get().tagInfoByName("make");
@@ -174,52 +182,17 @@ public final class DataUtils {
                 return Optional.empty();
             }
 
-            Optional<DirectoryInfo> exifSubifdInfo = metaData.directoryByName("exif-subifd");
-            if (exifSubifdInfo.isPresent()) {
-                Optional<TagInfo> imageWidthTag = exifSubifdInfo.get().tagInfoByName("exif-image-width");
-                if (imageWidthTag.isPresent()) {
-                    if (Type.INTEGER.equals(imageWidthTag.get().getValue().getType())) {
-                        imageWidth = (Integer) imageWidthTag.get().getValue().getValue();
-                    } else if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
-                        imageWidth = (Long) imageWidthTag.get().getValue().getValue();
-                    } else {
-                        LOG.warn("Image Width type can't be determined !");
-                        return Optional.empty();
-                    }
-                } else {
-                    LOG.warn("Image Width can't be determined !");
-                    return Optional.empty();
-                }
-                Optional<TagInfo> imageHeightTag = exifSubifdInfo.get().tagInfoByName("exif-image-height");
-                if (imageHeightTag.isPresent()) {
-                    if (Type.INTEGER.equals(imageHeightTag.get().getValue().getType())) {
-                        imageHeight = (Integer) imageHeightTag.get().getValue().getValue();
-                    } else if (Type.LONG.equals(imageHeightTag.get().getValue().getType())) {
-                        imageHeight = (Long) imageHeightTag.get().getValue().getValue();
-                    } else {
-                        LOG.warn("Image Height type can't be determined !");
-                        return Optional.empty();
-                    }
-                } else {
-                    LOG.warn("Image Height can't be determined !");
-                    return Optional.empty();
-                }
-                Optional<TagInfo> dateTimeTag = exifSubifdInfo.get().tagInfoByName("date/time-original");
-                if (dateTimeTag.isPresent()) {
-                    String timeStampTagValue = (String) dateTimeTag.get().getValue().getValue();
-                    Optional<String> normalizedTimeStamp = normalizeDateTime(timeStampTagValue);
-                    if (normalizedTimeStamp.isPresent()) {
-                        timeStamp = normalizedTimeStamp.get();
-                    } else {
-                        LOG.warn("Image date/time-original can't be parsed !");
-                        return Optional.empty();
-                    }
-                } else {
-                    LOG.warn("Image date/time-original can't be determined !");
-                    return Optional.empty();
-                }
+            Optional<Long> optionalImageWidth = getImageWidth(metaData);
+            if (optionalImageWidth.isPresent()) {
+                imageWidth = optionalImageWidth.get();
             } else {
-                LOG.warn("Image exif-subifd data not found !");
+                return Optional.empty();
+            }
+
+            Optional<Long> optionalImageHeight = getImageHeight(metaData);
+            if (optionalImageHeight.isPresent()) {
+                imageHeight = optionalImageHeight.get();
+            } else {
                 return Optional.empty();
             }
 
@@ -237,6 +210,70 @@ public final class DataUtils {
             LOG.error("Mapping Exception: ", e);
             return Optional.empty();
         }
+    }
+
+    private static Optional<String> getTimeStamp(MetaData metaData) {
+        Optional<DirectoryInfo> exifSubifdInfo = metaData.directoryByName("exif-subifd");
+        if (exifSubifdInfo.isPresent()) {
+            Optional<TagInfo> dateTimeTag = exifSubifdInfo.get().tagInfoByName("date/time-original");
+            if (dateTimeTag.isPresent()) {
+                String timeStampTagValue = (String) dateTimeTag.get().getValue().getValue();
+                Optional<String> normalizedTimeStamp = normalizeDateTime(timeStampTagValue);
+                if (normalizedTimeStamp.isPresent()) {
+                    return Optional.of(normalizedTimeStamp.get());
+                }
+            }
+        } else {
+            LOG.warn("Image exif-subifd data not found !");
+        }
+        Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
+        if (exifIfd0Info.isPresent()) {
+            Optional<TagInfo> dateTimeTag = exifIfd0Info.get().tagInfoByName("date/time");
+            if (dateTimeTag.isPresent()) {
+                String timeStampTagValue = (String) dateTimeTag.get().getValue().getValue();
+                Optional<String> normalizedTimeStamp = normalizeDateTime(timeStampTagValue);
+                if (normalizedTimeStamp.isPresent()) {
+                    return Optional.of(normalizedTimeStamp.get());
+                }
+            }
+        }
+        LOG.warn("Image date/time can't be determined !");
+        return Optional.empty();
+    }
+
+    private static Optional<Long> getImageWidth(MetaData metaData) {
+        return getImageWidthOrHeight(metaData, true);
+    }
+
+    private static Optional<Long> getImageHeight(MetaData metaData) {
+        return getImageWidthOrHeight(metaData, false);
+    }
+
+    private static Optional<Long> getImageWidthOrHeight(MetaData metaData, boolean width) {
+        String key = "image-width";
+        if (!width) {
+            key = "image-height";
+        }
+        Optional<DirectoryInfo> exifSubifdInfo = metaData.directoryByName("exif-subifd");
+        if (exifSubifdInfo.isPresent()) {
+            Optional<TagInfo> imageWidthTag = exifSubifdInfo.get().tagInfoByName("exif-" + key);
+            if (imageWidthTag.isPresent()) {
+                if (Type.INTEGER.equals(imageWidthTag.get().getValue().getType())) {
+                    return Optional.of((Long) imageWidthTag.get().getValue().getValue());
+                } else if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
+                    return Optional.of((Long) imageWidthTag.get().getValue().getValue());
+                }
+            }
+        }
+        Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
+        if (exifIfd0Info.isPresent()) {
+            Optional<TagInfo> imageWidthTag = exifIfd0Info.get().tagInfoByName(key);
+            if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
+                return Optional.of((Long) imageWidthTag.get().getValue().getValue());
+            }
+        }
+        LOG.warn("Image Width type can't be determined !");
+        return Optional.empty();
     }
 
     private static Optional<GPS> createGPS(MetaData metaData) {
