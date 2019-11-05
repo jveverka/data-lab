@@ -259,7 +259,7 @@ public final class DataUtils {
             Optional<TagInfo> imageWidthTag = exifSubifdInfo.get().tagInfoByName("exif-" + key);
             if (imageWidthTag.isPresent()) {
                 if (Type.INTEGER.equals(imageWidthTag.get().getValue().getType())) {
-                    return Optional.of((Long) imageWidthTag.get().getValue().getValue());
+                    return Optional.of(((Integer) imageWidthTag.get().getValue().getValue()).longValue());
                 } else if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
                     return Optional.of((Long) imageWidthTag.get().getValue().getValue());
                 }
