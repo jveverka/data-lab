@@ -138,11 +138,24 @@ public final class DataUtils {
     }
 
     public static Optional<VideoMetaDataInfo> createVideoMetaDataInfo(FileInfoId id, MetaData metaData) {
-        return Optional.empty();
+        try {
+            String videoType = "";
+
+            if (metaData.directoryNames().contains("mp4")) {
+                videoType = "mp4";
+            } else {
+                LOG.warn("Video type can't be determined !");
+                return Optional.empty();
+            }
+            VideoMetaDataInfo videoMetaDataInfo = new VideoMetaDataInfo(id, videoType);
+            return Optional.of(videoMetaDataInfo);
+        } catch (Exception e) {
+            LOG.error("Video mapping Exception: ", e);
+            return Optional.empty();
+        }
     }
 
     public static Optional<ImageMetaDataInfo> createImageMetaDataInfo(FileInfoId id, MetaData metaData) {
-
         try {
             String imageType = "";
             long imageWidth = 0;
@@ -212,7 +225,7 @@ public final class DataUtils {
             ImageMetaDataInfo imageMetaDataInfo = new ImageMetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
             return Optional.of(imageMetaDataInfo);
         } catch (Exception e) {
-            LOG.error("Mapping Exception: ", e);
+            LOG.error("Image mapping Exception: ", e);
             return Optional.empty();
         }
     }
