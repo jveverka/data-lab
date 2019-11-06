@@ -1,8 +1,10 @@
-package itx.dataserver.services.filescanner.dto.metadata;
+package itx.dataserver.services.filescanner.dto.metadata.image;
 
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
+import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
+import itx.dataserver.services.filescanner.dto.metadata.GPS;
 
-public class MetaDataInfo {
+public class ImageMetaDataInfo {
 
     private final FileInfoId id;
     private final String imageType;
@@ -27,8 +29,8 @@ public class MetaDataInfo {
     */
     private final GPS gps;
 
-    public MetaDataInfo(FileInfoId id, String imageType, long imageWidth, long imageHeight,
-                        DeviceInfo deviceInfo, String timeStamp, GPS gps) {
+    public ImageMetaDataInfo(FileInfoId id, String imageType, long imageWidth, long imageHeight,
+                             DeviceInfo deviceInfo, String timeStamp, GPS gps) {
         this.id = id;
         this.imageType = imageType;
         this.imageWidth = imageWidth;

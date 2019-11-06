@@ -1,7 +1,10 @@
-package itx.dataserver.services.filescanner.dto.metadata;
+package itx.dataserver.services.filescanner.dto.metadata.image;
 
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
+import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
+import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
+import itx.dataserver.services.filescanner.dto.metadata.GPS;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.impl.ESUtils;
@@ -12,10 +15,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
+public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDataInfo> {
 
     @Override
-    public Map<String, Object> getSource(MetaDataInfo data) {
+    public Map<String, Object> getSource(ImageMetaDataInfo data) {
         Map<String, Object> source = new HashMap<>();
         source.put("fileInfoId", data.getId().getId());
         source.put("imageType", data.getImageType());
@@ -73,17 +76,17 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
 
     @Override
     public String getIndexName() {
-        return "meta-data-info";
+        return "image-meta-data-info";
     }
 
     @Override
-    public DocumentId getDocumentId(MetaDataInfo data) {
+    public DocumentId getDocumentId(ImageMetaDataInfo data) {
         return new DocumentId(data.getId().getId());
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public MetaDataInfo getInstance(DocumentId id, Map<String, Object> source) {
+    public ImageMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String imageType = (String)source.get("imageType");
         long imageWidth = (Long)source.get("imageWidth");
@@ -100,7 +103,7 @@ public class MetaDataInfoTransformer implements DataTransformer<MetaDataInfo> {
         Coordinates coordinates = new Coordinates((Float)coordinatedSource.get("lon"), (Float)coordinatedSource.get("lat"));
         GPS gps = new GPS(coordinates, (Integer)gpsInfoSource.get("altitude"), (String)gpsInfoSource.get("timeStamp"), (String)gpsInfoSource.get("processingMethod"));
 
-        return new MetaDataInfo(fileInfoId, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
+        return new ImageMetaDataInfo(fileInfoId, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
 
     }
 

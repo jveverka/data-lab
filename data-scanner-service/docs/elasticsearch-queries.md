@@ -26,15 +26,15 @@ This is an example list of ElasticSearch queries covering some use cases.
   ```
 * Filter by deviceInfo and vendor  
   ```
-  GET http://localhost:9200/meta-data-info/_search?pretty=true&q=deviceInfo.vendor:Canon
+  GET http://localhost:9200/image-meta-data-info/_search?pretty=true&q=deviceInfo.vendor:Canon
   ```
 * Count query count deviceInfo of specific vendor
   ```
-  GET http://localhost:9200/meta-data-info/_count?q=deviceInfo.vendor:Canon
+  GET http://localhost:9200/image-meta-data-info/_count?q=deviceInfo.vendor:Canon
   ```
 * Get index mapping
   ```
-  GET http://127.0.0.1:9200/meta-data-info/_mapping
+  GET http://127.0.0.1:9200/image-meta-data-info/_mapping
   ```
 * Get aggregated data, count unmapped-data documents by type
   ```
@@ -76,7 +76,7 @@ This is an example list of ElasticSearch queries covering some use cases.
   ```
 * Get aggregated data, camera vendor types
   ```
-  POST http://127.0.0.1:9200/meta-data-info/_search?size=0
+  POST http://127.0.0.1:9200/image-meta-data-info/_search?size=0
   {
       "track_total_hits": 1000000,
       "aggs" : {

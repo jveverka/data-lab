@@ -2,7 +2,7 @@ package itx.dataserver.services.filescanner.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import itx.dataserver.services.filescanner.DataUtils;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.image.service.ParsingUtils;
 import itx.image.service.model.MetaData;
@@ -31,17 +31,17 @@ public class MetaDataMappingTests {
         InputStream is = this.getClass().getResourceAsStream(unmappedDataResourcePath);
         UnmappedData unmappedData = objectMapper.readValue(is, UnmappedData.class);
         MetaData model = ParsingUtils.readFromJsonString(unmappedData.getJsonData());
-        Optional<MetaDataInfo> metaDataInfoOptional = DataUtils.createMetaDataInfo(unmappedData.getId(), model);
+        Optional<ImageMetaDataInfo> metaDataInfoOptional = DataUtils.createImageMetaDataInfo(unmappedData.getId(), model);
 
         Assert.assertNotNull(metaDataInfoOptional);
         Assert.assertTrue(metaDataInfoOptional.isPresent());
 
-        MetaDataInfo metaDataInfo = metaDataInfoOptional.get();
-        Assert.assertNotNull(metaDataInfo);
-        Assert.assertEquals(metaDataInfo.getImageType(), "jpeg");
-        Assert.assertNotNull(metaDataInfo.getGps());
-        Assert.assertNotNull(metaDataInfo.getTimeStamp());
-        Assert.assertNotNull(metaDataInfo.getGps().getTimeStamp());
+        ImageMetaDataInfo imageMetaDataInfo = metaDataInfoOptional.get();
+        Assert.assertNotNull(imageMetaDataInfo);
+        Assert.assertEquals(imageMetaDataInfo.getImageType(), "jpeg");
+        Assert.assertNotNull(imageMetaDataInfo.getGps());
+        Assert.assertNotNull(imageMetaDataInfo.getTimeStamp());
+        Assert.assertNotNull(imageMetaDataInfo.getGps().getTimeStamp());
 
     }
 

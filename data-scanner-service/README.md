@@ -8,7 +8,7 @@ ElasticSearch database.
 ![architecture](docs/architecture.svg)
 
 ### Implemented features
-* __Init DB__ - initialize ElasticSearch indexes. This will delete all data in indices file-info, meta-data-info, unmapped-data. 
+* __Init DB__ - initialize ElasticSearch indexes. This will delete all data in indices file-info, image-meta-data-info, unmapped-data. 
 * __scan filesystem directory__ - recursively scans filesystem directory, produces data is written into ElasticSearch. 
   In case only subdirectory is scanned or re-scanned, existing data in ElasticSearch is database is merged with actual file system state. 
 * __record unmapped data__ - special index unmapped-data is reserved for recording failed mappings and file system scan errors. 
@@ -23,7 +23,8 @@ Indices have fields in documents which are unique and may be used for query docu
 ElasticSearch indices:
 * __file-info__ - main index containing file info data obtained from filesystem. 
   This is primary data index, other indices contain complementary information to file-info. 
-* __meta-data-info__ - index with meta-data-info for files, mostly bitmap images like JPEG photos.
+* __image-meta-data-info__ - index with image-meta-data-info for files, mostly bitmap images like JPEG photos.
+* __video-meta-data-info__ - index with video-meta-data-info for files, mostly video streams.
 * __unmapped-data__ - unmapped objects serialized in JSON or other file scanning errors.
   In case file scanning or other data mapping fails for particular file, data about this 
   incident is recorded for later analysis as document in unmapped-data index.  

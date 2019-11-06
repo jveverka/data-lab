@@ -184,6 +184,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> void getDocuments(Class<T> type, Observer<T> observer, SearchSourceBuilder searchSourceBuilder) {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {

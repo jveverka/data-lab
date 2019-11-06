@@ -7,7 +7,8 @@ import itx.dataserver.services.filescanner.dto.fileinfo.FileType;
 import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
 import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
 import itx.dataserver.services.filescanner.dto.metadata.GPS;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfo;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.impl.ESUtils;
@@ -60,7 +61,7 @@ public final class DataUtils {
         String jsonData = ParsingUtils.writeAsJsonString(metaData);
         String stackTrace = e != null ? DataUtils.getStackTraceAsString(e) : "";
         UnmappedData unmappedData =
-                new UnmappedData(id, MetaDataInfo.class.getTypeName(), jsonData, path.toString(), reason, stackTrace);
+                new UnmappedData(id, ImageMetaDataInfo.class.getTypeName(), jsonData, path.toString(), reason, stackTrace);
         elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
     }
 
@@ -136,7 +137,11 @@ public final class DataUtils {
         return FileTime.fromMillis(timeStampLong);
     }
 
-    public static Optional<MetaDataInfo> createMetaDataInfo(FileInfoId id, MetaData metaData) {
+    public static Optional<VideoMetaDataInfo> createVideoMetaDataInfo(FileInfoId id, MetaData metaData) {
+        return Optional.empty();
+    }
+
+    public static Optional<ImageMetaDataInfo> createImageMetaDataInfo(FileInfoId id, MetaData metaData) {
 
         try {
             String imageType = "";
@@ -204,8 +209,8 @@ public final class DataUtils {
             }
 
             DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
-            MetaDataInfo metaDataInfo = new MetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
-            return Optional.of(metaDataInfo);
+            ImageMetaDataInfo imageMetaDataInfo = new ImageMetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
+            return Optional.of(imageMetaDataInfo);
         } catch (Exception e) {
             LOG.error("Mapping Exception: ", e);
             return Optional.empty();

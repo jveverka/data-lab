@@ -5,8 +5,10 @@ import itx.dataserver.services.filescanner.dto.ScanResponse;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoDataTransformer;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfoTransformer;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfoTransformer;
+import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfoTransformer;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedDataTransformer;
 import itx.dataserver.services.query.SearchObserver;
@@ -47,10 +49,12 @@ public class FileScannerServiceImpl implements FileScannerService {
         this.dirScanner = new FSServiceImpl(executorService);
         this.elasticSearchService = new ElasticSearchServiceImpl(config, executorService);
         FileInfoDataTransformer fileInfoDataTransformer = new FileInfoDataTransformer();
-        MetaDataInfoTransformer metaDataInfoTransformer = new MetaDataInfoTransformer();
+        ImageMetaDataInfoTransformer imageMetaDataInfoTransformer = new ImageMetaDataInfoTransformer();
+        VideoMetaDataInfoTransformer videoMetaDataInfoTransformer = new VideoMetaDataInfoTransformer();
         UnmappedDataTransformer unmappedDataTransformer = new UnmappedDataTransformer();
         this.elasticSearchService.registerDataTransformer(FileInfo.class, fileInfoDataTransformer);
-        this.elasticSearchService.registerDataTransformer(MetaDataInfo.class, metaDataInfoTransformer);
+        this.elasticSearchService.registerDataTransformer(ImageMetaDataInfo.class, imageMetaDataInfoTransformer);
+        this.elasticSearchService.registerDataTransformer(VideoMetaDataInfo.class, videoMetaDataInfoTransformer);
         this.elasticSearchService.registerDataTransformer(UnmappedData.class, unmappedDataTransformer);
         this.mediaService = new MediaServiceImpl();
     }
@@ -59,11 +63,13 @@ public class FileScannerServiceImpl implements FileScannerService {
     public void initIndices() {
         LOG.info("deleting indices ...");
         deleteIndex(FileInfo.class);
-        deleteIndex(MetaDataInfo.class);
+        deleteIndex(ImageMetaDataInfo.class);
+        deleteIndex(VideoMetaDataInfo.class);
         deleteIndex(UnmappedData.class);
         LOG.info("creating indices ...");
         createIndex(FileInfo.class);
-        createIndex(MetaDataInfo.class);
+        createIndex(ImageMetaDataInfo.class);
+        createIndex(VideoMetaDataInfo.class);
         createIndex(UnmappedData.class);
         LOG.info("indices initialized.");
     }
@@ -104,7 +110,7 @@ public class FileScannerServiceImpl implements FileScannerService {
                 LOG.error("FileInfo delete action has failed !", e);
             }
             try {
-                elasticSearchService.deleteDocumentById(MetaDataInfo.class, new DocumentId(fileInfoId.getId()));
+                elasticSearchService.deleteDocumentById(ImageMetaDataInfo.class, new DocumentId(fileInfoId.getId()));
             } catch (IOException e) {
                 LOG.error("MetaDataInfo delete action has failed !", e);
             }

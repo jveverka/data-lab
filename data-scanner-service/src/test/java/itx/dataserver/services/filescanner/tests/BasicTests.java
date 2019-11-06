@@ -1,7 +1,7 @@
 package itx.dataserver.services.filescanner.tests;
 
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoDataTransformer;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfoTransformer;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfoTransformer;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -20,7 +20,7 @@ public class BasicTests {
 
     @Test
     public static void testMetaDataInfoTransformer() throws IOException {
-        MetaDataInfoTransformer transformer = new MetaDataInfoTransformer();
+        ImageMetaDataInfoTransformer transformer = new ImageMetaDataInfoTransformer();
         XContentBuilder indexMapping = transformer.getIndexMapping();
         Assert.assertNotNull(indexMapping);
         Assert.assertNotNull(transformer.getIndexName());

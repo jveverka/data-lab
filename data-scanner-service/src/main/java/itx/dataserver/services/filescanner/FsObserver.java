@@ -3,7 +3,8 @@ package itx.dataserver.services.filescanner;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfo;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.MediaService;
@@ -57,11 +58,17 @@ public class FsObserver implements Observer<DirItem> {
 
             if (metaData.isPresent()) {
 
-                Optional<MetaDataInfo> metaDataInfo = DataUtils.createMetaDataInfo(fileInfo.getId(), metaData.get());
-
-                if (metaDataInfo.isPresent()) {
+                Optional<ImageMetaDataInfo> imageMetaDataInfo = DataUtils.createImageMetaDataInfo(fileInfo.getId(), metaData.get());
+                Optional<VideoMetaDataInfo> videoMetaDataInfo = DataUtils.createVideoMetaDataInfo(fileInfo.getId(), metaData.get());
+                if (imageMetaDataInfo.isPresent()) {
                     try {
-                        this.elasticSearchService.saveDocument(MetaDataInfo.class, metaDataInfo.get());
+                        this.elasticSearchService.saveDocument(ImageMetaDataInfo.class, imageMetaDataInfo.get());
+                    } catch (Exception e) {
+                        DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_write_failed");
+                    }
+                } else if (videoMetaDataInfo.isPresent()) {
+                    try {
+                        this.elasticSearchService.saveDocument(VideoMetaDataInfo.class, videoMetaDataInfo.get());
                     } catch (Exception e) {
                         DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_write_failed");
                     }

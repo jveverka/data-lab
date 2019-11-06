@@ -3,7 +3,7 @@ package itx.dataserver.services.filescanner.tests;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
-import itx.dataserver.services.filescanner.dto.metadata.MetaDataInfo;
+import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
 import itx.image.service.MediaService;
 import itx.image.service.MediaServiceImpl;
 import itx.image.service.ParsingUtils;
@@ -38,16 +38,16 @@ public class MappingTests {
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
 
-        Optional<MetaDataInfo> metaDataInfoOptional = DataUtils.createMetaDataInfo(id, metaDataOptional.get());
+        Optional<ImageMetaDataInfo> metaDataInfoOptional = DataUtils.createImageMetaDataInfo(id, metaDataOptional.get());
         Assert.assertNotNull(metaDataInfoOptional);
         Assert.assertTrue(metaDataInfoOptional.isPresent());
 
-        MetaDataInfo metaDataInfo = metaDataInfoOptional.get();
-        Assert.assertNotNull(metaDataInfo);
-        Assert.assertEquals(metaDataInfo.getImageType(), "jpeg");
-        Assert.assertNotNull(metaDataInfo.getGps());
-        Assert.assertEquals(metaDataInfo.getTimeStamp(), "2019-09-30 22:09:54");
-        Assert.assertEquals(metaDataInfo.getGps().getTimeStamp(), "20190930T200914.000+0000");
+        ImageMetaDataInfo imageMetaDataInfo = metaDataInfoOptional.get();
+        Assert.assertNotNull(imageMetaDataInfo);
+        Assert.assertEquals(imageMetaDataInfo.getImageType(), "jpeg");
+        Assert.assertNotNull(imageMetaDataInfo.getGps());
+        Assert.assertEquals(imageMetaDataInfo.getTimeStamp(), "2019-09-30 22:09:54");
+        Assert.assertEquals(imageMetaDataInfo.getGps().getTimeStamp(), "20190930T200914.000+0000");
     }
 
     @Test
