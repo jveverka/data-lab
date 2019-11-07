@@ -6,6 +6,12 @@ public class VideoMetaDataInfo {
 
     private final FileInfoId id;
     private final String videoType;
+    /*
+    private final long duration;
+    private final long width;
+    private final long height;
+    private final String timeStamp;
+    */
 
     public VideoMetaDataInfo(FileInfoId id, String videoType) {
         this.id = id;
