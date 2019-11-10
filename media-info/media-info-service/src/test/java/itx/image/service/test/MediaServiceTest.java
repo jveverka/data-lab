@@ -26,10 +26,10 @@ public class MediaServiceTest {
 
     @DataProvider(name = "testMetaDataReadProvider")
     public static Object[][] getImagePaths() {
-        return new Object[][] {
-                { "/media/IMG_20180827_190350.jpg" },
-                { "/media/20190930_220954.jpg" },
-                { "/media/IMG-20171111-WA0007.jpeg" },
+        return new Object[][]{
+                {"/media/IMG_20180827_190350.jpg"},
+                {"/media/20190930_220954.jpg"},
+                {"/media/IMG-20171111-WA0007.jpeg"},
         };
     }
 
@@ -48,10 +48,10 @@ public class MediaServiceTest {
 
     @DataProvider(name = "testVideoMetaDataReadProvider")
     public static Object[][] getVideoPaths() {
-        return new Object[][] {
-                { "/media/GH010624.MP4" },
-                { "/media/GH010624.THM" },
-                { "/media/Untitled-Diagram.png" }
+        return new Object[][]{
+                {"/media/GH010624.MP4"},
+                {"/media/GH010624.THM"},
+                {"/media/Untitled-Diagram.png"}
         };
     }
 
@@ -66,11 +66,12 @@ public class MediaServiceTest {
 
     @DataProvider(name = "testNoMetaDataProvider")
     public static Object[][] getPaths() {
-        return new Object[][] {
-                { "/media/TEXT-FILE.txt" },
-                { "/media/GH010624.LRV" },
+        return new Object[][]{
+                {"/media/TEXT-FILE.txt"},
+                {"/media/GH010624.LRV"},
         };
     }
+
     @Test(dataProvider = "testNoMetaDataProvider")
     public void testNoMetaDataRead(String resourcePath) {
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
@@ -79,8 +80,47 @@ public class MediaServiceTest {
         Assert.assertTrue(metaDataOptional.isEmpty());
     }
 
-    @Test
-    public void testGetValueByPath() {
+    @DataProvider(name = "testGetValueByPath")
+    public static Object[][] getTestGetValueByPathData() {
+        return new Object[][]{
+                { Long.class, "exif-subifd", "exif-image-height", Long.valueOf(3264) },
+                { String.class, "exif-subifd", "date/time-original", "2018:08:27 19:03:51" },
+                { Integer.class, "huffman", "number-of-tables", Integer.valueOf(4) },
+                { String.class, "exif-subifd", "not-existing", null },
+                { String.class, "not-existing", "date/time-original", null },
+        };
+    }
+
+    @Test(dataProvider = "testGetValueByPath")
+    public void testGetValueByPath(Class<?> type, String directoryName, String tagName, Object expectedValue) {
+        InputStream imageStream = this.getClass().getResourceAsStream("/media/IMG_20180827_190350.jpg");
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
+
+        Assert.assertNotNull(metaDataOptional);
+        Assert.assertTrue(metaDataOptional.isPresent());
+
+        MetaData metaData = metaDataOptional.get();
+        Optional<?> valueByPath = metaData.getValueByPath(type, directoryName, tagName);
+
+        if (valueByPath.isPresent()) {
+            Object cast = type.cast(valueByPath.get());
+            Assert.assertNotNull(cast);
+            Assert.assertEquals(cast, expectedValue);
+        } else {
+            Assert.assertNull(expectedValue);
+        }
+    }
+
+    @DataProvider(name = "testGetFloatValueByPath")
+    public static Object[][] getTestFloatGetValueByPathData() {
+        return new Object[][]{
+                { "exif-subifd", "focal-length", Float.valueOf(3.5F) },
+                { "exif-subifd", "not-existing", null },
+                { "not-existing", "date/time-original", null },
+        };
+    }
+    @Test(dataProvider = "testGetFloatValueByPath")
+    public void testGetFloatValueByPath(String directoryName, String tagName, Float expectedValue) {
         InputStream imageStream = this.getClass().getResourceAsStream("/media/IMG_20180827_190350.jpg");
         Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
 
@@ -89,29 +129,14 @@ public class MediaServiceTest {
 
         MetaData metaData = metaDataOptional.get();
 
-        Optional<Long> longValueByPath = metaData.getValueByPath(Long.class, "exif-subifd", "exif-image-height");
-        Assert.assertNotNull(longValueByPath);
-        Assert.assertTrue(longValueByPath.isPresent());
-        Assert.assertTrue(longValueByPath.get() == 3264);
-
-        Optional<String> stringValueByPath = metaData.getValueByPath(String.class, "exif-subifd", "date/time-original");
-        Assert.assertNotNull(stringValueByPath);
-        Assert.assertTrue(stringValueByPath.isPresent());
-        Assert.assertEquals(stringValueByPath.get(), "2018:08:27 19:03:51");
-
-        stringValueByPath = metaData.getValueByPath(String.class, "exif-subifd", "not-existing");
-        Assert.assertNotNull(stringValueByPath);
-        Assert.assertTrue(stringValueByPath.isEmpty());
-
-        stringValueByPath = metaData.getValueByPath(String.class, "not-existing", "date/time-original");
-        Assert.assertNotNull(stringValueByPath);
-        Assert.assertTrue(stringValueByPath.isEmpty());
-
-        Optional<Float> floatValueByPath = metaData.getFloatValueByPath( "exif-subifd", "focal-length");
-        Assert.assertNotNull(floatValueByPath);
-        Assert.assertTrue(floatValueByPath.isPresent());
-        Assert.assertEquals(floatValueByPath.get(), Float.valueOf(3.5F));
-
+        Optional<Float> floatValueByPath = metaData.getFloatValueByPath( directoryName, tagName);
+        if (floatValueByPath.isPresent()) {
+            Assert.assertNotNull(floatValueByPath);
+            Assert.assertTrue(floatValueByPath.isPresent());
+            Assert.assertEquals(floatValueByPath.get(), expectedValue);
+        } else {
+            Assert.assertNull(expectedValue);
+        }
     }
 
 }
