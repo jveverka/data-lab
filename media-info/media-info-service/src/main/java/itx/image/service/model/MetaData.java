@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import itx.image.service.ParsingUtils;
 
+import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,11 @@ public class MetaData {
     @JsonIgnore
     public <T> Optional<T> getValueByPath(Class<T> type, String directoryName, String tagName) {
         return ParsingUtils.getValueByPath(this, type, directoryName, tagName);
+    }
+
+    @JsonIgnore
+    public Optional<Float> getFloatValueByPath(String directoryName, String tagName) {
+        return ParsingUtils.getFloatValueByPath(this, directoryName, tagName);
     }
 
 }

@@ -107,6 +107,11 @@ public class MediaServiceTest {
         Assert.assertNotNull(stringValueByPath);
         Assert.assertTrue(stringValueByPath.isEmpty());
 
+        Optional<Float> floatValueByPath = metaData.getFloatValueByPath( "exif-subifd", "focal-length");
+        Assert.assertNotNull(floatValueByPath);
+        Assert.assertTrue(floatValueByPath.isPresent());
+        Assert.assertEquals(floatValueByPath.get(), Float.valueOf(3.5F));
+
     }
 
 }

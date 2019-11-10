@@ -32,6 +32,7 @@ import itx.image.service.model.values.ObjectList;
 import itx.image.service.model.values.Shorts;
 import itx.image.service.model.values.StringValues;
 import itx.image.service.model.values.TagValue;
+import itx.image.service.model.values.Type;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -203,6 +204,29 @@ public final class ParsingUtils {
                 Optional<TagInfo> tagInfo = directoryInfo.get().tagInfoByName(tagName);
                 if (tagInfo.isPresent()) {
                     return Optional.of(type.cast(tagInfo.get().getValue().getValue()));
+                }
+            }
+            return Optional.empty();
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public static Optional<Float> getFloatValueByPath(MetaData metaData, String directoryName, String tagName) {
+        try {
+            Optional<DirectoryInfo> directoryInfo = metaData.directoryByName(directoryName);
+            if (directoryInfo.isPresent()) {
+                Optional<TagInfo> tagInfo = directoryInfo.get().tagInfoByName(tagName);
+                if (tagInfo.isPresent()) {
+                    Type type = tagInfo.get().getValue().getType();
+                    switch (type) {
+                        case FRACTION:
+                            Fraction fractionValue = (Fraction)tagInfo.get().getValue();
+                            return Optional.of(fractionValue.getValue().getFloatValue());
+                        case FLOAT:
+                            Float floatValue = (Float)tagInfo.get().getValue().getValue();
+                            return Optional.of(floatValue);
+                    }
                 }
             }
             return Optional.empty();
