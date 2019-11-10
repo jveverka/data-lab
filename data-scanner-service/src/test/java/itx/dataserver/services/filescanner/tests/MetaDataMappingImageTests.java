@@ -24,6 +24,7 @@ public class MetaDataMappingImageTests {
                 { "/metadata/image-meta-data-000.json", Boolean.TRUE, "2019-09-30 22:09:54", Boolean.TRUE },
                 { "/metadata/image-meta-data-001.json", Boolean.TRUE, "2019-08-27 13:51:06", Boolean.TRUE },
                 { "/metadata/image-meta-data-003.json", Boolean.FALSE, null,  Boolean.FALSE },
+                { "/metadata/image-meta-data-004.json", Boolean.FALSE, null,  Boolean.FALSE },
         };
     }
 
@@ -64,7 +65,7 @@ public class MetaDataMappingImageTests {
             Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo().getModel());
             Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo().getVendor());
         } else {
-
+            Assert.assertNull(imageMetaDataInfo.getDeviceInfo());
         }
 
         Assert.assertTrue(imageMetaDataInfo.getImageHeight() > 0);

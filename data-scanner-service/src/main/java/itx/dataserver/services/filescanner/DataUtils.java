@@ -207,8 +207,8 @@ public final class DataUtils {
             String imageType = "";
             long imageWidth = 0;
             long imageHeight = 0;
-            String vendor = "";
-            String model = "";
+            String vendor = null;
+            String model = null;
             String timeStamp = null;
             GPS gps = null;
 
@@ -242,7 +242,6 @@ public final class DataUtils {
                 }
             } else {
                 LOG.warn("Image exif-ifd0 data not found !");
-                return Optional.empty();
             }
 
             Optional<Long> optionalImageWidth = getImageWidth(metaData);
@@ -266,7 +265,10 @@ public final class DataUtils {
                 LOG.warn("GPS data not found !");
             }
 
-            DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
+            DeviceInfo deviceInfo = null;
+            if (vendor != null || model != null) {
+                deviceInfo = new DeviceInfo(vendor, model);
+            }
             ImageMetaDataInfo imageMetaDataInfo = new ImageMetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
             return Optional.of(imageMetaDataInfo);
         } catch (Exception e) {
