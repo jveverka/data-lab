@@ -21,13 +21,14 @@ public class MetaDataMappingImageTests {
     @DataProvider(name = "testMappingData")
     public static Object[][] testMappingData() {
         return new Object[][] {
-                { "/metadata/image-meta-data-000.json" },
-                { "/metadata/image-meta-data-001.json" },
+                { "/metadata/image-meta-data-000.json", Boolean.TRUE, "2019-09-30 22:09:54", Boolean.TRUE },
+                { "/metadata/image-meta-data-001.json", Boolean.TRUE, "2019-08-27 13:51:06", Boolean.TRUE },
+                { "/metadata/image-meta-data-003.json", Boolean.FALSE, "",  Boolean.FALSE },
         };
     }
 
     @Test(dataProvider = "testMappingData")
-    public void testMapping(String unmappedDataResourcePath) throws IOException {
+    public void testMapping(String unmappedDataResourcePath, boolean expectGps, String expectedTimeStamp, boolean expectVendorData) throws IOException {
         InputStream is = this.getClass().getResourceAsStream(unmappedDataResourcePath);
         UnmappedData unmappedData = objectMapper.readValue(is, UnmappedData.class);
         MetaData model = ParsingUtils.readFromJsonString(unmappedData.getJsonData());
@@ -37,11 +38,29 @@ public class MetaDataMappingImageTests {
         Assert.assertTrue(metaDataInfoOptional.isPresent());
 
         ImageMetaDataInfo imageMetaDataInfo = metaDataInfoOptional.get();
+
         Assert.assertNotNull(imageMetaDataInfo);
         Assert.assertEquals(imageMetaDataInfo.getImageType(), "jpeg");
-        Assert.assertNotNull(imageMetaDataInfo.getGps());
+
         Assert.assertNotNull(imageMetaDataInfo.getTimeStamp());
-        Assert.assertNotNull(imageMetaDataInfo.getGps().getTimeStamp());
+        Assert.assertEquals(imageMetaDataInfo.getTimeStamp(), expectedTimeStamp);
+
+        if (expectGps) {
+            Assert.assertNotNull(imageMetaDataInfo.getGps());
+            Assert.assertNotNull(imageMetaDataInfo.getGps().getTimeStamp());
+            Assert.assertNotNull(imageMetaDataInfo.getGps().getCoordinates());
+            Assert.assertNotNull(imageMetaDataInfo.getGps().getProcessingMethod());
+            Assert.assertNotNull(imageMetaDataInfo.getGps().getTimeStamp());
+        }
+
+        if (expectVendorData) {
+            Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo());
+            Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo().getModel());
+            Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo().getVendor());
+        }
+
+        Assert.assertTrue(imageMetaDataInfo.getImageHeight() > 0);
+        Assert.assertTrue(imageMetaDataInfo.getImageWidth() > 0);
     }
 
 }

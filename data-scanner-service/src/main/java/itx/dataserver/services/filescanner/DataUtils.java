@@ -54,15 +54,15 @@ public final class DataUtils {
     private DataUtils() {
     }
 
-    public static void logESError(ElasticSearchService elasticSearchService, FileInfoId id, MetaData metaData, Path path, String reason) throws IOException {
-        logESError(elasticSearchService, id, metaData, null, path, reason);
+    public static void logESError(ElasticSearchService elasticSearchService, Class<?> type, FileInfoId id, MetaData metaData, Path path, String reason) throws IOException {
+        logESError(elasticSearchService, type, id, metaData, null, path, reason);
     }
 
-    public static void logESError(ElasticSearchService elasticSearchService, FileInfoId id, MetaData metaData, Exception e, Path path, String reason) throws IOException {
+    public static void logESError(ElasticSearchService elasticSearchService, Class<?> type, FileInfoId id, MetaData metaData, Exception e, Path path, String reason) throws IOException {
         String jsonData = ParsingUtils.writeAsJsonString(metaData);
         String stackTrace = e != null ? DataUtils.getStackTraceAsString(e) : "";
         UnmappedData unmappedData =
-                new UnmappedData(id, ImageMetaDataInfo.class.getTypeName(), jsonData, path.toString(), reason, stackTrace);
+                new UnmappedData(id, type.getTypeName(), jsonData, path.toString(), reason, stackTrace);
         elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
     }
 
@@ -223,7 +223,7 @@ public final class DataUtils {
             if (timeStampOptional.isPresent()) {
                 timeStamp = timeStampOptional.get();
             } else {
-                return Optional.empty();
+                LOG.warn("TimeStamp data not found !");
             }
 
             Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
@@ -233,14 +233,12 @@ public final class DataUtils {
                     vendor = (String) makeTag.get().getValue().getValue();
                 } else {
                     LOG.warn("Device vendor can't be determined !");
-                    return Optional.empty();
                 }
                 Optional<TagInfo> modelTag = exifIfd0Info.get().tagInfoByName("model");
                 if (modelTag.isPresent()) {
                     model = (String) modelTag.get().getValue().getValue();
                 } else {
                     LOG.warn("Device model can't be determined !");
-                    return Optional.empty();
                 }
             } else {
                 LOG.warn("Image exif-ifd0 data not found !");
@@ -333,8 +331,19 @@ public final class DataUtils {
         Optional<DirectoryInfo> exifIfd0Info = metaData.directoryByName("exif-ifd0");
         if (exifIfd0Info.isPresent()) {
             Optional<TagInfo> imageWidthTag = exifIfd0Info.get().tagInfoByName(key);
-            if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
-                return Optional.of((Long) imageWidthTag.get().getValue().getValue());
+            if (imageWidthTag.isPresent()) {
+                if (Type.LONG.equals(imageWidthTag.get().getValue().getType())) {
+                    return Optional.of((Long) imageWidthTag.get().getValue().getValue());
+                }
+            }
+        }
+        Optional<DirectoryInfo> jpegInfo = metaData.directoryByName("jpeg");
+        if (jpegInfo.isPresent()) {
+            Optional<TagInfo> imageDataTag = jpegInfo.get().tagInfoByName(key);
+            if (imageDataTag.isPresent()) {
+                if (Type.INTEGER.equals(imageDataTag.get().getValue().getType())) {
+                    return Optional.of(Long.valueOf((Integer) imageDataTag.get().getValue().getValue()));
+                }
             }
         }
         LOG.warn("Image Width type can't be determined !");

@@ -66,10 +66,10 @@ public class FsObserver implements Observer<DirItem> {
                             try {
                                 this.elasticSearchService.saveDocument(ImageMetaDataInfo.class, imageMetaDataInfo.get());
                             } catch (Exception e) {
-                                DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_ImageMetaDataInfo_write_failed");
+                                DataUtils.logESError(elasticSearchService, ImageMetaDataInfo.class, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_ImageMetaDataInfo_write_failed");
                             }
                         } else {
-                            DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "ImageMetaDataInfo_mapping_failed");
+                            DataUtils.logESError(elasticSearchService, ImageMetaDataInfo.class, fileInfo.getId(), metaData.get(), dirItem.getPath(), "ImageMetaDataInfo_mapping_failed");
                         }
                         break;
                     case MP4:
@@ -78,14 +78,14 @@ public class FsObserver implements Observer<DirItem> {
                             try {
                                 this.elasticSearchService.saveDocument(VideoMetaDataInfo.class, videoMetaDataInfo.get());
                             } catch (Exception e) {
-                                DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_VideoMetaDataInfo_write_failed");
+                                DataUtils.logESError(elasticSearchService, VideoMetaDataInfo.class, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_VideoMetaDataInfo_write_failed");
                             }
                         } else {
-                            DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "VideoMetaDataInfo_mapping_failed");
+                            DataUtils.logESError(elasticSearchService, VideoMetaDataInfo.class, fileInfo.getId(), metaData.get(), dirItem.getPath(), "VideoMetaDataInfo_mapping_failed");
                         }
                         break;
                     case NA:
-                        DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "MetaDataInfo_mapping_not_supported");
+                        DataUtils.logESError(elasticSearchService, MetaDataType.class, fileInfo.getId(), metaData.get(), dirItem.getPath(), "MetaDataInfo_mapping_not_supported");
                         break;
                     default:
                         throw new UnsupportedOperationException("Unsupported MetaData type: " + metaDataType.getTypeName());
