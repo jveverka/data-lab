@@ -4,6 +4,7 @@ import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
+import itx.elastic.service.impl.ESUtils;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
@@ -39,7 +40,7 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
                 DataUtils.addMappingField(builder, "width", "long");
                 DataUtils.addMappingField(builder, "height", "long");
                 DataUtils.addMappingField(builder, "frameRate", "float");
-                DataUtils.addDateMappingField(builder, "timeStamp", DataUtils.DATE_TIME_FORMAT);
+                DataUtils.addDateMappingField(builder, "timeStamp", ESUtils.DATE_FORMAT);
             }
             builder.endObject();
         }

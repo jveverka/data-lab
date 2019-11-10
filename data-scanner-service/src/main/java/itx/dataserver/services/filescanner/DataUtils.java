@@ -46,9 +46,10 @@ public final class DataUtils {
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private static final SimpleDateFormat dateFormatIn01 = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
-    private static final SimpleDateFormat dateFormatOut = new SimpleDateFormat(DATE_TIME_FORMAT);
-    private static final DateTimeFormatter formatterWithTimeZoneIn01 = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss.n z");
+    public static final SimpleDateFormat dateFormatIn01 = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+    public static final SimpleDateFormat dateFormatOut = new SimpleDateFormat(DATE_TIME_FORMAT);
+    public static final DateTimeFormatter formatterWithTimeZoneIn01 = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss.n z");
+    public static final DateTimeFormatter formatterWithTimeZoneIn02 = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy");
 
     private DataUtils() {
     }
@@ -155,7 +156,12 @@ public final class DataUtils {
 
             Optional<String> creationTime = metaData.getValueByPath(String.class, "mp4-metadata", "creation-time");
             if (creationTime.isPresent()) {
-                timeStamp = creationTime.get();
+                Optional<String> normalizedTimeZone = normalizeDateTimeWithTimeZone(formatterWithTimeZoneIn02, creationTime.get());
+                if (normalizedTimeZone.isPresent()) {
+                    timeStamp = normalizedTimeZone.get();
+                } else {
+                    return Optional.empty();
+                }
             } else {
                 return Optional.empty();
             }
@@ -452,20 +458,24 @@ public final class DataUtils {
         }
     }
 
+    public static Optional<String> normalizeDateTimeWithTimeZone(DateTimeFormatter formatterWithTimeZoneIn, String dateTimeWithTimeZone) {
+        if (dateTimeWithTimeZone == null) return Optional.empty();
+        if (dateTimeWithTimeZone.isBlank()) return Optional.empty();
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeWithTimeZone, formatterWithTimeZoneIn);
+        int year = zonedDateTime.getYear();
+        if (year < 1900 || year > 2200) {
+            return Optional.empty();
+        }
+        return Optional.of(ESUtils.toString(zonedDateTime));
+    }
+
     /**
      * Normalizes datetime String.
      * @param dateTimeWithTimeZone input datetime string in format "yyyy:MM:dd HH:mm:ss Z".
      * @return dateTime string in "yyyyMMdd'T'HHmmss.SSSZ" format.
      */
     public static Optional<String> normalizeDateTimeWithTimeZone(String dateTimeWithTimeZone) {
-        if (dateTimeWithTimeZone == null) return Optional.empty();
-        if (dateTimeWithTimeZone.isBlank()) return Optional.empty();
-        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeWithTimeZone, formatterWithTimeZoneIn01);
-        int year = zonedDateTime.getYear();
-        if (year < 1900 || year > 2200) {
-            return Optional.empty();
-        }
-        return Optional.of(ESUtils.toString(zonedDateTime));
+        return normalizeDateTimeWithTimeZone(formatterWithTimeZoneIn01, dateTimeWithTimeZone);
     }
 
 }

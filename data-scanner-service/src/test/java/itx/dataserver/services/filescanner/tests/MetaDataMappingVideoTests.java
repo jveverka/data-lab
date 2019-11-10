@@ -42,6 +42,7 @@ public class MetaDataMappingVideoTests {
         Assert.assertTrue(videoMetaDataInfo.getWidth() == 3840);
         Assert.assertTrue(videoMetaDataInfo.getHeight() == 2160);
         Assert.assertTrue(videoMetaDataInfo.getFrameRate() == 59.94006F);
+        Assert.assertEquals(videoMetaDataInfo.getTimeStamp(), "20190406T233822.000+0200");
     }
 
 }
