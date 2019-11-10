@@ -18,6 +18,11 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
         Map<String, Object> source = new HashMap<>();
         source.put("fileInfoId", data.getId().getId());
         source.put("videoType", data.getVideoType());
+        source.put("duration", data.getDuration());
+        source.put("width", data.getWidth());
+        source.put("height", data.getHeight());
+        source.put("frameRate", data.getFrameRate());
+        source.put("timeStamp", data.getTimeStamp());
         return source;
     }
 
@@ -30,6 +35,11 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
             {
                 DataUtils.addMappingField(builder, "fileInfoId", "keyword");
                 DataUtils.addMappingField(builder, "videoType", "keyword");
+                DataUtils.addMappingField(builder, "duration", "float");
+                DataUtils.addMappingField(builder, "width", "long");
+                DataUtils.addMappingField(builder, "height", "long");
+                DataUtils.addMappingField(builder, "frameRate", "float");
+                DataUtils.addDateMappingField(builder, "timeStamp", DataUtils.DATE_TIME_FORMAT);
             }
             builder.endObject();
         }
@@ -51,7 +61,12 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
     public VideoMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String videoType = (String)source.get("videoType");
-        return new VideoMetaDataInfo(fileInfoId, videoType);
+        float duration = (Float)source.get("duration");
+        long width = (Long)source.get("width");
+        long height = (Long)source.get("height");
+        float frameRate = (Float)source.get("frameRate");
+        String timeStamp = (String)source.get("timeStamp");
+        return new VideoMetaDataInfo(fileInfoId, videoType, duration, width, height, frameRate, timeStamp);
     }
 
 }

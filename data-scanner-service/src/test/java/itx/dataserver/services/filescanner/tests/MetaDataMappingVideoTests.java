@@ -38,6 +38,10 @@ public class MetaDataMappingVideoTests {
         VideoMetaDataInfo videoMetaDataInfo = metaDataInfoOptional.get();
         Assert.assertNotNull(videoMetaDataInfo);
         Assert.assertEquals(videoMetaDataInfo.getVideoType(), "mp4");
+        Assert.assertTrue(videoMetaDataInfo.getDuration() == 38.592F);
+        Assert.assertTrue(videoMetaDataInfo.getWidth() == 3840);
+        Assert.assertTrue(videoMetaDataInfo.getHeight() == 2160);
+        Assert.assertTrue(videoMetaDataInfo.getFrameRate() == 59.94006F);
     }
 
 }

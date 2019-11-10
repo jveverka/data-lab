@@ -140,6 +140,11 @@ public final class DataUtils {
     public static Optional<VideoMetaDataInfo> createVideoMetaDataInfo(FileInfoId id, MetaData metaData) {
         try {
             String videoType = "";
+            float duration = 0;
+            long width = 0;
+            long height = 0;
+            float frameRate = 0;
+            String timeStamp = "";
 
             if (metaData.directoryNames().contains("mp4")) {
                 videoType = "mp4";
@@ -147,7 +152,43 @@ public final class DataUtils {
                 LOG.warn("Video type can't be determined !");
                 return Optional.empty();
             }
-            VideoMetaDataInfo videoMetaDataInfo = new VideoMetaDataInfo(id, videoType);
+
+            Optional<String> creationTime = metaData.getValueByPath(String.class, "mp4-metadata", "creation-time");
+            if (creationTime.isPresent()) {
+                timeStamp = creationTime.get();
+            } else {
+                return Optional.empty();
+            }
+
+            Optional<Integer> widthOptional = metaData.getValueByPath(Integer.class, "mp4-video", "width");
+            if (widthOptional.isPresent()) {
+                width = widthOptional.get();
+            } else {
+                return Optional.empty();
+            }
+
+            Optional<Integer> heightOptional = metaData.getValueByPath(Integer.class, "mp4-video", "height");
+            if (heightOptional.isPresent()) {
+                height = heightOptional.get();
+            } else {
+                return Optional.empty();
+            }
+
+            Optional<Float> durationOptional = metaData.getFloatValueByPath("mp4", "duration-in-seconds");
+            if (durationOptional.isPresent()) {
+                duration = durationOptional.get();
+            } else {
+                return Optional.empty();
+            }
+
+            Optional<Float> frameRateOptional = metaData.getValueByPath(Float.class, "mp4-video", "frame-rate");
+            if (frameRateOptional.isPresent()) {
+                frameRate = frameRateOptional.get();
+            } else {
+                return Optional.empty();
+            }
+
+            VideoMetaDataInfo videoMetaDataInfo = new VideoMetaDataInfo(id, videoType, duration, width, height, frameRate, timeStamp);
             return Optional.of(videoMetaDataInfo);
         } catch (Exception e) {
             LOG.error("Video mapping Exception: ", e);
