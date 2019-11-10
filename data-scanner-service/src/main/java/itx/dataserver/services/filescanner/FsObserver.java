@@ -33,7 +33,7 @@ public class FsObserver implements Observer<DirItem> {
     public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService) {
         this.subscribed = new CountDownLatch(1);
         this.completed = new CountDownLatch(1);
-        this.counter = new AtomicLong(1);
+        this.counter = new AtomicLong(0);
         this.records = new AtomicLong(0);
         this.elasticSearchService = elasticSearchService;
         this.mediaService = mediaService;
@@ -58,24 +58,38 @@ public class FsObserver implements Observer<DirItem> {
 
             if (metaData.isPresent()) {
 
-                Optional<ImageMetaDataInfo> imageMetaDataInfo = DataUtils.createImageMetaDataInfo(fileInfo.getId(), metaData.get());
-                Optional<VideoMetaDataInfo> videoMetaDataInfo = DataUtils.createVideoMetaDataInfo(fileInfo.getId(), metaData.get());
-                if (imageMetaDataInfo.isPresent()) {
-                    try {
-                        this.elasticSearchService.saveDocument(ImageMetaDataInfo.class, imageMetaDataInfo.get());
-                    } catch (Exception e) {
-                        DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_write_failed");
-                    }
-                } else if (videoMetaDataInfo.isPresent()) {
-                    try {
-                        this.elasticSearchService.saveDocument(VideoMetaDataInfo.class, videoMetaDataInfo.get());
-                    } catch (Exception e) {
-                        DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_write_failed");
-                    }
-                } else {
-                    DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "MetaDataInfo_mapping_failed");
+                MetaDataType metaDataType = DataUtils.getMetaDataType(metaData.get());
+                switch (metaDataType) {
+                    case JPEG:
+                        Optional<ImageMetaDataInfo> imageMetaDataInfo = DataUtils.createImageMetaDataInfo(fileInfo.getId(), metaData.get());
+                        if (imageMetaDataInfo.isPresent()) {
+                            try {
+                                this.elasticSearchService.saveDocument(ImageMetaDataInfo.class, imageMetaDataInfo.get());
+                            } catch (Exception e) {
+                                DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_ImageMetaDataInfo_write_failed");
+                            }
+                        } else {
+                            DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "ImageMetaDataInfo_mapping_failed");
+                        }
+                        break;
+                    case MP4:
+                        Optional<VideoMetaDataInfo> videoMetaDataInfo = DataUtils.createVideoMetaDataInfo(fileInfo.getId(), metaData.get());
+                        if (videoMetaDataInfo.isPresent()) {
+                            try {
+                                this.elasticSearchService.saveDocument(VideoMetaDataInfo.class, videoMetaDataInfo.get());
+                            } catch (Exception e) {
+                                DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_VideoMetaDataInfo_write_failed");
+                            }
+                        } else {
+                            DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "VideoMetaDataInfo_mapping_failed");
+                        }
+                        break;
+                    case NA:
+                        DataUtils.logESError(elasticSearchService, fileInfo.getId(), metaData.get(), dirItem.getPath(), "MetaDataInfo_mapping_not_supported");
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("Unsupported MetaData type: " + metaDataType.getTypeName());
                 }
-
             } else {
                 LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
             }

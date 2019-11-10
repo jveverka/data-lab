@@ -478,4 +478,14 @@ public final class DataUtils {
         return normalizeDateTimeWithTimeZone(formatterWithTimeZoneIn01, dateTimeWithTimeZone);
     }
 
+    public static MetaDataType getMetaDataType(MetaData metaData) {
+        if (metaData.directoryNames().contains("jpeg")) {
+            return MetaDataType.JPEG;
+        } else if (metaData.directoryNames().contains("mp4")) {
+            return MetaDataType.MP4;
+        } else {
+            return MetaDataType.NA;
+        }
+    }
+
 }
