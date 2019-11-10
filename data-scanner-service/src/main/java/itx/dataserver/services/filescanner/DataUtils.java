@@ -209,7 +209,7 @@ public final class DataUtils {
             long imageHeight = 0;
             String vendor = "";
             String model = "";
-            String timeStamp = "";
+            String timeStamp = null;
             GPS gps = null;
 
             if (metaData.directoryNames().contains("jpeg")) {
@@ -376,7 +376,6 @@ public final class DataUtils {
                 processingMethod = gpsProcessingMethodTag.get().getDescription();
             }
         } else {
-            LOG.warn("GPS data directory not found !");
             return Optional.empty();
         }
 

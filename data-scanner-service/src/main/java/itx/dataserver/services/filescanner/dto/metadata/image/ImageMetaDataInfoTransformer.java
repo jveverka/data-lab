@@ -95,13 +95,20 @@ public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDa
         String vendor = (String)deviceInfoSource.get("vendor");
         String model = (String)deviceInfoSource.get("model");
         DeviceInfo deviceInfo = new DeviceInfo(vendor, model);
-        String timeStamp = (String)source.get("timeStamp");
 
-        Map<String, Object> gpsInfoSource = (Map<String, Object>)source.get("gps");
-        Map<String, Object> coordinatedSource = (Map<String, Object>)gpsInfoSource.get("coordinates");
+        String timeStamp = null;
+        if (source.get("timeStamp") != null) {
+            timeStamp = (String) source.get("timeStamp");
+        }
 
-        Coordinates coordinates = new Coordinates((Float)coordinatedSource.get("lon"), (Float)coordinatedSource.get("lat"));
-        GPS gps = new GPS(coordinates, (Integer)gpsInfoSource.get("altitude"), (String)gpsInfoSource.get("timeStamp"), (String)gpsInfoSource.get("processingMethod"));
+        GPS gps = null;
+        if (source.get("gps") != null) {
+            Map<String, Object> gpsInfoSource = (Map<String, Object>) source.get("gps");
+            Map<String, Object> coordinatedSource = (Map<String, Object>) gpsInfoSource.get("coordinates");
+
+            Coordinates coordinates = new Coordinates((Float) coordinatedSource.get("lon"), (Float) coordinatedSource.get("lat"));
+            gps = new GPS(coordinates, (Integer) gpsInfoSource.get("altitude"), (String) gpsInfoSource.get("timeStamp"), (String) gpsInfoSource.get("processingMethod"));
+        }
 
         return new ImageMetaDataInfo(fileInfoId, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
 

@@ -23,7 +23,7 @@ public class MetaDataMappingImageTests {
         return new Object[][] {
                 { "/metadata/image-meta-data-000.json", Boolean.TRUE, "2019-09-30 22:09:54", Boolean.TRUE },
                 { "/metadata/image-meta-data-001.json", Boolean.TRUE, "2019-08-27 13:51:06", Boolean.TRUE },
-                { "/metadata/image-meta-data-003.json", Boolean.FALSE, "",  Boolean.FALSE },
+                { "/metadata/image-meta-data-003.json", Boolean.FALSE, null,  Boolean.FALSE },
         };
     }
 
@@ -42,8 +42,12 @@ public class MetaDataMappingImageTests {
         Assert.assertNotNull(imageMetaDataInfo);
         Assert.assertEquals(imageMetaDataInfo.getImageType(), "jpeg");
 
-        Assert.assertNotNull(imageMetaDataInfo.getTimeStamp());
-        Assert.assertEquals(imageMetaDataInfo.getTimeStamp(), expectedTimeStamp);
+        if (expectedTimeStamp != null) {
+            Assert.assertNotNull(imageMetaDataInfo.getTimeStamp());
+            Assert.assertEquals(imageMetaDataInfo.getTimeStamp(), expectedTimeStamp);
+        } else {
+            Assert.assertNull(imageMetaDataInfo.getTimeStamp());
+        }
 
         if (expectGps) {
             Assert.assertNotNull(imageMetaDataInfo.getGps());
@@ -51,12 +55,16 @@ public class MetaDataMappingImageTests {
             Assert.assertNotNull(imageMetaDataInfo.getGps().getCoordinates());
             Assert.assertNotNull(imageMetaDataInfo.getGps().getProcessingMethod());
             Assert.assertNotNull(imageMetaDataInfo.getGps().getTimeStamp());
+        } else {
+            Assert.assertNull(imageMetaDataInfo.getGps());
         }
 
         if (expectVendorData) {
             Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo());
             Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo().getModel());
             Assert.assertNotNull(imageMetaDataInfo.getDeviceInfo().getVendor());
+        } else {
+
         }
 
         Assert.assertTrue(imageMetaDataInfo.getImageHeight() > 0);
