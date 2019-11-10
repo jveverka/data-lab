@@ -25,8 +25,10 @@ public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDa
         source.put("imageWidth", data.getImageWidth());
         source.put("imageHeight", data.getImageHeight());
         Map<String, Object> deviceInfo = new HashMap<>();
-        deviceInfo.put("vendor", data.getDeviceInfo().getVendor());
-        deviceInfo.put("model", data.getDeviceInfo().getModel());
+        if (data.getDeviceInfo() != null) {
+            deviceInfo.put("vendor", data.getDeviceInfo().getVendor());
+            deviceInfo.put("model", data.getDeviceInfo().getModel());
+        }
         source.put("deviceInfo", deviceInfo);
         source.put("timeStamp", data.getTimeStamp());
 

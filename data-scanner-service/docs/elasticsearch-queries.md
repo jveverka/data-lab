@@ -107,3 +107,25 @@ This is an example list of ElasticSearch queries covering some use cases.
       }
   }
   ```
+* Search by radius distance from central point. (50km from center of Zilina, slovakia)
+  ```
+  GET http://127.0.0.1:9200/image-meta-data-info/_search
+  {
+      "query": {
+          "bool" : {
+              "must" : {
+                  "match_all" : {}
+              },
+              "filter" : {
+                  "geo_distance" : {
+                      "distance" : "50km",
+                      "gps.coordinates" : {
+                          "lat" : 49.2224761,
+                          "lon" : 18.7390965
+                      }
+                  }
+              }
+          }
+      }
+  }
+  ```
