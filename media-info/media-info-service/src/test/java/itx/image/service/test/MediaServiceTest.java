@@ -18,6 +18,12 @@ public class MediaServiceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(MediaServiceTest.class);
 
+    private final MediaService mediaService;
+
+    public MediaServiceTest() {
+        mediaService = new MediaServiceImpl();
+    }
+
     @DataProvider(name = "testMetaDataReadProvider")
     public static Object[][] getImagePaths() {
         return new Object[][] {
@@ -31,7 +37,6 @@ public class MediaServiceTest {
     public void testMetaDataRead(String resourcePath) throws IOException {
         LOG.info("reading image {}", resourcePath);
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
-        MediaService mediaService = new MediaServiceImpl();
         Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
@@ -54,7 +59,6 @@ public class MediaServiceTest {
     public void testVideoMetaDataRead(String resourcePath) throws IOException {
         LOG.info("reading video {}", resourcePath);
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
-        MediaService mediaService = new MediaServiceImpl();
         Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isPresent());
@@ -70,10 +74,39 @@ public class MediaServiceTest {
     @Test(dataProvider = "testNoMetaDataProvider")
     public void testNoMetaDataRead(String resourcePath) {
         InputStream imageStream = this.getClass().getResourceAsStream(resourcePath);
-        MediaService mediaService = new MediaServiceImpl();
         Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
         Assert.assertNotNull(metaDataOptional);
         Assert.assertTrue(metaDataOptional.isEmpty());
+    }
+
+    @Test
+    public void testGetValueByPath() {
+        InputStream imageStream = this.getClass().getResourceAsStream("/media/IMG_20180827_190350.jpg");
+        Optional<MetaData> metaDataOptional = mediaService.getMetaData(imageStream);
+
+        Assert.assertNotNull(metaDataOptional);
+        Assert.assertTrue(metaDataOptional.isPresent());
+
+        MetaData metaData = metaDataOptional.get();
+
+        Optional<Long> longValueByPath = metaData.getValueByPath(Long.class, "exif-subifd", "exif-image-height");
+        Assert.assertNotNull(longValueByPath);
+        Assert.assertTrue(longValueByPath.isPresent());
+        Assert.assertTrue(longValueByPath.get() == 3264);
+
+        Optional<String> stringValueByPath = metaData.getValueByPath(String.class, "exif-subifd", "date/time-original");
+        Assert.assertNotNull(stringValueByPath);
+        Assert.assertTrue(stringValueByPath.isPresent());
+        Assert.assertEquals(stringValueByPath.get(), "2018:08:27 19:03:51");
+
+        stringValueByPath = metaData.getValueByPath(String.class, "exif-subifd", "not-existing");
+        Assert.assertNotNull(stringValueByPath);
+        Assert.assertTrue(stringValueByPath.isEmpty());
+
+        stringValueByPath = metaData.getValueByPath(String.class, "not-existing", "date/time-original");
+        Assert.assertNotNull(stringValueByPath);
+        Assert.assertTrue(stringValueByPath.isEmpty());
+
     }
 
 }

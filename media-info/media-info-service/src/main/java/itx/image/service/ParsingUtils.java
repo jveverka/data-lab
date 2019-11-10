@@ -35,7 +35,7 @@ import itx.image.service.model.values.TagValue;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +46,7 @@ public final class ParsingUtils {
     private ParsingUtils() {
     }
 
-    private final static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
     static {
         mapper.registerModule(new Jdk8Module());
     }
@@ -139,7 +139,7 @@ public final class ParsingUtils {
         } else if (value instanceof StringValue) {
             StringValue stringValueValue = (StringValue)value;
             if (stringValueValue.getCharset() == null) {
-                return new itx.image.service.model.values.StringValue(new String(stringValueValue.getBytes(), Charset.forName("UTF-8")), unit);
+                return new itx.image.service.model.values.StringValue(new String(stringValueValue.getBytes(), StandardCharsets.UTF_8), unit);
             } else {
                 return new itx.image.service.model.values.StringValue(new String(stringValueValue.getBytes(), stringValueValue.getCharset()), unit);
             }
@@ -194,6 +194,21 @@ public final class ParsingUtils {
             return new FloatValue(floatValue, unit);
         }
         throw new UnsupportedOperationException("Unsupported value type: " + value.getClass().getCanonicalName());
+    }
+
+    public static <T> Optional<T> getValueByPath(MetaData metaData, Class<T> type, String directoryName, String tagName) {
+        try {
+            Optional<DirectoryInfo> directoryInfo = metaData.directoryByName(directoryName);
+            if (directoryInfo.isPresent()) {
+                Optional<TagInfo> tagInfo = directoryInfo.get().tagInfoByName(tagName);
+                if (tagInfo.isPresent()) {
+                    return Optional.of(type.cast(tagInfo.get().getValue().getValue()));
+                }
+            }
+            return Optional.empty();
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
 }

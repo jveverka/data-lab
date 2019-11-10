@@ -1,7 +1,9 @@
 package itx.image.service.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import itx.image.service.ParsingUtils;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,6 +33,11 @@ public class MetaData {
 
     public Set<String> directoryNames() {
         return directories.keySet();
+    }
+
+    @JsonIgnore
+    public <T> Optional<T> getValueByPath(Class<T> type, String directoryName, String tagName) {
+        return ParsingUtils.getValueByPath(this, type, directoryName, tagName);
     }
 
 }
