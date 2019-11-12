@@ -27,9 +27,11 @@ public class MediaServiceTest {
     @DataProvider(name = "testMetaDataReadProvider")
     public static Object[][] getImagePaths() {
         return new Object[][]{
-                {"/media/IMG_20180827_190350.jpg"},
-                {"/media/20190930_220954.jpg"},
-                {"/media/IMG-20171111-WA0007.jpeg"},
+                { "/media/IMG_20180827_190350.jpg" },
+                { "/media/20190930_220954.jpg" },
+                { "/media/IMG-20171111-WA0007.jpeg" },
+                { "/media/IMG_20190908_165555.jpg" },
+                { "/media/20190206_113018.jpg" },
         };
     }
 
