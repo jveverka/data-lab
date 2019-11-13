@@ -32,6 +32,7 @@ public class MediaServiceTest {
                 { "/media/IMG-20171111-WA0007.jpeg" },
                 { "/media/IMG_20190908_165555.jpg" },
                 { "/media/20190206_113018.jpg" },
+                { "/media/20191012_135832.jpg" },
         };
     }
 

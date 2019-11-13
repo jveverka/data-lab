@@ -26,6 +26,7 @@ public class MetaDataMappingImageTests {
                 { "/metadata/image-meta-data-003.json", Boolean.FALSE, null,  Boolean.FALSE },
                 { "/metadata/image-meta-data-004.json", Boolean.FALSE, null,  Boolean.FALSE },
                 { "/metadata/image-meta-data-005.json", Boolean.FALSE, "2019-02-06 11:30:18", Boolean.TRUE },
+                { "/metadata/image-meta-data-006.json", Boolean.TRUE,  "2019-10-12 13:58:32", Boolean.TRUE },
         };
     }
 
