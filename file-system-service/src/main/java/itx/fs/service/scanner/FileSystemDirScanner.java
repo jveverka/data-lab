@@ -1,6 +1,6 @@
 package itx.fs.service.scanner;
 
-import io.reactivex.rxjava3.core.FlowableEmitter;
+import io.reactivex.rxjava3.core.Emitter;
 import itx.fs.service.FSUtils;
 import itx.fs.service.dto.CheckSum;
 import itx.fs.service.dto.DirItem;
@@ -22,7 +22,7 @@ public class FileSystemDirScanner implements DirScanner {
     private static final Logger LOG = LoggerFactory.getLogger(FileSystemDirScanner.class);
 
     @Override
-    public void scanDirectory(FlowableEmitter<DirItem> emitter, DirQuery query) throws IOException {
+    public void scanDirectory(Emitter<DirItem> emitter, DirQuery query) throws IOException {
         Files.walkFileTree(query.getPath(), new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path path, BasicFileAttributes attributes) throws IOException {
