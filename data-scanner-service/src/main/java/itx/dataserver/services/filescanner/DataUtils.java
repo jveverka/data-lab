@@ -457,7 +457,8 @@ public final class DataUtils {
      * @param dateTime input datetime string in format "yyyy:MM:dd HH:mm:ss".
      * @return dateTime String in "yyyy-MM-dd HH:mm:ss" format.
      */
-    public static Optional<String> normalizeDateTime(String dateTime) {
+    //TODO: remove synchronized, use thread safe date formatter instead.
+    public synchronized static Optional<String> normalizeDateTime(String dateTime) {
         try {
             if (dateTime == null) return Optional.empty();
             if (dateTime.isBlank()) return Optional.empty();
