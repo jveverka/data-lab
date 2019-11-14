@@ -9,6 +9,7 @@ import itx.image.service.MediaServiceImpl;
 import itx.image.service.ParsingUtils;
 import itx.image.service.model.MetaData;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -50,14 +51,19 @@ public class MappingTests {
         Assert.assertEquals(imageMetaDataInfo.getGps().getTimeStamp(), "20190930T200914.000+0000");
     }
 
-    @Test
-    public void testDateMapping() throws ParseException {
-        Optional<String> result = DataUtils.normalizeDateTime("2019:09:30 22:09:54");
+    @DataProvider(name = "testDateMappingData")
+    public static Object[][] testDateMappingData() {
+        return new Object[][] {
+                { "2019:09:30 22:09:54",         "2019-09-30 22:09:54" },
+                { "2019:09:30 20:09:14.000 UTC", "2019-09-30 20:09:14" },
+        };
+    }
+
+    @Test(dataProvider = "testDateMappingData")
+    public void testDateMapping(String dateTime, String expectedDateTime) {
+        Optional<String> result = DataUtils.normalizeDateTime(dateTime);
         Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(result.get(), "2019-09-30 22:09:54");
-        result = DataUtils.normalizeDateTime("2019:09:30 20:09:14.000 UTC");
-        Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(result.get(), "2019-09-30 20:09:14");
+        Assert.assertEquals(result.get(), expectedDateTime);
     }
 
     @Test

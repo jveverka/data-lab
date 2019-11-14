@@ -45,9 +45,8 @@ public final class DataUtils {
     private static final Logger LOG = LoggerFactory.getLogger(DataUtils.class);
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_TIME_FORMAT_IN = "yyyy:MM:dd HH:mm:ss";
 
-    public static final SimpleDateFormat dateFormatIn01 = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
-    public static final SimpleDateFormat dateFormatOut = new SimpleDateFormat(DATE_TIME_FORMAT);
     public static final DateTimeFormatter formatterWithTimeZoneIn01 = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss.n z");
     public static final DateTimeFormatter formatterWithTimeZoneIn02 = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy");
 
@@ -457,11 +456,13 @@ public final class DataUtils {
      * @param dateTime input datetime string in format "yyyy:MM:dd HH:mm:ss".
      * @return dateTime String in "yyyy-MM-dd HH:mm:ss" format.
      */
-    //TODO: remove synchronized, use thread safe date formatter instead.
-    public synchronized static Optional<String> normalizeDateTime(String dateTime) {
+    //TODO: optimize for performance.
+    public static Optional<String> normalizeDateTime(String dateTime) {
         try {
             if (dateTime == null) return Optional.empty();
             if (dateTime.isBlank()) return Optional.empty();
+            SimpleDateFormat dateFormatIn01 = new SimpleDateFormat(DATE_TIME_FORMAT_IN);
+            SimpleDateFormat dateFormatOut = new SimpleDateFormat(DATE_TIME_FORMAT);
             Date parsedDate = dateFormatIn01.parse(dateTime);
             return Optional.of(dateFormatOut.format(parsedDate));
         } catch (ParseException e) {
