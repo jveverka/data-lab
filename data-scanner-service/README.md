@@ -36,12 +36,12 @@ Examples of [ElasticSearch queries](docs/elasticsearch-queries.md) covering vari
 gradle clean installDist distZip test
 ```
 ```
-./build/install/data-scanner-service/bin/data-scanner-service -e <n> -p <path> -i <init> -eh <elasstiHost> -ep <elasticPort>
+./build/install/data-scanner-service/bin/data-scanner-service -e <n> -p <path> -i -eh <elasstiHost> -ep <elasticPort>
 # n - optional, thread pool size, default=1
 # path - mandatory, /path/to/root/dir
 # elasticHost - optional, hostname of elasticsearch server, default="127.0.0.1"
 # elasticPort - optional, port of lasticsearch server, default=9200
-# init - optional, true|false init elasticsearch indices. all data in indec are lost if init = true. 
+# init - optional, if present init elasticsearch indices. all data in indec are lost if init is used. 
 
 # Full directory scan (first time)
 ./build/install/data-scanner-service/bin/data-scanner-service -p /path/to/dir -i true

@@ -4,19 +4,13 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Cancellable;
+import itx.fs.service.FSUtils;
 import itx.fs.service.dto.DirItem;
 import itx.fs.service.dto.DirQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class ObservableSourceScanner implements Disposable, Cancellable, ObservableOnSubscribe<DirItem> {
@@ -39,27 +33,15 @@ public class ObservableSourceScanner implements Disposable, Cancellable, Observa
         dispose = false;
         emitter.setCancellable(this);
         emitter.setDisposable(this);
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
+        executor.execute(() -> {
                 try {
-                    ExecutorService executorService = Executors.newFixedThreadPool(query.getExecutorSize());
-                    Files.walkFileTree(query.getPath(), new SimpleFileVisitor<Path>() {
-                        @Override
-                        public FileVisitResult visitFile(Path path, BasicFileAttributes attributes) {
-                            executorService.submit(new FileScannerTask(emitter, path, attributes));
-                            return FileVisitResult.CONTINUE;
-                        }
-                    });
-                    executorService.shutdown();
-                    while(!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
-                    }
-                    emitter.onComplete();
-                    LOG.info("done.");
+                    TransformingEmitter transformingEmitter = new TransformingEmitter(emitter, query.getExecutorSize());
+                    FSUtils.walkDirectoryRecursively(query.getPath(), transformingEmitter);
+                    while (!transformingEmitter.await(1, TimeUnit.SECONDS));
+                    transformingEmitter.close();
                 } catch (Exception e) {
-                    emitter.onError(e);
+                    LOG.error("Error: ", e);
                 }
-            }
         });
     }
 
@@ -75,7 +57,7 @@ public class ObservableSourceScanner implements Disposable, Cancellable, Observa
 
     @Override
     public void cancel() throws Throwable {
-
+        LOG.info("cancel");
     }
 
 }

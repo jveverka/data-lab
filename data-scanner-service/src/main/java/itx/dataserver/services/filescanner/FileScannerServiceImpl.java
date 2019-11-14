@@ -78,7 +78,7 @@ public class FileScannerServiceImpl implements FileScannerService {
     public ScanResponse scanAndStoreSubDirAsync(DirQuery query) throws InterruptedException {
 
         if (!Files.isDirectory(query.getPath())) {
-            LOG.error("Expected directory path ! {}", query.getPath().toString());
+            LOG.error("Expected directory path ! {}", query.getPath());
             return ScanResponse.getError(query.getPath());
         }
 
@@ -96,8 +96,7 @@ public class FileScannerServiceImpl implements FileScannerService {
         SearchObserver searchObserver = new SearchObserver();
 
         elasticSearchService.getDocuments(FileInfo.class, searchObserver, searchSourceBuilder);
-        while(!searchObserver.await(1, TimeUnit.SECONDS)) {
-        }
+        while(!searchObserver.await(1, TimeUnit.SECONDS));
 
         LOG.info("Deleting {} existing records ...", searchObserver.getDocumentIds().size());
         int deleteProgress = 0;
@@ -129,7 +128,7 @@ public class FileScannerServiceImpl implements FileScannerService {
         LOG.info("Subscription completed");
         fsObserver.awaitCompleted();
         LOG.info("Scan completed.");
-        return ScanResponse.getSuccess(query.getPath(), fsObserver.getRecords(), searchObserver.getDocumentIds().size());
+        return ScanResponse.getSuccess(query.getPath(), fsObserver.getRecords(), searchObserver.getDocumentIds().size(), fsObserver.getDirCounter());
     }
 
     @Override
@@ -142,8 +141,8 @@ public class FileScannerServiceImpl implements FileScannerService {
     @Override
     public void closeAndWaitForExecutors() throws Exception {
         executorService.shutdown();
-        while(!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
-        }
+        while(!executorService.awaitTermination(1, TimeUnit.SECONDS));
+        LOG.info("waiting for es executor");
         elasticSearchService.closeAndWaitForExecutors();
     }
 

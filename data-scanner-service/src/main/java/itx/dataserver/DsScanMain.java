@@ -48,6 +48,7 @@ public class DsScanMain {
         float durationSec = (System.nanoTime() - startTime)/1_000_000_000F;
         LOG.info("DsMain: records deleted: {}", scanResponse.getDeletedRecords());
         LOG.info("DsMain: records created: {}", scanResponse.getCreatedRecords());
+        LOG.info("DsMain: dirs scanned   : {}", scanResponse.getDirectories());
         LOG.info("DsMain: success: {}", scanResponse.isSuccess());
         scanner.closeAndWaitForExecutors();
         LOG.info("DsMain: done in {} s", durationSec);

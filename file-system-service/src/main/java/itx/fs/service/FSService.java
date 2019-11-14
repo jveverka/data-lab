@@ -21,6 +21,7 @@ public interface FSService {
      * @param query file system query.
      * @return file system data stream. See {@link LoggingDataSubscriber} as simple example.
      */
+    @Deprecated
     Flowable<DirItem> scanDirectory(DirQuery query);
 
     /**
@@ -35,6 +36,7 @@ public interface FSService {
      * @param filePath file or directory path to be scanned.
      * @return file or directory data or error.
      */
+    @Deprecated
     Single<DirItem> scanSingleFileOrDirectory(Path filePath);
 
 }
