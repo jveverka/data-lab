@@ -55,14 +55,13 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
     @Override
     public void onNext(FileItem value) {
         FileScannerTask fileScannerTask = new FileScannerTask(observableEmitter, value.getPath(), value.getBasicFileAttributes());
-        //TODO: fix multi threading
-        //executorService.submit(fileScannerTask);
-        fileScannerTask.run();
+        executorService.submit(fileScannerTask);
     }
 
     @Override
     public void onError(Throwable error) {
         LOG.info("onError");
+        closeAndWait();
         this.observableEmitter.onError(error);
         cl.countDown();
     }
@@ -70,6 +69,7 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
     @Override
     public void onComplete() {
         LOG.info("onComplete");
+        closeAndWait();
         this.observableEmitter.onComplete();
         cl.countDown();
     }
@@ -83,6 +83,14 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
 
     public boolean await(long timeout, TimeUnit unit) throws InterruptedException {
         return cl.await(timeout, unit);
+    }
+
+    private void closeAndWait() {
+        try {
+            close();
+        } catch (InterruptedException e) {
+            LOG.error("Close error: {}", e);
+        }
     }
 
 }
