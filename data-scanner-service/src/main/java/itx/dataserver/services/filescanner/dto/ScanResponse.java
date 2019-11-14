@@ -9,13 +9,15 @@ public class ScanResponse {
     private final long createdRecords;
     private final boolean success;
     private final long directories;
+    private final long errors;
 
-    public ScanResponse(Path path, long deletedRecords, long createdRecords, boolean success, long directories) {
+    public ScanResponse(Path path, long deletedRecords, long createdRecords, boolean success, long directories, long errors) {
         this.path = path;
         this.deletedRecords = deletedRecords;
         this.createdRecords = createdRecords;
         this.success = success;
         this.directories = directories;
+        this.errors = errors;
     }
 
     public Path getPath() {
@@ -38,12 +40,16 @@ public class ScanResponse {
         return directories;
     }
 
-    public static ScanResponse getError(Path path) {
-        return new ScanResponse(path, 0, 0, false, 0);
+    public long getErrors() {
+        return errors;
     }
 
-    public static ScanResponse getSuccess(Path path, long createdRecords, long deletedRecords, long directories) {
-        return new ScanResponse(path, deletedRecords, createdRecords, true, directories);
+    public static ScanResponse getError(Path path) {
+        return new ScanResponse(path, 0, 0, false, 0, 0);
+    }
+
+    public static ScanResponse getSuccess(Path path, long createdRecords, long deletedRecords, long directories, long errors) {
+        return new ScanResponse(path, deletedRecords, createdRecords, true, directories, errors);
     }
 
 }

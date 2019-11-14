@@ -49,9 +49,11 @@ public class DsScanMain {
         LOG.info("DsMain: records deleted: {}", scanResponse.getDeletedRecords());
         LOG.info("DsMain: records created: {}", scanResponse.getCreatedRecords());
         LOG.info("DsMain: dirs scanned   : {}", scanResponse.getDirectories());
+        LOG.info("DsMain: scan errors    : {}", scanResponse.getErrors());
         LOG.info("DsMain: success: {}", scanResponse.isSuccess());
         scanner.closeAndWaitForExecutors();
         LOG.info("DsMain: done in {} s", durationSec);
+        LOG.info("DsMain: speed = {} files/sec", scanResponse.getCreatedRecords()/durationSec);
     }
 
 }

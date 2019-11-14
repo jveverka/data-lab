@@ -128,7 +128,8 @@ public class FileScannerServiceImpl implements FileScannerService {
         LOG.info("Subscription completed");
         fsObserver.awaitCompleted();
         LOG.info("Scan completed.");
-        return ScanResponse.getSuccess(query.getPath(), fsObserver.getRecords(), searchObserver.getDocumentIds().size(), fsObserver.getDirCounter());
+        return ScanResponse.getSuccess(query.getPath(), fsObserver.getRecords(), searchObserver.getDocumentIds().size(),
+                fsObserver.getDirCounter(), fsObserver.getErrors());
     }
 
     @Override

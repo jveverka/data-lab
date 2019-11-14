@@ -30,6 +30,7 @@ public class FsObserver implements Observer<DirItem> {
     private AtomicLong fileCounter;
     private AtomicLong dirCounter;
     private AtomicLong records;
+    private AtomicLong errors;
 
     public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService) {
         this.subscribed = new CountDownLatch(1);
@@ -37,6 +38,7 @@ public class FsObserver implements Observer<DirItem> {
         this.fileCounter = new AtomicLong(0);
         this.dirCounter = new AtomicLong(0);
         this.records = new AtomicLong(0);
+        this.errors = new AtomicLong(0);
         this.elasticSearchService = elasticSearchService;
         this.mediaService = mediaService;
     }
@@ -55,6 +57,7 @@ public class FsObserver implements Observer<DirItem> {
                 FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
                 this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
             } catch (Exception e) {
+                errors.incrementAndGet();
                 LOG.error("DIR Exception: ", e);
                 try {
                     DataUtils.ligESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
@@ -80,9 +83,11 @@ public class FsObserver implements Observer<DirItem> {
                                 try {
                                     this.elasticSearchService.saveDocument(ImageMetaDataInfo.class, imageMetaDataInfo.get());
                                 } catch (Exception e) {
+                                    errors.incrementAndGet();
                                     DataUtils.logESError(elasticSearchService, ImageMetaDataInfo.class, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_ImageMetaDataInfo_write_failed");
                                 }
                             } else {
+                                errors.incrementAndGet();
                                 DataUtils.logESError(elasticSearchService, ImageMetaDataInfo.class, fileInfo.getId(), metaData.get(), dirItem.getPath(), "ImageMetaDataInfo_mapping_failed");
                             }
                             break;
@@ -92,13 +97,16 @@ public class FsObserver implements Observer<DirItem> {
                                 try {
                                     this.elasticSearchService.saveDocument(VideoMetaDataInfo.class, videoMetaDataInfo.get());
                                 } catch (Exception e) {
+                                    errors.incrementAndGet();
                                     DataUtils.logESError(elasticSearchService, VideoMetaDataInfo.class, fileInfo.getId(), metaData.get(), e, dirItem.getPath(), "ElasticSearch_VideoMetaDataInfo_write_failed");
                                 }
                             } else {
+                                errors.incrementAndGet();
                                 DataUtils.logESError(elasticSearchService, VideoMetaDataInfo.class, fileInfo.getId(), metaData.get(), dirItem.getPath(), "VideoMetaDataInfo_mapping_failed");
                             }
                             break;
                         case NA:
+                            errors.incrementAndGet();
                             DataUtils.logESError(elasticSearchService, MetaDataType.class, fileInfo.getId(), metaData.get(), dirItem.getPath(), "MetaDataInfo_mapping_not_supported");
                             break;
                         default:
@@ -111,6 +119,7 @@ public class FsObserver implements Observer<DirItem> {
             } catch (Exception e) {
                 LOG.error("Exception: ", e);
                 try {
+                    errors.incrementAndGet();
                     DataUtils.ligESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
                 } catch (Exception ex) {
                     LOG.error("ES logging Exception: ", e);
@@ -151,4 +160,7 @@ public class FsObserver implements Observer<DirItem> {
         return dirCounter.get();
     }
 
+    public long getErrors() {
+        return errors.get();
+    }
 }
