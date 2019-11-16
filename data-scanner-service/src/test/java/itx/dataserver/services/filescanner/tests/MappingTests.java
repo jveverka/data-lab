@@ -102,18 +102,14 @@ public class MappingTests {
                 { Paths.get("/root/path/dir/my-file.jpeg"), ".annotated-meta-data-bulk.json", Boolean.FALSE },
                 { Paths.get("/root/path/dir/my-file.json"), ".annotated-meta-data-bulk.json", Boolean.FALSE },
                 { Paths.get("/root/path/dir/.annotated-meta-data-bulk-02.json"), ".annotated-meta-data-bulk*.json", Boolean.FALSE },
-                { Paths.get("/root/path/dir/.annotated-meta-data-bulk.json"), ".annotated-meta-data-bulk*.json", Boolean.TRUE },
                 { Paths.get("/root/path/dir/annotation-meta-data-bulk.json"), "annotation-meta-data-bulk.json", Boolean.TRUE },
                 { Paths.get("/root/path/dir/.annotation-meta-data-bulk.json"), ".annotation-meta-data-bulk.json", Boolean.TRUE },
-                //TODO: fix tests and implementation
-                //{ Paths.get("/root/path/dir/.annotated-meta-data-bulk01.json"), ".annotated-meta-data-bulk*", Boolean.TRUE },
-                //{ Paths.get("/root/path/dir/.annotated-meta-data-bulk-03.json"), ".annotated-meta-data-bulk*", Boolean.TRUE },
         };
     }
 
     @Test(dataProvider = "testAnnotationMetaDataPatterns")
-    public void testAnnotationMetaDataPatterns(Path path, String fileNamePattern, Boolean expectedResult) {
-        Boolean result = DataUtils.matchesAnnotationMetaDataPattern(path, fileNamePattern);
+    public void testAnnotationMetaDataPatterns(Path path, String annotationFileName, Boolean expectedResult) {
+        Boolean result = DataUtils.matchesAnnotationMetaDataFileName(path, annotationFileName);
         Assert.assertEquals(result, expectedResult);
     }
 

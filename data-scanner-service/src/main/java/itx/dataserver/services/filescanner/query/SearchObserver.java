@@ -1,4 +1,4 @@
-package itx.dataserver.services.query;
+package itx.dataserver.services.filescanner.query;
 
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;

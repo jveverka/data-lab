@@ -14,7 +14,7 @@ import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfo;
 import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfoTransformer;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedDataTransformer;
-import itx.dataserver.services.query.SearchObserver;
+import itx.dataserver.services.filescanner.query.SearchObserver;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
