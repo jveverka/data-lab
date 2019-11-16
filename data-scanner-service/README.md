@@ -32,6 +32,14 @@ ElasticSearch indices:
 
 Examples of [ElasticSearch queries](docs/elasticsearch-queries.md) covering various use-cases.
 
+### Directory scanning
+File system is scanned recursively starting from root directory. Meta-data are obtained from file system and 
+from file content, depending on file type.
+* __Images__ - image files are tested for meta-data presence, in case meta-data is present, the record is stored in ElasticSearch. 
+* __Videos__ - video files are tested for meta-data presence, in case meta-data is present, the record is stored in ElasticSearch.
+* __Annotations__ - in case JSON meta-data file is present in any directory or subdirectory, records within the file are stored in ElasticSearch.
+  Default JSON meta-data name is __.annotation-meta-data-bulk.json__.
+
 ### Run and Build
 ```
 gradle clean installDist distZip test
