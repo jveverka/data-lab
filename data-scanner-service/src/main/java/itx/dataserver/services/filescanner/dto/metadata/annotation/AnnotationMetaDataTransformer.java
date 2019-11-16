@@ -22,12 +22,13 @@ public class AnnotationMetaDataTransformer implements DataTransformer<Annotation
 
     @Override
     public Map<String, Object> getSource(AnnotationMetaData data) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DataUtils.DATE_TIME_FORMAT);
         Map<String, Object> source = new HashMap<>();
         source.put("fileInfoId", data.getId().getId());
         source.put("path", data.getPath().toString());
         source.put("name", data.getName());
         source.put("description", data.getDescription());
-        source.put("timeStamp", data.getTimeStamp());
+        source.put("timeStamp", sdf.format(data.getTimeStamp()));
         Map<String, Object> coordinates = new HashMap<>();
         if (data.getCoordinates() != null) {
             coordinates.put("lon", data.getCoordinates().getLon());
@@ -79,7 +80,7 @@ public class AnnotationMetaDataTransformer implements DataTransformer<Annotation
         try {
             timeStamp = sdf.parse((String) source.get("timeStamp"));
         } catch (ParseException e) {
-
+            throw new DataMappingException(e);
         }
         Map<String, Object> coordinatedSource = (Map<String, Object>) source.get("coordinates");
         Coordinates coordinates = new Coordinates((Float) coordinatedSource.get("lon"), (Float) coordinatedSource.get("lat"));
