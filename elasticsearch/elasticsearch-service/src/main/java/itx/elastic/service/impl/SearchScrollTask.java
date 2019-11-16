@@ -14,8 +14,6 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 public class SearchScrollTask<T> implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(SearchScrollTask.class);
@@ -74,7 +72,7 @@ public class SearchScrollTask<T> implements Runnable {
             }
             observer.onComplete();
             LOG.info("SearchScrollTask: done.");
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.info("SearchScrollTask: {}}", e.getMessage());
             observer.onError(e);
         }

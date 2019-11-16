@@ -1,5 +1,6 @@
 package itx.elastic.service.tests.it.dto;
 
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.impl.ESUtils;
 import itx.elastic.service.dto.DocumentId;
@@ -81,7 +82,7 @@ public class EventDataTransformer implements DataTransformer<EventData> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public EventData getInstance(DocumentId id, Map<String, Object> source) {
+    public EventData getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         Map<String, Object> geoLocationMap = (Map<String, Object>)source.get("location");
         Location geoLocation = new Location(Float.parseFloat(geoLocationMap.get("lon").toString()), Float.parseFloat(geoLocationMap.get("lat").toString()));
         ZonedDateTime zonedDateTime = ESUtils.fromString(source.get("startDate").toString());

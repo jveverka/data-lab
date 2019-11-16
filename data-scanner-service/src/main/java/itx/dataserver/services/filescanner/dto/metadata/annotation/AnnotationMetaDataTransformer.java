@@ -3,6 +3,7 @@ package itx.dataserver.services.filescanner.dto.metadata.annotation;
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -68,7 +69,7 @@ public class AnnotationMetaDataTransformer implements DataTransformer<Annotation
 
     @Override
     @SuppressWarnings("unchecked")
-    public AnnotationMetaData getInstance(DocumentId id, Map<String, Object> source) {
+    public AnnotationMetaData getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         SimpleDateFormat sdf = new SimpleDateFormat(DataUtils.DATE_TIME_FORMAT);
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         Path path = Paths.get((String)source.get("path"));

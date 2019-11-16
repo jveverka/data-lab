@@ -1,5 +1,6 @@
 package itx.elastic.service.tests.it;
 
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
@@ -37,7 +38,7 @@ public class ElasticSearchServiceBasicTestsIT {
     }
 
     @Test
-    public void testEventDataTransformer() {
+    public void testEventDataTransformer() throws DataMappingException {
         EventDataTransformer eventDataTransformer = new EventDataTransformer();
         EventData eventDataOriginal = TestUtils.createEventData(1);
 

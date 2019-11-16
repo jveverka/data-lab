@@ -1,6 +1,7 @@
 package itx.dataserver.services.filescanner.dto.fileinfo;
 
 import itx.dataserver.services.filescanner.DataUtils;
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import itx.fs.service.dto.CheckSum;
@@ -73,7 +74,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public FileInfo getInstance(DocumentId id, Map<String, Object> source) {
+    public FileInfo getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
 
         Optional<CheckSum> checkSumOptional = Optional.empty();

@@ -2,6 +2,7 @@ package itx.dataserver.services.filescanner.dto.unmapped;
 
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -56,7 +57,7 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
     }
 
     @Override
-    public UnmappedData getInstance(DocumentId id, Map<String, Object> source) {
+    public UnmappedData getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String type = (String)source.get("type");
         String jsonData = (String)source.get("jsonData");

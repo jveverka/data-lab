@@ -1,5 +1,6 @@
 package itx.elastic.service.tests.it;
 
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
@@ -45,13 +46,13 @@ public class ElasticSearchServiceDocumentsTestsIT {
     }
 
     @Test
-    public void testGetNotExistingDocument() throws IOException {
+    public void testGetNotExistingDocument() throws IOException, DataMappingException {
         Optional<EventData> document = elasticSearchService.getDocumentById(EventData.class, new DocumentId("not-existing-id"));
         Assert.assertTrue(document.isEmpty());
     }
 
     @Test
-    public void testCreateReadDeleteDocument() throws IOException {
+    public void testCreateReadDeleteDocument() throws IOException, DataMappingException {
         boolean result = false;
         Optional<EventData> documentById = null;
         result = elasticSearchService.saveDocument(EventData.class, eventData);

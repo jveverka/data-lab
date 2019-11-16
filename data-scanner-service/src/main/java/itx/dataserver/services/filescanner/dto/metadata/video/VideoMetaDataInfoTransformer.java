@@ -2,6 +2,7 @@ package itx.dataserver.services.filescanner.dto.metadata.video;
 
 import itx.dataserver.services.filescanner.DataUtils;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.impl.ESUtils;
@@ -59,7 +60,7 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
     }
 
     @Override
-    public VideoMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) {
+    public VideoMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String videoType = (String)source.get("videoType");
         float duration = (Float)source.get("duration");

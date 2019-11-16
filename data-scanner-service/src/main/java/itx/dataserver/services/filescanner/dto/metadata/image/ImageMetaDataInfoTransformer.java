@@ -5,6 +5,7 @@ import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.dataserver.services.filescanner.dto.metadata.Coordinates;
 import itx.dataserver.services.filescanner.dto.metadata.DeviceInfo;
 import itx.dataserver.services.filescanner.dto.metadata.GPS;
+import itx.elastic.service.DataMappingException;
 import itx.elastic.service.DataTransformer;
 import itx.elastic.service.dto.DocumentId;
 import itx.elastic.service.impl.ESUtils;
@@ -88,7 +89,7 @@ public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDa
 
     @Override
     @SuppressWarnings("unchecked")
-    public ImageMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) {
+    public ImageMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String imageType = (String)source.get("imageType");
         long imageWidth = (Long)source.get("imageWidth");

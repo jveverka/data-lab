@@ -147,7 +147,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) throws IOException {
+    public <T> Optional<T> getDocumentById(Class<T> type, DocumentId id) throws IOException, DataMappingException {
         DataTransformer<T> dataTransformer = (DataTransformer<T>)transformers.get(type);
         if (dataTransformer != null) {
             GetRequest getRequest = new GetRequest(dataTransformer.getIndexName(), id.getId());
