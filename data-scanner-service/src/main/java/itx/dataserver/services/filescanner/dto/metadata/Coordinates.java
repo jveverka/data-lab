@@ -1,11 +1,16 @@
 package itx.dataserver.services.filescanner.dto.metadata;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Coordinates {
 
     private final float lon;
     private final float lat;
 
-    public Coordinates(float lon, float lat) {
+    @JsonCreator
+    public Coordinates(@JsonProperty("lon") float lon,
+                       @JsonProperty("lat") float lat) {
         this.lon = lon;
         this.lat = lat;
     }
