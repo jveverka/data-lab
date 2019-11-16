@@ -4,9 +4,9 @@ import com.beust.jcommander.JCommander;
 import itx.dataserver.services.filescanner.DsScanArguments;
 import itx.dataserver.services.filescanner.FileScannerService;
 import itx.dataserver.services.filescanner.FileScannerServiceImpl;
+import itx.dataserver.services.filescanner.dto.ScanRequest;
 import itx.dataserver.services.filescanner.dto.ScanResponse;
 import itx.elastic.service.dto.ClientConfig;
-import itx.fs.service.dto.DirQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,11 +44,14 @@ public class DsScanMain {
         } else {
             LOG.info("DsMain: ES indices initialization is skipped.");
         }
-        ScanResponse scanResponse = scanner.scanAndStoreSubDirAsync(new DirQuery(rootPath, arguments.getExecutorSize()));
+        LOG.info("DsMain: annotated-meta-data={}", arguments.getMetaDataFileName());
+        ScanRequest scanRequest = new ScanRequest(rootPath, arguments.getExecutorSize(), arguments.getMetaDataFileName());
+        ScanResponse scanResponse = scanner.scanAndStoreSubDirAsync(scanRequest);
         float durationSec = (System.nanoTime() - startTime)/1_000_000_000F;
         LOG.info("DsMain: records deleted: {}", scanResponse.getDeletedRecords());
         LOG.info("DsMain: records created: {}", scanResponse.getCreatedRecords());
         LOG.info("DsMain: dirs scanned   : {}", scanResponse.getDirectories());
+        LOG.info("DsMain: annotations    : {}", scanResponse.getAnnotations());
         LOG.info("DsMain: scan errors    : {}", scanResponse.getErrors());
         LOG.info("DsMain: success: {}", scanResponse.isSuccess());
         scanner.closeAndWaitForExecutors();

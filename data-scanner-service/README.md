@@ -25,6 +25,7 @@ ElasticSearch indices:
   This is primary data index, other indices contain complementary information to file-info. 
 * __image-meta-data-info__ - index with image-meta-data-info for files, mostly bitmap images like JPEG photos.
 * __video-meta-data-info__ - index with video-meta-data-info for files, mostly video streams.
+* __annotation-meta-data__ - annotation meta data from file system.
 * __unmapped-data__ - unmapped objects serialized in JSON or other file scanning errors.
   In case file scanning or other data mapping fails for particular file, data about this 
   incident is recorded for later analysis as document in unmapped-data index.  

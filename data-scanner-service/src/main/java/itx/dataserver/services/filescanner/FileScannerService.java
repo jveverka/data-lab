@@ -1,7 +1,7 @@
 package itx.dataserver.services.filescanner;
 
+import itx.dataserver.services.filescanner.dto.ScanRequest;
 import itx.dataserver.services.filescanner.dto.ScanResponse;
-import itx.fs.service.dto.DirQuery;
 
 /**
  * This service is responsible for scanning file system and records meta-data produced by file system scanning into
@@ -24,7 +24,7 @@ public interface FileScannerService extends AutoCloseable {
      * @param query containing root path to target directory.
      * @throws InterruptedException
      */
-    ScanResponse scanAndStoreSubDirAsync(DirQuery query) throws InterruptedException;
+    ScanResponse scanAndStoreSubDirAsync(ScanRequest query) throws InterruptedException;
 
     /**
      * Delete all documents in unmapped-data index.

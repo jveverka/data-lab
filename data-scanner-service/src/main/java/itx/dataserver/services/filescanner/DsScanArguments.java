@@ -19,6 +19,9 @@ public class DsScanArguments {
     @Parameter(names = {"-i", "--init-indices" }, description = "Initialize ElasticSearch indices, this will delete and create empty indices.")
     private boolean initIndices = false;
 
+    @Parameter(names = {"-m", "--meta-data" }, description = "Meta Data file name used during data scanning.")
+    private String metaDataFileName = ".annotation-meta-data-bulk.json";
+
     public int getExecutorSize() {
         return executorSize;
     }
@@ -37,6 +40,10 @@ public class DsScanArguments {
 
     public boolean isInitIndices() {
         return initIndices;
+    }
+
+    public String getMetaDataFileName() {
+        return metaDataFileName;
     }
 
 }

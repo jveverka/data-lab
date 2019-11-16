@@ -75,4 +75,9 @@ public class AnnotationMetaData {
                 annotationMetaData.description, annotationMetaData.timeStamp, annotationMetaData.coordinates);
     }
 
+    public static AnnotationMetaData from(Path path, AnnotationMetaData annotationMetaData) {
+        return new AnnotationMetaData(annotationMetaData.id, path, annotationMetaData.name,
+                annotationMetaData.description, annotationMetaData.timeStamp, annotationMetaData.coordinates);
+    }
+
 }

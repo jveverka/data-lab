@@ -1,8 +1,11 @@
 package itx.dataserver.services.filescanner;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
+import itx.dataserver.services.filescanner.dto.metadata.annotation.AnnotationMetaData;
 import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
 import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfo;
 import itx.elastic.service.ElasticSearchService;
@@ -14,7 +17,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,22 +34,31 @@ public class FsObserver implements Observer<DirItem> {
 
     private final ElasticSearchService elasticSearchService;
     private final MediaService mediaService;
+    private final String metaDataFileName;
+    private final ObjectMapper objectMapper;
+    private final Map<String, AnnotationMetaData> annotationCache;
+
     private final CountDownLatch subscribed;
     private final CountDownLatch completed;
-    private AtomicLong fileCounter;
-    private AtomicLong dirCounter;
-    private AtomicLong records;
-    private AtomicLong errors;
+    private final AtomicLong fileCounter;
+    private final AtomicLong dirCounter;
+    private final AtomicLong records;
+    private final AtomicLong errors;
+    private final AtomicLong annotations;
 
-    public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService) {
+    public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService, String metaDataFileName) {
+        this.elasticSearchService = elasticSearchService;
+        this.mediaService = mediaService;
+        this.metaDataFileName = metaDataFileName;
+        this.annotationCache = new ConcurrentHashMap<>();
+        this.objectMapper = new ObjectMapper();
         this.subscribed = new CountDownLatch(1);
         this.completed = new CountDownLatch(1);
         this.fileCounter = new AtomicLong(0);
         this.dirCounter = new AtomicLong(0);
         this.records = new AtomicLong(0);
         this.errors = new AtomicLong(0);
-        this.elasticSearchService = elasticSearchService;
-        this.mediaService = mediaService;
+        this.annotations = new AtomicLong(0);
     }
 
     @Override
@@ -51,25 +69,48 @@ public class FsObserver implements Observer<DirItem> {
     @Override
     public void onNext(DirItem dirItem) {
         File file = dirItem.getPath().toFile();
+        FileInfo fileInfo = null;
+
         if (file.isDirectory()) {
             try {
-                LOG.info("DIR  onNext: {} {}", dirCounter.incrementAndGet(), dirItem.getPath().toString());
-                FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
+
+                Path annotationPath = Paths.get(dirItem.getPath().toString(), metaDataFileName);
+                File annotationFile = annotationPath.toFile();
+                if (annotationFile.isFile() && DataUtils.matchesAnnotationMetaDataFileName(annotationPath, metaDataFileName)) {
+                    //load annotations into common cache pool
+                    LOG.info("ANOT onNext:{}", annotationFile.getPath());
+                    try (FileInputStream fis = new FileInputStream(annotationFile)) {
+                        List<AnnotationMetaData> annotations = objectMapper.readValue(fis, new TypeReference<List<AnnotationMetaData>>() {});
+                        for (AnnotationMetaData annotationMetaData: annotations) {
+                            annotationMetaData = AnnotationMetaData.from(Paths.get(dirItem.getPath().toString(), annotationMetaData.getPath().toString()), annotationMetaData);
+                            annotationCache.put(annotationMetaData.getPath().toString(), annotationMetaData);
+                        }
+                    } catch (Exception e) {
+                        LOG.error("ANOT Exception: ", e);
+                    }
+                }
+
+                LOG.info("DIR  onNext: {} {}", dirCounter.incrementAndGet(), dirItem.getPath());
+                fileInfo = DataUtils.createFileInfo(dirItem);
                 this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
             } catch (Exception e) {
                 errors.incrementAndGet();
                 LOG.error("DIR Exception: ", e);
                 try {
-                    DataUtils.ligESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
+                    DataUtils.logESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
                 } catch (Exception ex) {
                     LOG.error("DIR ES logging Exception: ", e);
                 }
             }
         } else {
+            if (file.isFile() && DataUtils.matchesAnnotationMetaDataFileName(dirItem.getPath(), metaDataFileName)) {
+                // do not process data file with annotation data
+                return;
+            }
             try (FileInputStream fis = new FileInputStream(file)) {
-                LOG.info("File onNext: {} {}", fileCounter.incrementAndGet(), dirItem.getPath().toString());
+                LOG.info("FILE onNext: {} {}", fileCounter.incrementAndGet(), dirItem.getPath());
                 Optional<MetaData> metaData = this.mediaService.getMetaData(fis);
-                FileInfo fileInfo = DataUtils.createFileInfo(dirItem);
+                fileInfo = DataUtils.createFileInfo(dirItem);
                 this.elasticSearchService.saveDocument(FileInfo.class, fileInfo);
                 this.records.incrementAndGet();
 
@@ -120,12 +161,33 @@ public class FsObserver implements Observer<DirItem> {
                 LOG.error("Exception: ", e);
                 try {
                     errors.incrementAndGet();
-                    DataUtils.ligESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
+                    DataUtils.logESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
                 } catch (Exception ex) {
                     LOG.error("ES logging Exception: ", e);
                 }
             }
         }
+
+        // Save annotation data
+        if (fileInfo != null) {
+            AnnotationMetaData annotation = annotationCache.remove(fileInfo.getFileSystemInfo().getPath());
+            if (annotation != null) {
+                annotation = AnnotationMetaData.from(fileInfo.getId(), annotation);
+                try {
+                    this.elasticSearchService.saveDocument(AnnotationMetaData.class, annotation);
+                    annotations.incrementAndGet();
+                } catch (IOException e) {
+                    LOG.error("ANOT Exception: ", e);
+                    errors.incrementAndGet();
+                    try {
+                        DataUtils.logESErrorDirMapping(elasticSearchService, dirItem.getPath(), e);
+                    } catch (IOException ex) {
+                        LOG.error("ES logging Exception: ", e);
+                    }
+                }
+            }
+        }
+
     }
 
     @Override
@@ -162,5 +224,9 @@ public class FsObserver implements Observer<DirItem> {
 
     public long getErrors() {
         return errors.get();
+    }
+
+    public long getAnnotations() {
+        return annotations.get();
     }
 }

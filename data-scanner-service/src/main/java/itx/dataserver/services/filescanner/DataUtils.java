@@ -65,7 +65,7 @@ public final class DataUtils {
         elasticSearchService.saveDocument(UnmappedData.class, unmappedData);
     }
 
-    public static void ligESErrorDirMapping(ElasticSearchService elasticSearchService, Path path, Exception e) throws IOException {
+    public static void logESErrorDirMapping(ElasticSearchService elasticSearchService, Path path, Exception e) throws IOException {
         String id = UUID.randomUUID().toString();
         String jsonData = path.toString();
         String stackTrace = DataUtils.getStackTraceAsString(e);
@@ -498,6 +498,11 @@ public final class DataUtils {
         } else {
             return MetaDataType.NA;
         }
+    }
+
+    public static boolean matchesAnnotationMetaDataFileName(Path path, String metaDataFileName) {
+        String fileName = path.getFileName().toString();
+        return fileName.equals(metaDataFileName);
     }
 
 }

@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Optional;
 
@@ -90,6 +92,29 @@ public class MappingTests {
         Assert.assertTrue(metaDataOptional.isPresent());
         String jsonData = ParsingUtils.writeAsJsonString(metaDataOptional.get());
         Assert.assertNotNull(jsonData);
+    }
+
+    @DataProvider(name = "testAnnotationMetaDataPatterns")
+    public static Object[][] testAnnotationMetaDataPatterns() {
+        return new Object[][] {
+                { Paths.get("/root/path/dir/.annotated-meta-data-bulk.json"), ".annotated-meta-data-bulk.json", Boolean.TRUE },
+                { Paths.get("/root/path/dir"), ".annotated-meta-data-bulk.json", Boolean.FALSE },
+                { Paths.get("/root/path/dir/my-file.jpeg"), ".annotated-meta-data-bulk.json", Boolean.FALSE },
+                { Paths.get("/root/path/dir/my-file.json"), ".annotated-meta-data-bulk.json", Boolean.FALSE },
+                { Paths.get("/root/path/dir/.annotated-meta-data-bulk-02.json"), ".annotated-meta-data-bulk*.json", Boolean.FALSE },
+                { Paths.get("/root/path/dir/.annotated-meta-data-bulk.json"), ".annotated-meta-data-bulk*.json", Boolean.TRUE },
+                { Paths.get("/root/path/dir/annotation-meta-data-bulk.json"), "annotation-meta-data-bulk.json", Boolean.TRUE },
+                { Paths.get("/root/path/dir/.annotation-meta-data-bulk.json"), ".annotation-meta-data-bulk.json", Boolean.TRUE },
+                //TODO: fix tests and implementation
+                //{ Paths.get("/root/path/dir/.annotated-meta-data-bulk01.json"), ".annotated-meta-data-bulk*", Boolean.TRUE },
+                //{ Paths.get("/root/path/dir/.annotated-meta-data-bulk-03.json"), ".annotated-meta-data-bulk*", Boolean.TRUE },
+        };
+    }
+
+    @Test(dataProvider = "testAnnotationMetaDataPatterns")
+    public void testAnnotationMetaDataPatterns(Path path, String fileNamePattern, Boolean expectedResult) {
+        Boolean result = DataUtils.matchesAnnotationMetaDataPattern(path, fileNamePattern);
+        Assert.assertEquals(result, expectedResult);
     }
 
 }
