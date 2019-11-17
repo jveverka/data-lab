@@ -30,7 +30,7 @@ public class FileScannerTask implements Runnable {
     public void run() {
         if (attributes.isRegularFile()) {
             try {
-                CheckSum checkSum = FSUtils.calculateChecksum(path, FSUtils.SHA256);
+                CheckSum checkSum = FSUtils.calculateSha256Checksum(path);
                 emitter.onNext(new DirItem(path, attributes, checkSum));
             } catch (NoSuchAlgorithmException e) {
                 emitter.onError(e);

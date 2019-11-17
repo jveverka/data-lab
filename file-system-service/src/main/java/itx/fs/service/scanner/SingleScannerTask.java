@@ -30,7 +30,7 @@ public class SingleScannerTask implements Runnable {
     public void run() {
         if (attributes.isRegularFile()) {
             try {
-                CheckSum checkSum = FSUtils.calculateChecksum(path, FSUtils.SHA256);
+                CheckSum checkSum = FSUtils.calculateSha256Checksum(path);
                 emitter.onSuccess(new DirItem(path, attributes, checkSum));
             } catch (NoSuchAlgorithmException e) {
                 emitter.onError(e);
