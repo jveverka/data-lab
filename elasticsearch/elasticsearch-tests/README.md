@@ -9,7 +9,7 @@ gradle clean build -Dtest.profile=integration --stacktrace --info
 ```
 
 ### Install ElasticSearch
-* Download ElasticSearch [binary package](https://www.elastic.co/downloads/elasticsearch).
+* Download ElasticSearch [binary package](https://www.elastic.co/downloads/past-releases/elasticsearch-7-4-2).
 * Extract the package in any directory 
   ```
   tar xzvf elasticsearch-7.4.2-linux-x86_64.tar.gz
