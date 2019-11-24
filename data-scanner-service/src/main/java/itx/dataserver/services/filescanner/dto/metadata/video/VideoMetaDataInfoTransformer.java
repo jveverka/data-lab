@@ -25,6 +25,7 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
         source.put("height", data.getHeight());
         source.put("frameRate", data.getFrameRate());
         source.put("timeStamp", data.getTimeStamp());
+        source.put("mediaType", data.getMediaType());
         return source;
     }
 
@@ -42,6 +43,7 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
                 DataUtils.addMappingField(builder, "height", "long");
                 DataUtils.addMappingField(builder, "frameRate", "float");
                 DataUtils.addDateMappingField(builder, "timeStamp", ESUtils.DATE_FORMAT);
+                DataUtils.addMappingField(builder, "mediaType", "keyword");
             }
             builder.endObject();
         }
@@ -68,7 +70,8 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
         long height = (Long)source.get("height");
         float frameRate = (Float)source.get("frameRate");
         String timeStamp = (String)source.get("timeStamp");
-        return new VideoMetaDataInfo(fileInfoId, videoType, duration, width, height, frameRate, timeStamp);
+        String mediaType = (String)source.get("mediaType");
+        return new VideoMetaDataInfo(fileInfoId, videoType, duration, width, height, frameRate, timeStamp, mediaType);
     }
 
 }

@@ -47,6 +47,8 @@ public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDa
         }
 
         source.put("gps", gps);
+        source.put("mediaType", data.getMediaType());
+
         return source;
     }
 
@@ -70,6 +72,7 @@ public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDa
                 DataUtils.addMappingField(builder, "gps.altitude", "long");
                 DataUtils.addDateMappingField(builder, "gps.timeStamp", ESUtils.DATE_FORMAT);
                 DataUtils.addMappingField(builder, "gps.processingMethod", "keyword");
+                DataUtils.addMappingField(builder, "mediaType", "keyword");
             }
             builder.endObject();
         }
@@ -113,7 +116,8 @@ public class ImageMetaDataInfoTransformer implements DataTransformer<ImageMetaDa
             gps = new GPS(coordinates, (Integer) gpsInfoSource.get("altitude"), (String) gpsInfoSource.get("timeStamp"), (String) gpsInfoSource.get("processingMethod"));
         }
 
-        return new ImageMetaDataInfo(fileInfoId, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
+        String mediaType = (String)source.get("mediaType");
+        return new ImageMetaDataInfo(fileInfoId, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps, mediaType);
 
     }
 

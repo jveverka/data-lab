@@ -13,6 +13,7 @@ public class ImageMetaDataInfo {
     private final long imageHeight;
     private final DeviceInfo deviceInfo;
     private final String timeStamp;
+    private final String mediaType;
     /*
     private final String deviceOrientation;
     private final int resolutionX;
@@ -30,7 +31,7 @@ public class ImageMetaDataInfo {
     private final GPS gps;
 
     public ImageMetaDataInfo(FileInfoId id, String imageType, long imageWidth, long imageHeight,
-                             DeviceInfo deviceInfo, String timeStamp, GPS gps) {
+                             DeviceInfo deviceInfo, String timeStamp, GPS gps, String mediaType) {
         this.id = id;
         this.imageType = imageType;
         this.imageWidth = imageWidth;
@@ -38,6 +39,7 @@ public class ImageMetaDataInfo {
         this.deviceInfo = deviceInfo;
         this.timeStamp = timeStamp;
         this.gps = gps;
+        this.mediaType = mediaType;
     }
 
 
@@ -69,4 +71,7 @@ public class ImageMetaDataInfo {
         return gps;
     }
 
+    public String getMediaType() {
+        return mediaType;
+    }
 }

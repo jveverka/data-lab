@@ -145,6 +145,7 @@ public final class DataUtils {
             long height = 0;
             float frameRate = 0;
             String timeStamp = "";
+            String mediaType = null;
 
             if (metaData.directoryNames().contains("mp4")) {
                 videoType = "mp4";
@@ -193,7 +194,12 @@ public final class DataUtils {
                 return Optional.empty();
             }
 
-            VideoMetaDataInfo videoMetaDataInfo = new VideoMetaDataInfo(id, videoType, duration, width, height, frameRate, timeStamp);
+            Optional<String> mediaTypeOptional = getMediaType(metaData);
+            if (mediaTypeOptional.isPresent()) {
+                mediaType = mediaTypeOptional.get();
+            }
+
+            VideoMetaDataInfo videoMetaDataInfo = new VideoMetaDataInfo(id, videoType, duration, width, height, frameRate, timeStamp, mediaType);
             return Optional.of(videoMetaDataInfo);
         } catch (Exception e) {
             LOG.error("Video mapping Exception: ", e);
@@ -210,6 +216,7 @@ public final class DataUtils {
             String model = null;
             String timeStamp = null;
             GPS gps = null;
+            String mediaType = null;
 
             if (metaData.directoryNames().contains("jpeg")) {
                 imageType = "jpeg";
@@ -268,12 +275,22 @@ public final class DataUtils {
             if (vendor != null || model != null) {
                 deviceInfo = new DeviceInfo(vendor, model);
             }
-            ImageMetaDataInfo imageMetaDataInfo = new ImageMetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps);
+
+            Optional<String> mediaTypeOptional = getMediaType(metaData);
+            if (mediaTypeOptional.isPresent()) {
+                mediaType = mediaTypeOptional.get();
+            }
+
+            ImageMetaDataInfo imageMetaDataInfo = new ImageMetaDataInfo(id, imageType, imageWidth, imageHeight, deviceInfo, timeStamp, gps, mediaType);
             return Optional.of(imageMetaDataInfo);
         } catch (Exception e) {
             LOG.error("Image mapping Exception: ", e);
             return Optional.empty();
         }
+    }
+
+    private static Optional<String> getMediaType(MetaData metaData) {
+        return metaData.getValueByPath(String.class, "file-type", "detected-mime-type");
     }
 
     private static Optional<String> getTimeStamp(MetaData metaData) {
