@@ -1,10 +1,8 @@
-package itx.fs.service;
+package itx.fs.service.fsaccess;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -37,7 +35,7 @@ public class FSUtils {
     }
 
     /**
-     * Compute checksum of file with give algorithm.
+     * Compute checksum of file with given algorithm.
      * @param file {@link Path} to file.
      * @param algorithm Algorithm name. For example SHA-256.
      * @return Calculated {@link CheckSum} for given file.
@@ -45,13 +43,25 @@ public class FSUtils {
      * @throws IOException
      */
     public static CheckSum calculateChecksum(Path file, String algorithm) throws NoSuchAlgorithmException, IOException {
-        MessageDigest digest = MessageDigest.getInstance(algorithm);
         try (InputStream fis = new FileInputStream(file.toFile())) {
-            byte[] buffer = new byte[10240];
-            int nread;
-            while ((nread = fis.read(buffer)) != -1) {
-                digest.update(buffer, 0, nread);
-            }
+            return calculateChecksum(fis, algorithm);
+        }
+    }
+
+    /**
+     * Compute checksum from {@link InputStream} data with given algorithm.
+     * @param {@link InputStream} of data for checksum calculation.
+     * @param algorithm Algorithm name. For example SHA-256.
+     * @return Calculated {@link CheckSum} for given file.
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     */
+    public static CheckSum calculateChecksum(InputStream is, String algorithm) throws NoSuchAlgorithmException, IOException {
+        MessageDigest digest = MessageDigest.getInstance(algorithm);
+        byte[] buffer = new byte[10240];
+        int nread;
+        while ((nread = is.read(buffer)) != -1) {
+            digest.update(buffer, 0, nread);
         }
         StringBuilder result = new StringBuilder();
         for (byte b : digest.digest()) {
@@ -84,24 +94,25 @@ public class FSUtils {
      * Walk through single directory, emit observed files and sub-directories. This walk is NOT recursive.
      * @param dirPath base {@link Path} to walk through.
      * @param emitter {@link Emitter} which consumes walk through events.
+     * @param fileDataReader service reading data from file system.
      * @return {@link List} of sub-directories which may be used by recursive walk trough.
      * @throws IOException thrown in case of file access error.
      */
-    public static List<Path> walkDirectory(Path dirPath, Emitter<FileItem> emitter) throws IOException {
-        File file = dirPath.toFile();
+    public static List<Path> walkDirectory(Path dirPath, Emitter<FileItem> emitter, FileDataReader fileDataReader) throws IOException {
         List<Path> directories = new ArrayList<>();
-        if (file.isDirectory()) {
-            String[] fileListing = file.list();
-            for (String subPath: fileListing) {
-                File f = Paths.get(dirPath.toString(), subPath).toFile();
-                if (f.isDirectory()) {
-                    directories.add(f.toPath());
-                    BasicFileAttributes basicFileAttributes = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
-                    emitter.onNext(new FileItem(f.toPath(), basicFileAttributes));
+        Optional<String[]> directoryList = fileDataReader.getDirectoryList(dirPath);
+        if (directoryList.isPresent()) {
+            String[] fileListing = directoryList.get();
+            for (String subPathString: fileListing) {
+                Path subPath = Paths.get(dirPath.toString(), subPathString);
+                if (fileDataReader.isDirectory(subPath)) {
+                    directories.add(subPath);
+                    BasicFileAttributes basicFileAttributes = fileDataReader.getBasicFileAttributes(subPath);
+                    emitter.onNext(new FileItem(subPath, basicFileAttributes));
                 } else {
                     try {
-                        BasicFileAttributes basicFileAttributes = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
-                        emitter.onNext(new FileItem(f.toPath(), basicFileAttributes));
+                        BasicFileAttributes basicFileAttributes = fileDataReader.getBasicFileAttributes(subPath);
+                        emitter.onNext(new FileItem(subPath, basicFileAttributes));
                     } catch (IOException e) {
                         emitter.onError(e);
                         throw e;
@@ -120,14 +131,15 @@ public class FSUtils {
      * Walk through directory, emit observed files and sub-directories. This walk is recursive.
      * @param dirPath base {@link Path} to walk through.
      * @param emitter which consumes walk through events.
+     * @param fileDataReader service reading data from file system.
      * @throws IOException thrown in case of file access error.
      */
-    public static void walkDirectoryRecursively(Path dirPath, Emitter<FileItem> emitter) throws IOException {
-        List<Path> dirs = walkDirectory(dirPath, emitter);
+    public static void walkDirectoryRecursively(Path dirPath, Emitter<FileItem> emitter, FileDataReader fileDataReader) throws IOException {
+        List<Path> dirs = walkDirectory(dirPath, emitter, fileDataReader);
         while (!dirs.isEmpty()) {
             List<Path> subDirs = new ArrayList<>();
             for (Path subDirPath : dirs) {
-                List<Path> subCollection = walkDirectory(subDirPath, emitter);
+                List<Path> subCollection = walkDirectory(subDirPath, emitter, fileDataReader);
                 subDirs.addAll(subCollection);
             }
             dirs = subDirs;

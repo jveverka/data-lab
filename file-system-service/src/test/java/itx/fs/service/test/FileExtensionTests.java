@@ -1,6 +1,6 @@
 package itx.fs.service.test;
 
-import itx.fs.service.FSUtils;
+import itx.fs.service.fsaccess.FSUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

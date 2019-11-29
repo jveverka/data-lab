@@ -1,6 +1,6 @@
 package itx.fs.service.dto;
 
-import itx.fs.service.FSUtils;
+import itx.fs.service.fsaccess.FSUtils;
 
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;

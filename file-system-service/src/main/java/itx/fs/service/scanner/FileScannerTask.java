@@ -1,7 +1,7 @@
 package itx.fs.service.scanner;
 
 import io.reactivex.rxjava3.core.Emitter;
-import itx.fs.service.FSUtils;
+import itx.fs.service.fsaccess.FSUtils;
 import itx.fs.service.dto.CheckSum;
 import itx.fs.service.dto.DirItem;
 import org.slf4j.Logger;
