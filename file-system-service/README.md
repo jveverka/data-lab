@@ -1,8 +1,11 @@
 # FileSystem service
 This service library scans file system and gets meta-data about files and directories.
 
-### Build and Run
+### Build and Test 
 ```
-gradle clean installDist distZip test publishToMavenLocal
-build/install/file-system-service/bin/file-system-service /path/to/directory
+gradle clean build test jacocoTestReport
+```
+JaCoCo test report is available at
+```
+build/reports/jacoco/test/html/index.html
 ```

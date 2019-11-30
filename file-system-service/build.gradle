@@ -1,9 +1,7 @@
 
 apply plugin: 'java'
-apply plugin: 'application'
 apply plugin: 'maven-publish'
-
-mainClassName = 'itx.fs.service.FsMain'
+apply plugin: 'jacoco'
 
 dependencies {
     compile 'io.reactivex.rxjava3:rxjava:3.0.0-RC4'

@@ -86,6 +86,16 @@ public class FSServiceTests {
         Assert.assertNotNull(testSingleObserver.getDirItem());
         Boolean isActualDirectory = testSingleObserver.getDirItem().getAttributes().isDirectory();
         Assert.assertEquals(isActualDirectory, isDirectory);
+        Assert.assertNotNull(testSingleObserver.getDirItem().getCheckSum());
+        Assert.assertNotNull(testSingleObserver.getDirItem().getPath());
+        Assert.assertNotNull(testSingleObserver.getDirItem().getExtension());
+    }
+
+    @Test
+    public void testConstructor() {
+        Executor executor = Executors.newSingleThreadExecutor();
+        FSService fsService = new FSServiceImpl(executor);
+        Assert.assertNotNull(fsService);
     }
 
 }
