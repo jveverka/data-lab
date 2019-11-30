@@ -25,6 +25,9 @@ public class TestEmitter implements Emitter<FileItem> {
 
     @Override
     public void onNext(FileItem value) {
+        if (cl.getCount() <= 0) {
+            throw new UnsupportedOperationException("onNext called after observer termination !");
+        }
         if (value.getBasicFileAttributes().isDirectory()) {
             dirCounter++;
         } else {

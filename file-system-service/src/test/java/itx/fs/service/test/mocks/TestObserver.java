@@ -29,6 +29,9 @@ public class TestObserver implements Observer<DirItem> {
 
     @Override
     public void onNext(DirItem dirItem) {
+        if (cl.getCount() <= 0) {
+            throw new UnsupportedOperationException("onNext called after observer termination !");
+        }
         this.dirItemList.add(dirItem);
     }
 

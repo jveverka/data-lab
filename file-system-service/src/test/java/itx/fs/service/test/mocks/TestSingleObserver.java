@@ -25,6 +25,9 @@ public class TestSingleObserver implements SingleObserver<DirItem> {
 
     @Override
     public void onSuccess(DirItem dirItem) {
+        if (cl.getCount() <= 0) {
+            throw new UnsupportedOperationException("onNext called after observer termination !");
+        }
         this.dirItem = dirItem;
         this.cl.countDown();
     }

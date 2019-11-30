@@ -3,12 +3,15 @@ package itx.fs.service.scanner;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Cancellable;
+import itx.fs.service.dto.CheckSum;
 import itx.fs.service.dto.DirItem;
 import itx.fs.service.dto.FileItem;
 import itx.fs.service.fsaccess.FileDataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -57,8 +60,22 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
 
     @Override
     public void onNext(FileItem value) {
-        FileScannerTask fileScannerTask = new FileScannerTask(observableEmitter, value.getPath(), value.getBasicFileAttributes(), fileDataReader);
-        executorService.submit(fileScannerTask);
+        executorService.submit(() -> {
+            if (value.getBasicFileAttributes().isRegularFile()) {
+                try {
+                    CheckSum checkSum = fileDataReader.calculateSha256Checksum(value.getPath());
+                    observableEmitter.onNext(new DirItem(value.getPath(), value.getBasicFileAttributes(), checkSum));
+                } catch (NoSuchAlgorithmException e) {
+                    observableEmitter.onError(e);
+                    LOG.error("Checksum exception: ", e);
+                } catch (IOException e) {
+                    observableEmitter.onError(e);
+                    LOG.error("IOException exception: ", e);
+                }
+            } else {
+                observableEmitter.onNext(new DirItem(value.getPath(), value.getBasicFileAttributes()));
+            }
+        });
     }
 
     @Override

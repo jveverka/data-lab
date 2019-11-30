@@ -38,15 +38,4 @@ public class FsItemMock {
         return (dirs == null) || (files == null);
     }
 
-    public int getSize() {
-        int size = 0;
-        if (dirs != null) {
-            size = size + dirs.length;
-        }
-        if (files != null) {
-            size = size + files.length;
-        }
-        return size;
-    }
-
 }
