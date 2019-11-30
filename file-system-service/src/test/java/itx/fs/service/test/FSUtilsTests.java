@@ -33,7 +33,7 @@ public class FSUtilsTests {
         CheckSum checkSum = FSUtils.calculateChecksum(is, algorithm);
         Assert.assertNotNull(checkSum);
         Assert.assertEquals(checkSum.getAlgorithm(), algorithm);
-        Assert.assertEquals(checkSum.getChecksum(), checksum);
+        Assert.assertEquals(checkSum.getValue(), checksum);
     }
 
     @DataProvider(name = "testFileSystemDataProvider")

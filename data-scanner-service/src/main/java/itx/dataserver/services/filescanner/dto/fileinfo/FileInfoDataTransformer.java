@@ -20,7 +20,7 @@ public class FileInfoDataTransformer implements DataTransformer<FileInfo> {
     public Map<String, Object> getSource(FileInfo data) {
         Map<String, Object> checksum = new HashMap<>();
         if (data.getFileSystemInfo().getChecksum().isPresent()) {
-            checksum.put("checksum", data.getFileSystemInfo().getChecksum().get().getChecksum());
+            checksum.put("checksum", data.getFileSystemInfo().getChecksum().get().getValue());
             checksum.put("algorithm", data.getFileSystemInfo().getChecksum().get().getAlgorithm());
         }
         Map<String, Object> source = new HashMap<>();

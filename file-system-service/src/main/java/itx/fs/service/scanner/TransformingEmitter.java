@@ -110,6 +110,7 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
             close();
         } catch (InterruptedException e) {
             LOG.error("Close error: {}", e);
+            Thread.currentThread().interrupt();
         }
     }
 

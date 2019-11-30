@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public class CheckSum {
 
-    private final String checksum;
+    private final String value;
     private final String algorithm;
 
-    public CheckSum(String checksum, String algorithm) {
-        Objects.requireNonNull(checksum);
+    public CheckSum(String value, String algorithm) {
+        Objects.requireNonNull(value);
         Objects.requireNonNull(algorithm);
-        this.checksum = checksum;
+        this.value = value;
         this.algorithm = algorithm;
     }
 
-    public String getChecksum() {
-        return checksum;
+    public String getValue() {
+        return value;
     }
 
     public String getAlgorithm() {
@@ -27,17 +27,17 @@ public class CheckSum {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CheckSum checkSum = (CheckSum) o;
-        return Objects.equals(checksum, checkSum.checksum) &&
+        return Objects.equals(this.value, checkSum.value) &&
                 Objects.equals(algorithm, checkSum.algorithm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(checksum, algorithm);
+        return Objects.hash(value, algorithm);
     }
 
     @Override
     public String toString() {
-        return checksum + ":" + algorithm;
+        return value + ":" + algorithm;
     }
 }
