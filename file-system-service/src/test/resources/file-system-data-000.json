@@ -1,0 +1,9 @@
+{
+  "name": "dir-001",
+  "dirs": [
+  ],
+  "files": [
+    { "name": "file-001.txt" },
+    { "name": "file-002.txt" }
+  ]
+}

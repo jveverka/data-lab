@@ -1,0 +1,40 @@
+{
+  "name": "dir-001",
+  "dirs": [
+    {
+      "name" : "dir-011",
+      "dirs": [
+        {
+          "name": "dir-111",
+          "dirs": [
+          ],
+          "files": [
+            { "name": "file-111.txt" },
+            { "name": "file-112.txt" },
+            { "name": "file-113.txt" },
+            { "name": "file-114.txt" }
+          ]
+        }
+      ],
+      "files": [
+        { "name": "file-011.txt" },
+        { "name": "file-012.txt" },
+        { "name": "file-013.txt" }
+      ]
+    },
+    {
+      "name": "dir-012",
+      "dirs": [
+      ],
+      "files": [
+        { "name": "file-021.txt" },
+        { "name": "file-022.txt" },
+        { "name": "file-023.txt" }
+      ]
+    }
+  ],
+  "files": [
+    { "name": "file-001.txt" },
+    { "name": "file-002.txt" }
+  ]
+}

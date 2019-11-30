@@ -26,9 +26,9 @@ public class TestEmitter implements Emitter<FileItem> {
     @Override
     public void onNext(FileItem value) {
         if (value.getBasicFileAttributes().isDirectory()) {
-            fileCounter++;
-        } else {
             dirCounter++;
+        } else {
+            fileCounter++;
         }
     }
 
@@ -51,6 +51,14 @@ public class TestEmitter implements Emitter<FileItem> {
         LOG.info("Dirs : {}", dirCounter);
         LOG.info("Files: {}", fileCounter);
         return !error;
+    }
+
+    public Long getFileCount() {
+        return fileCounter;
+    }
+
+    public Long getDirCount() {
+        return dirCounter;
     }
 
 }

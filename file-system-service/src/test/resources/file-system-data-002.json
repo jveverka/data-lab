@@ -1,0 +1,28 @@
+{
+  "name": "dir-001",
+  "dirs": [
+    {
+      "name" : "dir-011",
+      "dirs": [
+        {
+          "name": "dir-111",
+          "dirs": [
+          ],
+          "files": [
+          ]
+        }
+      ],
+      "files": [
+      ]
+    },
+    {
+      "name": "dir-012",
+      "dirs": [
+      ],
+      "files": [
+      ]
+    }
+  ],
+  "files": [
+  ]
+}
