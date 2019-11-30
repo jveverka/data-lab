@@ -2,7 +2,7 @@ package itx.elastic.service;
 
 /**
  * This exception indicates, that data mapping has failed within {@link DataTransformer}.
- * This exeprion is thrown when raw data from ElasticSearch can't be mapped into particular java POJO.
+ * This exception is thrown when raw data from ElasticSearch can't be mapped into particular java POJO.
  */
 public class DataMappingException extends Exception {
 

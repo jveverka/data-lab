@@ -32,31 +32,32 @@ public class DsScanMain {
             LOG.error("ERROR: directory path expected {}", arguments.getRootPath());
             return;
         }
-        LOG.info("DsMain: exec={} rootPath={}", arguments.getExecutorSize(), rootPath.toString());
+        LOG.info("DsMain: exec={} rootPath={}", arguments.getExecutorSize(), rootPath);
         LOG.info("DsMain: ElasticSearch={}:{}", arguments.getElasticHost(), arguments.getElasticPort());
         ClientConfig config = new ClientConfig.Builder()
                 .addEndPoint(arguments.getElasticHost(), arguments.getElasticPort(), "http")
                 .build();
-        FileScannerService scanner = new FileScannerServiceImpl(config, arguments.getExecutorSize());
-        if (arguments.isInitIndices()) {
-            LOG.info("DsMain: ES init indices ...");
-            scanner.initIndices();
-        } else {
-            LOG.info("DsMain: ES indices initialization is skipped.");
+        try (FileScannerService scanner = new FileScannerServiceImpl(config, arguments.getExecutorSize())) {
+            if (arguments.isInitIndices()) {
+                LOG.info("DsMain: ES init indices ...");
+                scanner.initIndices();
+            } else {
+                LOG.info("DsMain: ES indices initialization is skipped.");
+            }
+            LOG.info("DsMain: annotated-meta-data={}", arguments.getMetaDataFileName());
+            ScanRequest scanRequest = new ScanRequest(rootPath, arguments.getExecutorSize(), arguments.getMetaDataFileName());
+            ScanResponse scanResponse = scanner.scanAndStoreSubDirAsync(scanRequest);
+            float durationSec = (System.nanoTime() - startTime) / 1_000_000_000F;
+            LOG.info("DsMain: records deleted: {}", scanResponse.getDeletedRecords());
+            LOG.info("DsMain: records created: {}", scanResponse.getCreatedRecords());
+            LOG.info("DsMain: dirs scanned   : {}", scanResponse.getDirectories());
+            LOG.info("DsMain: annotations    : {}", scanResponse.getAnnotations());
+            LOG.info("DsMain: scan errors    : {}", scanResponse.getErrors());
+            LOG.info("DsMain: success: {}", scanResponse.isSuccess());
+            scanner.closeAndWaitForExecutors();
+            LOG.info("DsMain: done in {} s", durationSec);
+            LOG.info("DsMain: speed = {} files/sec", scanResponse.getCreatedRecords() / durationSec);
         }
-        LOG.info("DsMain: annotated-meta-data={}", arguments.getMetaDataFileName());
-        ScanRequest scanRequest = new ScanRequest(rootPath, arguments.getExecutorSize(), arguments.getMetaDataFileName());
-        ScanResponse scanResponse = scanner.scanAndStoreSubDirAsync(scanRequest);
-        float durationSec = (System.nanoTime() - startTime)/1_000_000_000F;
-        LOG.info("DsMain: records deleted: {}", scanResponse.getDeletedRecords());
-        LOG.info("DsMain: records created: {}", scanResponse.getCreatedRecords());
-        LOG.info("DsMain: dirs scanned   : {}", scanResponse.getDirectories());
-        LOG.info("DsMain: annotations    : {}", scanResponse.getAnnotations());
-        LOG.info("DsMain: scan errors    : {}", scanResponse.getErrors());
-        LOG.info("DsMain: success: {}", scanResponse.isSuccess());
-        scanner.closeAndWaitForExecutors();
-        LOG.info("DsMain: done in {} s", durationSec);
-        LOG.info("DsMain: speed = {} files/sec", scanResponse.getCreatedRecords()/durationSec);
     }
 
 }

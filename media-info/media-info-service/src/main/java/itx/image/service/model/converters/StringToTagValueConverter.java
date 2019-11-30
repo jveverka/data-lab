@@ -1,7 +1,6 @@
 package itx.image.service.model.converters;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -34,12 +33,14 @@ import java.util.Optional;
 
 public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
 
+    private static final String VALUE = "value";
+
     @Override
-    public TagValue deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public TagValue deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         ObjectCodec oc = p.getCodec();
         JsonNode node = oc.readTree(p);
         Type type = Type.valueOf(node.get("type").textValue());
-        String stringValue = node.get("value").asText();
+        String stringValue = node.get(VALUE).asText();
         Optional<String> unit = Optional.ofNullable(node.get("unit").asText());
         switch (type) {
             case INTEGER:
@@ -52,7 +53,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new StringValue(stringValue, unit);
 
             case JPEG_COMPONENT:
-                JsonNode jpegNodeValue = node.get("value");
+                JsonNode jpegNodeValue = node.get(VALUE);
                 JPEGComponent.Value jpegValue = new JPEGComponent.Value(
                         jpegNodeValue.get("name").asText(),
                         jpegNodeValue.get("samplingFactorByte").asInt(),
@@ -61,7 +62,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new JPEGComponent(jpegValue, unit);
 
             case FRACTION:
-                JsonNode jpegFractionValue = node.get("value");
+                JsonNode jpegFractionValue = node.get(VALUE);
                 Fraction.Value fractionValue = new Fraction.Value(
                         jpegFractionValue.get("numerator").asLong(),
                         jpegFractionValue.get("denominator").asLong()
@@ -69,7 +70,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new Fraction(fractionValue, unit);
 
             case FRACTIONS:
-                JsonNode jpegFractionsValue = node.get("value");
+                JsonNode jpegFractionsValue = node.get(VALUE);
                 Iterator<JsonNode> fractionsIterator = jpegFractionsValue.elements();
                 List<Fraction.Value> fractions = new ArrayList<>();
                 while(fractionsIterator.hasNext()) {
@@ -90,7 +91,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new Bytes(bytes, unit);
 
             case SHORTS:
-                JsonNode shortsValue = node.get("value");
+                JsonNode shortsValue = node.get(VALUE);
                 Iterator<JsonNode> shortsIterator = shortsValue.elements();
                 List<Short> shorts = new ArrayList<>();
                 while(shortsIterator.hasNext()) {
@@ -103,7 +104,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new Shorts(shortsArray, unit);
 
             case INTEGERS:
-                JsonNode integersValue = node.get("value");
+                JsonNode integersValue = node.get(VALUE);
                 Iterator<JsonNode> integersIterator = integersValue.elements();
                 List<Integer> integers = new ArrayList<>();
                 while(integersIterator.hasNext()) {
@@ -119,7 +120,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new BooleanValue(Boolean.valueOf(stringValue), unit);
 
             case FLOATS:
-                JsonNode floatsValue = node.get("value");
+                JsonNode floatsValue = node.get(VALUE);
                 Iterator<JsonNode> floatsIterator = floatsValue.elements();
                 List<Float> floats = new ArrayList<>();
                 while(floatsIterator.hasNext()) {
@@ -132,11 +133,11 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new Floats(floatArray, unit);
 
             case OBJECT_LIST:
-                JsonNode objectListValue = node.get("value");
+                //JsonNode objectListValue = node.get(VALUE);
             break;
 
             case STRINGS:
-                JsonNode stringsValue = node.get("value");
+                JsonNode stringsValue = node.get(VALUE);
                 Iterator<JsonNode> stringsIterator = stringsValue.elements();
                 List<String> strings = new ArrayList<>();
                 while(stringsIterator.hasNext()) {
@@ -145,7 +146,7 @@ public class StringToTagValueConverter extends JsonDeserializer<TagValue> {
                 return new StringValues(strings.toArray(new String[strings.size()]), unit);
 
             case DATE:
-                long dateValue = node.get("value").asLong();
+                long dateValue = node.get(VALUE).asLong();
                 return new DateValue(new Date(dateValue), unit);
 
             case FLOAT:

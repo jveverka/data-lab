@@ -15,7 +15,6 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
@@ -24,7 +23,6 @@ import org.elasticsearch.client.SyncedFlushResponse;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -202,8 +200,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public void closeAndWaitForExecutors() throws Exception {
         client.close();
         executorService.shutdown();
-        while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
-        }
+        while (!executorService.awaitTermination(1, TimeUnit.SECONDS));
     }
 
     @Override

@@ -21,9 +21,9 @@ public class DirectoryInfo {
                          @JsonProperty("errors") Collection<ErrorInfo> errors) {
         this.name = name;
         this.tags = new HashMap<>();
-        tags.forEach(t->{
-            this.tags.put(t.getName(), t);
-        });
+        tags.forEach(t->
+            this.tags.put(t.getName(), t)
+        );
         this.errors = errors;
     }
 

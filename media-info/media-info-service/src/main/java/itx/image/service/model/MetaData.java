@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import itx.image.service.ParsingUtils;
 
-import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +18,9 @@ public class MetaData {
     @JsonCreator
     public MetaData(@JsonProperty("directories") Collection<DirectoryInfo> directories) {
         this.directories = new HashMap<>();
-        directories.forEach(d->{
-            this.directories.put(d.getName(), d);
-        });
+        directories.forEach(d->
+            this.directories.put(d.getName(), d)
+        );
     }
 
     public Collection<DirectoryInfo> getDirectories() {
