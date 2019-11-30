@@ -39,12 +39,13 @@ public class FSUtilsTests {
     @DataProvider(name = "testFileSystemDataProvider")
     public static Object[][] getTestFileSystemDataProvider() {
         return new Object[][]{
-                { "file-system-data-000.json", "/not/existing/path", Long.valueOf(0), Long.valueOf(2) },
-                { "file-system-data-001.json", "/not/existing/path", Long.valueOf(3), Long.valueOf(12) },
-                { "file-system-data-002.json", "/not/existing/path", Long.valueOf(3), Long.valueOf(0) },
-                { "file-system-data-003.json", "/not/existing/path", Long.valueOf(0), Long.valueOf(0) },
+                { "file-system-data-000.json", "/not/existing/path-00", Long.valueOf(0), Long.valueOf(3) },
+                { "file-system-data-001.json", "/not/existing/path-01", Long.valueOf(3), Long.valueOf(12) },
+                { "file-system-data-002.json", "/not/existing/path-02", Long.valueOf(3), Long.valueOf(0) },
+                { "file-system-data-003.json", "/not/existing/path-03", Long.valueOf(0), Long.valueOf(0) },
         };
     }
+
     @Test(dataProvider = "testFileSystemDataProvider")
     public void testWalkDirectoryRecursively(String resource, String rootPath, Long dirCount, Long fileCount) throws IOException, InterruptedException {
         Path basePath = Paths.get(rootPath);
@@ -53,7 +54,7 @@ public class FSUtilsTests {
         FsItemMock fsItems = objectMapper.readValue(is, FsItemMock.class);
         TestEmitter testEmitter = new TestEmitter();
         FileDataReaderMock fileDataReader = new FileDataReaderMock(basePath, fsItems);
-        FSUtils.walkDirectoryRecursively(basePath, testEmitter, fileDataReader);
+        FSUtils.walkDirectoryRecursively(Paths.get(basePath.toString(), "dir-001"), testEmitter, fileDataReader);
         testEmitter.await();
         Assert.assertTrue(testEmitter.getStatus());
         Assert.assertEquals(testEmitter.getDirCount(), dirCount);

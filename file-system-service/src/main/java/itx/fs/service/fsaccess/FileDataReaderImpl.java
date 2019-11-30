@@ -1,10 +1,13 @@
 package itx.fs.service.fsaccess;
 
+import itx.fs.service.dto.CheckSum;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 public class FileDataReaderImpl implements FileDataReader {
@@ -26,6 +29,11 @@ public class FileDataReaderImpl implements FileDataReader {
     @Override
     public boolean isDirectory(Path path) {
         return path.toFile().isDirectory();
+    }
+
+    @Override
+    public CheckSum calculateSha256Checksum(Path path) throws IOException, NoSuchAlgorithmException {
+        return FSUtils.calculateSha256Checksum(path);
     }
 
 }

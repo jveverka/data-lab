@@ -17,11 +17,21 @@ public class FSServiceImpl implements FSService {
     private final Executor executor;
     private final FileDataReader fileDataReader;
 
+    /**
+     * Creates an instance of {@link FSService}. This instance uses default {@link FileDataReaderImpl} to
+     * access the file system
+     * @param executor executor for running asynchronous scan tasks.
+     */
     public FSServiceImpl(Executor executor) {
         this.executor = executor;
         this.fileDataReader = new FileDataReaderImpl();
     }
 
+    /**
+     * Creates an instance of {@link FSService}
+     * @param executor executor for running asynchronous scan tasks.
+     * @param fileDataReader service for reading data from file system.
+     */
     public FSServiceImpl(Executor executor, FileDataReader fileDataReader) {
         this.executor = executor;
         this.fileDataReader = fileDataReader;
@@ -34,7 +44,7 @@ public class FSServiceImpl implements FSService {
 
     @Override
     public Single<DirItem> scanSingleFileOrDirectory(Path filePath) {
-        return Single.create(new SingleOnSubscribeScanner(executor, filePath));
+        return Single.create(new SingleOnSubscribeScanner(executor, filePath, fileDataReader));
     }
 
 }

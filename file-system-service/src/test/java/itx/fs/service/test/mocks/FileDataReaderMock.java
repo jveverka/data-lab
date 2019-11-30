@@ -1,12 +1,16 @@
 package itx.fs.service.test.mocks;
 
+import itx.fs.service.dto.CheckSum;
 import itx.fs.service.fsaccess.FileDataReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +19,16 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class FileDataReaderMock implements FileDataReader {
 
+    private static final Logger LOG = LoggerFactory.getLogger(FileDataReaderMock.class);
+
     private final Map<Path, FsItemMock> fsMock;
 
     public FileDataReaderMock(Path basePath, FsItemMock fsItemMock) {
         this.fsMock = new ConcurrentHashMap<>();
         FsItemMock root = new FsItemMock(basePath.toString(), fsItemMock.getDirs(), fsItemMock.getFiles());
-        this.fsMock.put(basePath, root);
+        this.fsMock.put(Paths.get(basePath.toString(), fsItemMock.getName()), root);
         scanFsItem(basePath, this.fsMock, fsItemMock);
+        LOG.info("FileDataReaderMock initialized.");
     }
 
     @Override
@@ -97,6 +104,11 @@ public class FileDataReaderMock implements FileDataReader {
         throw new UnsupportedOperationException("path not found: " + path.toString());
     }
 
+    @Override
+    public CheckSum calculateSha256Checksum(Path path) throws IOException, NoSuchAlgorithmException {
+        return new CheckSum("123456789", "sha256");
+    }
+
     private static String[] getList(FsItemMock fsItemMock) {
         List<String> names = new ArrayList<>();
         if (fsItemMock.getDirs() != null) {
@@ -115,13 +127,15 @@ public class FileDataReaderMock implements FileDataReader {
     private static void scanFsItem(Path basePath, Map<Path, FsItemMock> fsMock, FsItemMock fsItemMock) {
         if (fsItemMock.getDirs() != null) {
             for (FsItemMock fsItemMockDir : fsItemMock.getDirs()) {
-                fsMock.put(Paths.get(basePath.toString(), fsItemMockDir.getName()), fsItemMockDir);
-                scanFsItem(Paths.get(basePath.toString(), fsItemMockDir.getName()), fsMock, fsItemMockDir);
+                Path dirPath = Paths.get(basePath.toString(), fsItemMock.getName(), fsItemMockDir.getName());
+                fsMock.put(dirPath , fsItemMockDir);
+                scanFsItem(Paths.get(basePath.toString(), fsItemMock.getName()), fsMock, fsItemMockDir);
             }
         }
         if (fsItemMock.getFiles() != null) {
             for (FsItemMock fsItemMockFile : fsItemMock.getFiles()) {
-                fsMock.put(Paths.get(basePath.toString(), fsItemMockFile.getName()), fsItemMockFile);
+                Path filePath = Paths.get(basePath.toString(), fsItemMock.getName(), fsItemMockFile.getName());
+                fsMock.put(filePath, fsItemMockFile);
             }
         }
     }

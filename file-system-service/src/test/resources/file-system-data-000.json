@@ -4,6 +4,7 @@
   ],
   "files": [
     { "name": "file-001.txt" },
-    { "name": "file-002.txt" }
+    { "name": "file-002.txt" },
+    { "name": "file-003.txt" }
   ]
 }

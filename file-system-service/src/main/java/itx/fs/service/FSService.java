@@ -9,7 +9,7 @@ import itx.fs.service.dto.DirQuery;
 import java.nio.file.Path;
 
 /**
- * File system Scanner service
+ * File system Scanner service.
  */
 public interface FSService {
 

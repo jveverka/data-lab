@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Cancellable;
 import itx.fs.service.dto.DirItem;
 import itx.fs.service.dto.FileItem;
+import itx.fs.service.fsaccess.FileDataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +21,13 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
     private final ObservableEmitter<DirItem> observableEmitter;
     private final ExecutorService executorService;
     private final CountDownLatch cl;
+    private final FileDataReader fileDataReader;
 
-    public TransformingEmitter(ObservableEmitter<DirItem> observableEmitter, int executorSize) {
+    public TransformingEmitter(ObservableEmitter<DirItem> observableEmitter, int executorSize, FileDataReader fileDataReader) {
         this.observableEmitter = observableEmitter;
         this.executorService = Executors.newFixedThreadPool(executorSize);
         this.cl = new CountDownLatch(1);
+        this.fileDataReader = fileDataReader;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class TransformingEmitter implements ObservableEmitter<FileItem>, AutoClo
 
     @Override
     public void onNext(FileItem value) {
-        FileScannerTask fileScannerTask = new FileScannerTask(observableEmitter, value.getPath(), value.getBasicFileAttributes());
+        FileScannerTask fileScannerTask = new FileScannerTask(observableEmitter, value.getPath(), value.getBasicFileAttributes(), fileDataReader);
         executorService.submit(fileScannerTask);
     }
 

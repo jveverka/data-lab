@@ -8,7 +8,6 @@ mainClassName = 'itx.fs.service.FsMain'
 dependencies {
     compile 'io.reactivex.rxjava3:rxjava:3.0.0-RC4'
     testCompile 'org.testng:testng:7.0.0'
-    testCompile 'org.jmockit:jmockit:1.48'
     testCompile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
     testCompile 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
     testCompile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1'

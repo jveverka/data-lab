@@ -38,7 +38,7 @@ public class ObservableSourceScanner implements Disposable, Cancellable, Observa
         emitter.setDisposable(this);
         executor.execute(() -> {
                 try {
-                    TransformingEmitter transformingEmitter = new TransformingEmitter(emitter, query.getExecutorSize());
+                    TransformingEmitter transformingEmitter = new TransformingEmitter(emitter, query.getExecutorSize(), fileDataReader);
                     FSUtils.walkDirectoryRecursively(query.getPath(), transformingEmitter, fileDataReader);
                     while (!transformingEmitter.await(1, TimeUnit.SECONDS));
                     transformingEmitter.close();

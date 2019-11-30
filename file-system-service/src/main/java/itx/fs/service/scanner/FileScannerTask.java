@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Emitter;
 import itx.fs.service.fsaccess.FSUtils;
 import itx.fs.service.dto.CheckSum;
 import itx.fs.service.dto.DirItem;
+import itx.fs.service.fsaccess.FileDataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,18 +20,20 @@ public class FileScannerTask implements Runnable {
     private final Emitter<DirItem> emitter;
     private final Path path;
     private final BasicFileAttributes attributes;
+    private final FileDataReader fileDataReader;
 
-    public FileScannerTask(Emitter<DirItem> emitter, Path path, BasicFileAttributes attributes) {
+    public FileScannerTask(Emitter<DirItem> emitter, Path path, BasicFileAttributes attributes, FileDataReader fileDataReader) {
         this.emitter = emitter;
         this.path = path;
         this.attributes = attributes;
+        this.fileDataReader = fileDataReader;
     }
 
     @Override
     public void run() {
         if (attributes.isRegularFile()) {
             try {
-                CheckSum checkSum = FSUtils.calculateSha256Checksum(path);
+                CheckSum checkSum = fileDataReader.calculateSha256Checksum(path);
                 emitter.onNext(new DirItem(path, attributes, checkSum));
             } catch (NoSuchAlgorithmException e) {
                 emitter.onError(e);
