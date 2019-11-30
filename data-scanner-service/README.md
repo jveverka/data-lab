@@ -64,4 +64,5 @@ gradle clean installDist distZip test
 |----------------------------|---------------------------|------------------------------|
 | CPU i7-3632QM, 32GB RAM    | <-                        | 82431 / 1873.0686 s          |
 | CPU i7-3632QM, 32GB RAM    | AMD Ryzen 5 3600, 8GB RAM | 82431 / 1705.6926 s          |
+| AMD Ryzen 7 3700X, 8GB RAM | CPU i7-3632QM, 32GB RAM   | 82431 / 251.75032 s          |
 | AMD Ryzen 7 3700X, 8GB RAM | AMD Ryzen 5 3600, 8GB RAM | 82431 / 158.01813 s          |
