@@ -18,16 +18,22 @@ This service is designed to detect objects in images or videos.
   sha256sum data/yolov3.weights
   # 523e4e69e1d015393a1b0a441cef1d9c7659e3eb2d7e15f793f060a21b32f297
   ```
-* convert weights
+* convert weights using CLI
   ```
   ./convert.py
   ```  
 
-## Run Object detection CLI  
-  ```
-  ./detect.py --image path/to/image/file.jpg
-  ```
+## Run Object detection - CLI  
+```
+./detect.py --image path/to/image/file.jpg
+```
 Check console output and ``output.jpg`` image for generated results.
+
+## Run Object detection - REST service
+```
+./detect-rest.py 
+curl -X POST http://localhost:5000/detect -d '{ "path": "/local/path/to/image.jpg" }' -H "Content-Type: application/json"
+```
 
 #### Sources
 Implementation is inspired by those projects:

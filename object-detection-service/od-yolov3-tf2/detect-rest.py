@@ -14,6 +14,7 @@ flags.DEFINE_string('classes', './data/coco.names', 'path to classes file')
 flags.DEFINE_string('weights', './checkpoints/yolov3.tf', 'path to weights file')
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_integer('num_classes', 80, 'number of classes in the model')
+flags.DEFINE_integer('port', 5000, 'http port')
 
 app = Flask(__name__)
 global yolo
@@ -63,6 +64,6 @@ if __name__ == '__main__':
        class_names = [c.strip() for c in open(FLAGS.classes).readlines()]
        logging.info('classes loaded')
 
-       app.run(debug=True, port=5000)
+       app.run(debug=False, port=FLAGS.port)
     except SystemExit:
        pass
