@@ -10,6 +10,7 @@ This service is designed to detect objects in images or videos.
   ```
   pip3 install --user tensorflow==2.0.0b1
   pip3 install --user opencv-python==4.1.1.26
+  pip3 install --user flask
   ``` 
 * download pre-trained model
   ```
