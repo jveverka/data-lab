@@ -21,7 +21,8 @@ global yolo
 
 @app.route('/version')
 def getVersion():
-    return '{ "version": "1.0.0" }'
+    version = { "version": "1.0.0" }
+    return jsonify(version)
 
 @app.route('/detect', methods=["POST"])
 def detect():
