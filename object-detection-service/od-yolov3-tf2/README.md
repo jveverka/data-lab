@@ -2,6 +2,8 @@
 This object detection service is based on [YOLOv3](https://pjreddie.com/darknet/yolo/) 
 and [TensorFlow 2.0](https://www.tensorflow.org/guide/effective_tf2).
 This service is designed to detect objects in images or videos. 
+Source images are loaded from local disk, or uploaded in http post multipart request.
+Supported image formats: JPEG, PNG.
 
 ## Install Environment
 * Ubuntu __18.04.3 LTS__
@@ -47,8 +49,9 @@ Check console output and ``output.jpg`` image for generated results.
   curl -X POST -H "Content-Type: multipart/form-data" -F "file=@/path/to/image.jpg" http://localhost:5000/upload-detect
   ```
 
-#### Sources
-Implementation is inspired by those projects:
+#### References
+Implementation uses or is inspired by those projects:
 * [YoloV3 Implemented in TensorFlow 2.0](https://github.com/zzh8829/yolov3-tf2)
 * [Keras YoloV3 for TF 1.12](https://github.com/qqwweee/keras-yolo3)
+* [Python Flask](https://flask.palletsprojects.com/en/1.1.x/)
   
