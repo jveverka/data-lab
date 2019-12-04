@@ -32,7 +32,7 @@ Check console output and ``output.jpg`` image for generated results.
 ## Run Object detection - REST service
 ```
 ./detect-rest.py 
-curl -X POST http://localhost:5000/detect -d '{ "path": "/local/path/to/image.jpg" }' -H "Content-Type: application/json"
+curl -X POST http://localhost:5000/local-detect -d '{ "path": "/local/path/to/image.jpg" }' -H "Content-Type: application/json"
 ```
 
 #### Sources

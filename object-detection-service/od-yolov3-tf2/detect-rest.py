@@ -2,7 +2,7 @@
 
 import time
 import sys
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from absl import app, flags, logging
 from absl.flags import FLAGS
 import numpy as np
@@ -24,7 +24,7 @@ def getVersion():
     version = { "version": "1.0.0" }
     return jsonify(version)
 
-@app.route('/detect', methods=["POST"])
+@app.route('/local-detect', methods=["POST"])
 def detect():
     req_data = request.get_json()
     path = req_data['path'];
@@ -33,6 +33,16 @@ def detect():
     content = open(path, 'rb').read()
     return evaluateImage(content, path)
 
+@app.route('/upload-detect', methods=["POST"])
+def uploadDetect():
+    if 'file' not in request.files:
+        logging.info('Error: file not attached !')
+        abort(500)
+    file = request.files['file']
+    if file.filename == '':
+        logging.info('Error: file name not specified !')
+        abort(500)
+    return evaluateImage(file.stream.read(), file.filename)
 
 def evaluateImage(content, path):
     img = tf.image.decode_image(content, channels=3)
