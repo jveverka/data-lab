@@ -42,7 +42,9 @@ def uploadDetect():
     if file.filename == '':
         logging.info('Error: file name not specified !')
         abort(500)
-    return evaluateImage(file.stream.read(), file.filename)
+    content = file.stream.read()
+    return evaluateImage(content, file.filename)
+
 
 def evaluateImage(content, path):
     img = tf.image.decode_image(content, channels=3)

@@ -30,10 +30,22 @@ This service is designed to detect objects in images or videos.
 Check console output and ``output.jpg`` image for generated results.
 
 ## Run Object detection - REST service
-```
-./detect-rest.py 
-curl -X POST http://localhost:5000/local-detect -d '{ "path": "/local/path/to/image.jpg" }' -H "Content-Type: application/json"
-```
+* start seb server 
+  ```
+  ./detect-rest.py 
+  ```
+* get service version  
+  ```
+  curl -X GET http://localhost:5000/version
+  ```
+* detect objects in image on local file system  
+  ```
+  curl -X POST -H "Content-Type: application/json" -d '{ "path": "/local/path/to/image.jpg" }' http://localhost:5000/local-detect
+  ```
+* detect objects in uploaded image   
+  ```
+  curl -X POST -H "Content-Type: multipart/form-data" -F "file=@/path/to/image.jpg" http://localhost:5000/upload-detect
+  ```
 
 #### Sources
 Implementation is inspired by those projects:
