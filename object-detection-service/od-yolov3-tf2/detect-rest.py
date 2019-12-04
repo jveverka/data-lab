@@ -30,7 +30,8 @@ def detect():
     path = req_data['path'];
     logging.info('path:{}'.format(path))
 
-    img = tf.image.decode_image(open(path, 'rb').read(), channels=3)
+    content = open(path, 'rb').read()
+    img = tf.image.decode_image(content, channels=3)
     img = tf.expand_dims(img, 0)
     img = transform_images(img, FLAGS.size)
 
