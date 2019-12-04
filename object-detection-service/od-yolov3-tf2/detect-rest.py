@@ -31,6 +31,10 @@ def detect():
     logging.info('path:{}'.format(path))
 
     content = open(path, 'rb').read()
+    return evaluateImage(content, path)
+
+
+def evaluateImage(content, path):
     img = tf.image.decode_image(content, channels=3)
     img = tf.expand_dims(img, 0)
     img = transform_images(img, FLAGS.size)
@@ -49,8 +53,9 @@ def detect():
             "box": np.array(boxes[0][i]).tolist()
         }
         objects[i] = object
+    result = { 'result': 'ok', 'path': path, 'time': t2, "objects": objects }
+    return result
 
-    return jsonify({ 'result': 'ok', 'path': path, 'time': t2, "objects": objects })
 
 if __name__ == '__main__':
     try:
