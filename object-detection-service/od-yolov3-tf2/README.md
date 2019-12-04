@@ -10,7 +10,7 @@ This service is designed to detect objects in images or videos.
   ```
   pip3 install --user tensorflow==2.0.0b1
   pip3 install --user opencv-python==4.1.1.26
-  pip3 install --user flask
+  pip3 install --user Flask==1.1.1
   ``` 
 * download pre-trained model
   ```
@@ -30,19 +30,19 @@ This service is designed to detect objects in images or videos.
 Check console output and ``output.jpg`` image for generated results.
 
 ## Run Object detection - REST service
-* start seb server 
+* Start seb server. 
   ```
   ./detect-rest.py 
   ```
-* get service version  
+* Get service version, response is JSON formatted version.  
   ```
   curl -X GET http://localhost:5000/version
   ```
-* detect objects in image on local file system  
+* Detect objects in image on local file system, response is JSON formatted object detections.  
   ```
   curl -X POST -H "Content-Type: application/json" -d '{ "path": "/local/path/to/image.jpg" }' http://localhost:5000/local-detect
   ```
-* detect objects in uploaded image   
+* Detect objects in uploaded image, response is JSON formatted object detections.   
   ```
   curl -X POST -H "Content-Type: multipart/form-data" -F "file=@/path/to/image.jpg" http://localhost:5000/upload-detect
   ```
