@@ -60,12 +60,12 @@ def evaluateImage(content, path):
     objects = list(range(nums[0]))
     for i in range(nums[0]):
         object = {
-            "class": class_names[int(classes[0][i])],
+            "classId": class_names[int(classes[0][i])],
             "score": np.array(scores[0][i]).tolist(),
             "box": np.array(boxes[0][i]).tolist()
         }
         objects[i] = object
-    result = { 'result': 'ok', 'path': path, 'time': t2, "objects": objects }
+    result = { 'result': True, 'path': path, 'time': t2, "objects": objects }
     return result
 
 

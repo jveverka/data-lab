@@ -11,3 +11,5 @@ project(":elasticsearch-service").projectDir = new File("elasticsearch/elasticse
 include "elasticsearch-tests"
 project(":elasticsearch-tests").projectDir = new File("elasticsearch/elasticsearch-tests")
 
+include "od-yolov3-tf2-java"
+project(":od-yolov3-tf2-java").projectDir = new File("ml-services/od-yolov3-tf2-java")

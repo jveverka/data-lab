@@ -3,7 +3,8 @@ This project contains implementations of [ML](https://en.wikipedia.org/wiki/Mach
 based object detection services. Object detection is done in bitmap images (JPEG, PNG).
 
 ## Services
-* [YOLOv3 TF2 Object Detection Service](od-yolov3-tf2) - REST service, Image object detection.
+* [Object Detection YOLOv3 TF2 Service](od-yolov3-tf2) - REST service, Image object detection.
+* [OD YOLOv3 TF2 java](od-yolov3-tf2-java) - java REST client for od-yolov3-tf2 service.
 
 #### References
 * [TF Object detection](https://github.com/tensorflow/models/tree/master/research/object_detection)

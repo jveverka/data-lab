@@ -40,3 +40,4 @@ project(':elasticsearch-tests') {
     }
 }
 
+project(':od-yolov3-tf2-java') {}

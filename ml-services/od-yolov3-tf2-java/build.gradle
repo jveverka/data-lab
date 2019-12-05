@@ -1,0 +1,36 @@
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
+
+dependencies {
+    compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
+    testCompile 'org.testng:testng:7.0.0'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+test {
+    // enable TestNG support (default is JUnit)
+    useTestNG()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'itx.ml.service'
+            artifactId = 'od-yolov3-tf2-java'
+            version = '1.0.0'
+
+            from components.java
+        }
+    }
+}
