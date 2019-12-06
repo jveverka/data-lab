@@ -13,11 +13,12 @@ images, video streams, text documents, file system. This project is work in prog
 * __Image content object recognition__ - queries on objects contained in images. 
 
 ### Microservices
-* [__file-system-service__](file-system-service) - [__microservice__] simple service for scanning file system.
+* [__data-scanner-service__](data-scanner-service) - [__microservice__] simple service for scanning file system.
 * [__ml-services__](ml-services) - [__microservices__] simple services utilizing using machine learning.
 
 ### Components 
-* [__elasticsearch-service__](elasticsearch) - [__library__] service for easy elasticsearch read/write access.
+* [__file-system-service__](file-system-service) - [__library__] simple library for scanning file system.
+* [__elasticsearch-service__](elasticsearch) - [__library__] service for easy ElasticSearch read/write access.
 * [__data-scanner-service__](data-scanner-service) - [__library__] service for scanning data directory and annotating data files.
 
 ### Architecture
