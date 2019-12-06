@@ -1,6 +1,7 @@
 package itx.ml.service.odyolov3tf2.http.client.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import itx.ml.service.odyolov3tf2.http.client.dto.PathRequest;
 import itx.ml.service.odyolov3tf2.http.client.dto.Result;
 import itx.ml.service.odyolov3tf2.http.client.dto.Version;
 import org.testng.Assert;
@@ -20,6 +21,14 @@ public class DTOSerializationAndDeserializationTests {
         Version version = objectMapper.readValue(is, Version.class);
         Assert.assertNotNull(version);
         Assert.assertNotNull(version.getVersion());
+    }
+
+    @Test
+    public void testPathIO() throws IOException {
+        InputStream is = this.getClass().getResourceAsStream("/path-request.json");
+        PathRequest pathRequest = objectMapper.readValue(is, PathRequest.class);
+        Assert.assertNotNull(pathRequest);
+        Assert.assertNotNull(pathRequest.getPath());
     }
 
     @DataProvider(name = "testDataProvider")

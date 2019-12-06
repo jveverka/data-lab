@@ -40,4 +40,8 @@ project(':elasticsearch-tests') {
     }
 }
 
-project(':od-yolov3-tf2-java') {}
+project(':od-yolov3-tf2-java') {
+    dependencies {
+        testCompile project(':media-data')
+    }
+}

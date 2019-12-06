@@ -49,6 +49,9 @@ Check console output and ``output.jpg`` image for generated results.
   curl -X POST -H "Content-Type: multipart/form-data" -F "file=@/path/to/image.jpg" http://localhost:5000/upload-detect
   ```
 
+## Java REST client API
+* [Java REST API client](../od-yolov3-tf2-java) for YOLOv3 Object Detection Service is available here.
+
 #### References
 Implementation uses or is inspired by those projects:
 * [YoloV3 Implemented in TensorFlow 2.0](https://github.com/zzh8829/yolov3-tf2)

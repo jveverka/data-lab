@@ -17,6 +17,9 @@ repositories {
 
 test {
     // enable TestNG support (default is JUnit)
+    if (System.properties['test.profile'] != 'integration') {
+        exclude '**/*TestsIT*'
+    }
     useTestNG()
     testLogging {
         events "passed", "skipped", "failed"
