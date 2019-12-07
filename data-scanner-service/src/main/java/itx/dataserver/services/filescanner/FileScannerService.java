@@ -36,4 +36,6 @@ public interface FileScannerService extends AutoCloseable {
      */
     void closeAndWaitForExecutors() throws Exception;
 
+    long getMlTaskCount();
+
 }

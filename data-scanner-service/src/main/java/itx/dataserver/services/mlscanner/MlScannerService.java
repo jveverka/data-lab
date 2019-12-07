@@ -6,4 +6,6 @@ public interface MlScannerService {
 
     void onFileEvent(DirItem dirItem);
 
+    long getTaskCount();
+
 }

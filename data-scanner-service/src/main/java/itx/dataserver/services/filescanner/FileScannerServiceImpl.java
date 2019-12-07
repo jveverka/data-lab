@@ -163,6 +163,11 @@ public class FileScannerServiceImpl implements FileScannerService {
     }
 
     @Override
+    public long getMlTaskCount() {
+        return mlScannerService.getTaskCount();
+    }
+
+    @Override
     public void close() throws Exception {
         executorService.shutdown();
         mlExecutorService.shutdown();

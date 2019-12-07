@@ -56,9 +56,13 @@ public class DsScanMain {
             LOG.info("DsMain: annotations    : {}", scanResponse.getAnnotations());
             LOG.info("DsMain: scan errors    : {}", scanResponse.getErrors());
             LOG.info("DsMain: success: {}", scanResponse.isSuccess());
-            scanner.closeAndWaitForExecutors();
             LOG.info("DsMain: done in {} s", durationSec);
             LOG.info("DsMain: speed = {} files/sec", scanResponse.getCreatedRecords() / durationSec);
+            scanner.closeAndWaitForExecutors();
+            LOG.info("DsMain: waiting for ML services to finish ...");
+            durationSec = (System.nanoTime() - startTime) / 1_000_000_000F;
+            LOG.info("DsMain: ML done in {} s", durationSec);
+            LOG.info("DsMain: ML speed = {} files/sec", scanner.getMlTaskCount() / durationSec);
         }
     }
 
