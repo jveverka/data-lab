@@ -33,9 +33,13 @@ public class MlScanTask implements Runnable {
     public void run() {
         try {
             Result result = objectRecognitionService.getResult(dirItem.getPath());
-            FileInfoId fileInfoId = DataUtils.createFileInfoId(dirItem);
-            ObjectRecognition objectRecognition = new ObjectRecognition(fileInfoId, result.getPath(), result.getObjects());
-            elasticSearchService.saveDocument(ObjectRecognition.class, objectRecognition);
+            if (result.getResult() && result.getObjects().size() > 0) {
+                FileInfoId fileInfoId = DataUtils.createFileInfoId(dirItem);
+                ObjectRecognition objectRecognition = new ObjectRecognition(fileInfoId, result.getPath(), result.getObjects());
+                elasticSearchService.saveDocument(ObjectRecognition.class, objectRecognition);
+            } else {
+                LOG.warn("No objects recognized in image.");
+            }
         } catch (IOException e) {
             LOG.error("Error: ", e);
         } catch (InterruptedException e) {
