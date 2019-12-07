@@ -129,3 +129,18 @@ This is an example list of ElasticSearch queries covering some use cases.
       }
   }
   ```
+* Get Object Categories recognized by ML services.
+  ```
+  GET http://127.0.0.1:9200/object-recognition/_search?size=0 
+  {
+  	  "track_total_hits": 100000,
+      "aggs" : {
+  			"vendorTypes" : {
+  				"terms": {
+  				  "field": "objects.classId",
+  					"size" : 100
+  				}
+  			}
+      }
+  }	
+  ```   
