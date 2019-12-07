@@ -28,6 +28,7 @@ public class ObjectRecognitionDataTransformer implements DataTransformer<ObjectR
             Map<String, Object> object = new HashMap<>();
             object.put("classId", detectedObject.getClassId());
             object.put("score", detectedObject.getScore());
+            object.put("box", detectedObject.getBox());
             objectsList.add(object);
         }
         source.put("objects", objectsList);
@@ -72,7 +73,8 @@ public class ObjectRecognitionDataTransformer implements DataTransformer<ObjectR
         for (Map<String, Object> object: objects) {
             String classId = (String)object.get("classId");
             Float score = (Float)object.get("score");
-            DetectedObject detectedObject = new DetectedObject(classId, new Float[0], score);
+            Float[] box = (Float[])object.get("box");
+            DetectedObject detectedObject = new DetectedObject(classId, box, score);
             detectedObjects.add(detectedObject);
         }
 
