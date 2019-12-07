@@ -25,13 +25,13 @@ images, video streams, text documents, file system. This project is work in prog
 ![architecture](docs/architecture-01.svg)
 
 ### Technology stack
-* Microservices - REST, Message Broker integrations, K8s, WIP
-* ElasticSearch - main meta-data database
-* Kibana - basic data visualizations
-* Java 11 - microservice implementations 
-* Gradle 6.x - build system 
-* TensorFlow 2.0 / Keras - ML related tasks
-* Python 3.6.x - microservice implementations
+* __Microservices__ - REST, Message Broker integrations, K8s, WIP
+* __ElasticSearch 7.x__ - main meta-data database
+* __Kibana 7.x__ - basic data visualizations
+* __Java 11__ - microservice implementations 
+* __Python 3.6.x__ - microservice implementations
+* __TensorFlow 2.0 / Keras__ - ML related tasks
+* __Gradle 6.x__ - build system 
 
 ### Run and build
 ```
