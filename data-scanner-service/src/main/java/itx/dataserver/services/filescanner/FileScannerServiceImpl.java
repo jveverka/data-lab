@@ -15,6 +15,10 @@ import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfoT
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedData;
 import itx.dataserver.services.filescanner.dto.unmapped.UnmappedDataTransformer;
 import itx.dataserver.services.filescanner.query.SearchObserver;
+import itx.dataserver.services.mlscanner.MlScannerService;
+import itx.dataserver.services.mlscanner.MlScannerServiceImpl;
+import itx.dataserver.services.mlscanner.dto.ObjectRecognition;
+import itx.dataserver.services.mlscanner.dto.ObjectRecognitionDataTransformer;
 import itx.elastic.service.ElasticSearchService;
 import itx.elastic.service.ElasticSearchServiceImpl;
 import itx.elastic.service.dto.ClientConfig;
@@ -24,6 +28,8 @@ import itx.fs.service.FSServiceImpl;
 import itx.fs.service.dto.DirItem;
 import itx.image.service.MediaService;
 import itx.image.service.MediaServiceImpl;
+import itx.ml.service.odyolov3tf2.http.client.ObjectRecognitionService;
+import itx.ml.service.odyolov3tf2.http.client.ObjectRecognitionServiceImpl;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -31,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,8 +51,10 @@ public class FileScannerServiceImpl implements FileScannerService {
     private final ElasticSearchService elasticSearchService;
     private final MediaService mediaService;
     private final ExecutorService executorService;
+    private final MlScannerService mlScannerService;
+    private final ExecutorService mlExecutorService;
 
-    public FileScannerServiceImpl(ClientConfig config, int executorSize) {
+    public FileScannerServiceImpl(ClientConfig config, InetSocketAddress mlAddress, int executorSize) {
         LOG.info("FileScannerService: initializing ...");
         this.executorService = Executors.newFixedThreadPool(executorSize);
         this.dirScanner = new FSServiceImpl(executorService);
@@ -55,12 +64,17 @@ public class FileScannerServiceImpl implements FileScannerService {
         VideoMetaDataInfoTransformer videoMetaDataInfoTransformer = new VideoMetaDataInfoTransformer();
         UnmappedDataTransformer unmappedDataTransformer = new UnmappedDataTransformer();
         AnnotationMetaDataTransformer annotationMetaDataTransformer = new AnnotationMetaDataTransformer();
+        ObjectRecognitionDataTransformer objectRecognitionDataTransformer = new ObjectRecognitionDataTransformer();
         this.elasticSearchService.registerDataTransformer(FileInfo.class, fileInfoDataTransformer);
         this.elasticSearchService.registerDataTransformer(ImageMetaDataInfo.class, imageMetaDataInfoTransformer);
         this.elasticSearchService.registerDataTransformer(VideoMetaDataInfo.class, videoMetaDataInfoTransformer);
         this.elasticSearchService.registerDataTransformer(UnmappedData.class, unmappedDataTransformer);
         this.elasticSearchService.registerDataTransformer(AnnotationMetaData.class, annotationMetaDataTransformer);
+        this.elasticSearchService.registerDataTransformer(ObjectRecognition.class, objectRecognitionDataTransformer);
         this.mediaService = new MediaServiceImpl();
+        this.mlExecutorService = Executors.newSingleThreadExecutor();
+        ObjectRecognitionService objectRecognitionService = new ObjectRecognitionServiceImpl(mlAddress);
+        this.mlScannerService = new MlScannerServiceImpl(mlExecutorService, elasticSearchService, objectRecognitionService);
     }
 
     @Override
@@ -71,12 +85,14 @@ public class FileScannerServiceImpl implements FileScannerService {
         deleteIndex(VideoMetaDataInfo.class);
         deleteIndex(UnmappedData.class);
         deleteIndex(AnnotationMetaData.class);
+        deleteIndex(ObjectRecognition.class);
         LOG.info("creating indices ...");
         createIndex(FileInfo.class);
         createIndex(ImageMetaDataInfo.class);
         createIndex(VideoMetaDataInfo.class);
         createIndex(UnmappedData.class);
         createIndex(AnnotationMetaData.class);
+        createIndex(ObjectRecognition.class);
         LOG.info("indices initialized.");
     }
 
@@ -114,11 +130,12 @@ public class FileScannerServiceImpl implements FileScannerService {
             deleteDocumentById(VideoMetaDataInfo.class, fileInfoId.getId());
             deleteDocumentById(AnnotationMetaData.class, fileInfoId.getId());
             deleteDocumentById(UnmappedData.class, fileInfoId.getId());
+            deleteDocumentById(ObjectRecognition.class, fileInfoId.getId());
         }
 
         LOG.info("Commencing  directory scan ...");
         Observable<DirItem> dirItemObservable = dirScanner.scanDirectoryAsync(query);
-        FsObserver fsObserver = new FsObserver(elasticSearchService, mediaService, query.getMetaDataFileName());
+        FsObserver fsObserver = new FsObserver(elasticSearchService, mediaService, query.getMetaDataFileName(), mlScannerService);
         dirItemObservable.subscribe(fsObserver);
         fsObserver.awaitSubscribed(10, TimeUnit.SECONDS);
         LOG.info("Subscription completed");
@@ -139,13 +156,16 @@ public class FileScannerServiceImpl implements FileScannerService {
     public void closeAndWaitForExecutors() throws Exception {
         executorService.shutdown();
         while(!executorService.awaitTermination(1, TimeUnit.SECONDS));
-        LOG.info("waiting for es executor");
+        mlExecutorService.shutdown();
+        while(!mlExecutorService.awaitTermination(1, TimeUnit.SECONDS));
+        LOG.info("waiting for es executors");
         elasticSearchService.closeAndWaitForExecutors();
     }
 
     @Override
     public void close() throws Exception {
         executorService.shutdown();
+        mlExecutorService.shutdown();
         elasticSearchService.close();
     }
 

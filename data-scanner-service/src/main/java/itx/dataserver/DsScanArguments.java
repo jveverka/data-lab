@@ -1,4 +1,4 @@
-package itx.dataserver.services.filescanner;
+package itx.dataserver;
 
 import com.beust.jcommander.Parameter;
 
@@ -22,6 +22,12 @@ public class DsScanArguments {
     @Parameter(names = {"-m", "--meta-data" }, description = "Meta Data file name used during data scanning.")
     private String metaDataFileName = ".annotation-meta-data-bulk.json";
 
+    @Parameter(names = {"-mh", "--ml-host" }, description = "Host name of Machine-Learning server.")
+    private String mlHost = "127.0.0.1";
+
+    @Parameter(names = {"-mp", "--ml-port" }, description = "Port number of Machine-Learning server.")
+    private int mlPort = 5000;
+
     public int getExecutorSize() {
         return executorSize;
     }
@@ -44,6 +50,14 @@ public class DsScanArguments {
 
     public String getMetaDataFileName() {
         return metaDataFileName;
+    }
+
+    public String getMlHost() {
+        return mlHost;
+    }
+
+    public int getMlPort() {
+        return mlPort;
     }
 
 }

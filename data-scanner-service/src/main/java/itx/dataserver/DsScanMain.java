@@ -1,7 +1,6 @@
 package itx.dataserver;
 
 import com.beust.jcommander.JCommander;
-import itx.dataserver.services.filescanner.DsScanArguments;
 import itx.dataserver.services.filescanner.FileScannerService;
 import itx.dataserver.services.filescanner.FileScannerServiceImpl;
 import itx.dataserver.services.filescanner.dto.ScanRequest;
@@ -10,6 +9,7 @@ import itx.elastic.service.dto.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,7 +37,9 @@ public class DsScanMain {
         ClientConfig config = new ClientConfig.Builder()
                 .addEndPoint(arguments.getElasticHost(), arguments.getElasticPort(), "http")
                 .build();
-        try (FileScannerService scanner = new FileScannerServiceImpl(config, arguments.getExecutorSize())) {
+        LOG.info("DsMain: ML-Service={}:{}", arguments.getMlHost(), arguments.getMlPort());
+        InetSocketAddress mlAddress = InetSocketAddress.createUnresolved(arguments.getMlHost(), arguments.getMlPort());
+        try (FileScannerService scanner = new FileScannerServiceImpl(config, mlAddress, arguments.getExecutorSize())) {
             if (arguments.isInitIndices()) {
                 LOG.info("DsMain: ES init indices ...");
                 scanner.initIndices();

@@ -19,6 +19,7 @@ project(':data-scanner-service') {
         compile project(':elasticsearch-service')
         compile project(':media-info-service')
         compile project(':file-system-service')
+        compile project(':od-yolov3-tf2-java')
         testCompile project(':media-data')
     }
 }

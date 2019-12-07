@@ -1,5 +1,6 @@
 package itx.dataserver.services.filescanner;
 
+import com.drew.tools.FileUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reactivex.rxjava3.core.Observer;
@@ -8,8 +9,10 @@ import itx.dataserver.services.filescanner.dto.fileinfo.FileInfo;
 import itx.dataserver.services.filescanner.dto.metadata.annotation.AnnotationMetaData;
 import itx.dataserver.services.filescanner.dto.metadata.image.ImageMetaDataInfo;
 import itx.dataserver.services.filescanner.dto.metadata.video.VideoMetaDataInfo;
+import itx.dataserver.services.mlscanner.MlScannerService;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
+import itx.fs.service.fsaccess.FSUtils;
 import itx.image.service.MediaService;
 import itx.image.service.model.MetaData;
 import org.slf4j.Logger;
@@ -36,6 +39,7 @@ public class FsObserver implements Observer<DirItem> {
     private final MediaService mediaService;
     private final String metaDataFileName;
     private final ObjectMapper objectMapper;
+    private final MlScannerService mlScannerService;
     private final Map<String, AnnotationMetaData> annotationCache;
 
     private final CountDownLatch subscribed;
@@ -46,8 +50,10 @@ public class FsObserver implements Observer<DirItem> {
     private final AtomicLong errors;
     private final AtomicLong annotations;
 
-    public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService, String metaDataFileName) {
+    public FsObserver(ElasticSearchService elasticSearchService, MediaService mediaService,
+                      String metaDataFileName, MlScannerService mlScannerService) {
         this.elasticSearchService = elasticSearchService;
+        this.mlScannerService = mlScannerService;
         this.mediaService = mediaService;
         this.metaDataFileName = metaDataFileName;
         this.annotationCache = new ConcurrentHashMap<>();
@@ -155,6 +161,14 @@ public class FsObserver implements Observer<DirItem> {
                     }
                 } else {
                     LOG.trace("MetaData not present for {}", dirItem.getPath().toString());
+                }
+
+                Optional<String> extension = FSUtils.getFileExtension(dirItem.getPath(), true);
+                if (extension.isPresent()) {
+                    String ext = extension.get().toUpperCase();
+                    if ("JPG".equals(ext) || "JPEG".equals(ext) || "PNG".equals(ext)) {
+                        mlScannerService.onFileEvent(dirItem);
+                    }
                 }
 
             } catch (Exception e) {
