@@ -37,39 +37,57 @@ public class ObjectRecognitionServiceImpl implements ObjectRecognitionService {
     }
 
     @Override
-    public Version getVersion() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .header("Content-Type", "application/json")
-                .uri(getVersionUri)
-                .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return objectMapper.readValue(response.body(), Version.class);
+    public Version getVersion() throws ORException {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .header("Content-Type", "application/json")
+                    .uri(getVersionUri)
+                    .build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return objectMapper.readValue(response.body(), Version.class);
+        } catch (Exception e) {
+            throw new ORException("Error", e);
+        }
     }
 
     @Override
-    public Result getResult(InputStream is, String fileName, String mimeType) throws IOException, InterruptedException {
-        String boundary = "X-HTTP11CLIENT-SEPARATOR";
-        HttpRequest request = HttpRequest.newBuilder()
+    public Result getResult(InputStream is, String fileName, String mimeType) throws ORException {
+        try {
+            String boundary = "X-HTTP11CLIENT-SEPARATOR";
+            HttpRequest request = HttpRequest.newBuilder()
                 .POST(ofMimeMultipartData(is, fileName, mimeType, boundary))
                 .header("Content-Type", "multipart/form-data;boundary=" + boundary)
                 .uri(getResultUploadDetect)
                 .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return objectMapper.readValue(response.body(), Result.class);
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new ORException("Http status: " + response.statusCode());
+            }
+            return objectMapper.readValue(response.body(), Result.class);
+        } catch (Exception e) {
+            throw new ORException("Error", e);
+        }
     }
 
     @Override
-    public Result getResult(Path path) throws IOException, InterruptedException {
-        PathRequest pathRequest = new PathRequest(path.toString());
-        String jsonData = objectMapper.writeValueAsString(pathRequest);
-        HttpRequest request = HttpRequest.newBuilder()
+    public Result getResult(Path path) throws ORException {
+        try {
+            PathRequest pathRequest = new PathRequest(path.toString());
+            String jsonData = objectMapper.writeValueAsString(pathRequest);
+            HttpRequest request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(jsonData))
                 .header("Content-Type", "application/json")
                 .uri(getResultLocalDetect)
                 .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return objectMapper.readValue(response.body(), Result.class);
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new ORException("Http status: " + response.statusCode());
+            }
+            return objectMapper.readValue(response.body(), Result.class);
+        } catch (Exception e) {
+            throw new ORException("Error", e);
+        }
     }
 
     private static HttpRequest.BodyPublisher ofMimeMultipartData(InputStream is, String fileName, String mimeType, String boundary) throws IOException {

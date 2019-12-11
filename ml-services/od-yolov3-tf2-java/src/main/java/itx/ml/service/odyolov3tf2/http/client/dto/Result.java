@@ -11,16 +11,19 @@ public class Result {
     private final Float time;
     private final List<DetectedObject> objects;
     private final Boolean result;
+    private final String message;
 
     @JsonCreator
     public Result(@JsonProperty("path") String path,
                   @JsonProperty("time") Float time,
                   @JsonProperty("objects") List<DetectedObject> objects,
-                  @JsonProperty("result") Boolean result) {
+                  @JsonProperty("result") Boolean result,
+                  @JsonProperty("message") String message) {
         this.path = path;
         this.time = time;
         this.objects = objects;
         this.result = result;
+        this.message = message;
     }
 
     public String getPath() {
@@ -39,4 +42,7 @@ public class Result {
         return result;
     }
 
+    public String getMessage() {
+        return message;
+    }
 }

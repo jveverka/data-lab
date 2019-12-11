@@ -2,7 +2,7 @@
 
 import time
 import sys
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify
 from absl import app, flags, logging
 from absl.flags import FLAGS
 import numpy as np
@@ -26,25 +26,36 @@ def getVersion():
 
 @app.route('/local-detect', methods=["POST"])
 def detect():
-    req_data = request.get_json()
-    path = req_data['path'];
-    logging.info('path:{}'.format(path))
+    try:
+        req_data = request.get_json()
+        path = req_data['path'];
+        logging.info('path:{}'.format(path))
 
-    content = open(path, 'rb').read()
-    return evaluateImage(content, path)
+        content = open(path, 'rb').read()
+        return evaluateImage(content, path)
+    except:
+        return createErrorResponse({ 'result': False, 'path': path, 'message': 'ERROR' }, 500)
 
 @app.route('/upload-detect', methods=["POST"])
 def uploadDetect():
-    if 'file' not in request.files:
-        logging.info('Error: file not attached !')
-        abort(500)
-    file = request.files['file']
-    if file.filename == '':
-        logging.info('Error: file name not specified !')
-        abort(500)
-    content = file.stream.read()
-    return evaluateImage(content, file.filename)
+    try:
+        if 'file' not in request.files:
+            logging.info('Error: file not attached !')
+            return createErrorResponse({ 'result': False, 'path': '', 'message': 'ERROR: missing multipart attachment !' }, 500)
+        file = request.files['file']
+        if file.filename == '':
+            logging.info('Error: file name not specified !')
+            return createErrorResponse({ 'result': False, 'path': '', 'message': 'ERROR: file name not specified !' }, 500)
+        content = file.stream.read()
+        return evaluateImage(content, file.filename)
+    except:
+        return createErrorResponse({ 'result': False, 'path': '', 'message': 'ERROR' }, 500)
 
+
+def createErrorResponse(data, status):
+    response = jsonify(data)
+    response.status_code = status
+    return response
 
 def evaluateImage(content, path):
     img = tf.image.decode_image(content, channels=3)
@@ -65,7 +76,7 @@ def evaluateImage(content, path):
             "box": np.array(boxes[0][i]).tolist()
         }
         objects[i] = object
-    result = { 'result': True, 'path': path, 'time': t2, "objects": objects }
+    result = { 'result': True, 'path': path, 'time': t2, 'objects': objects, 'message': 'OK' }
     return result
 
 

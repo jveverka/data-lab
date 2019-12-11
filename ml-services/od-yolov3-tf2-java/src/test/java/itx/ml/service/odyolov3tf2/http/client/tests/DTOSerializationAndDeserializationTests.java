@@ -48,6 +48,7 @@ public class DTOSerializationAndDeserializationTests {
         Assert.assertNotNull(result.getPath());
         Assert.assertNotNull(result.getTime());
         Assert.assertNotNull(result.getResult());
+        Assert.assertNotNull(result.getMessage());
     }
 
 }
