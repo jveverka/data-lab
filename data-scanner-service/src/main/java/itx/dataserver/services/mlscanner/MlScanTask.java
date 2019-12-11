@@ -4,6 +4,7 @@ import itx.dataserver.services.filescanner.dto.fileinfo.FileInfoId;
 import itx.dataserver.services.mlscanner.dto.ObjectRecognition;
 import itx.elastic.service.ElasticSearchService;
 import itx.fs.service.dto.DirItem;
+import itx.ml.service.odyolov3tf2.http.client.ORException;
 import itx.ml.service.odyolov3tf2.http.client.ObjectRecognitionService;
 import itx.ml.service.odyolov3tf2.http.client.dto.Result;
 import org.slf4j.Logger;
@@ -42,7 +43,7 @@ public class MlScanTask implements Runnable {
             }
         } catch (IOException e) {
             LOG.error("Error: ", e);
-        } catch (InterruptedException e) {
+        } catch (ORException e) {
             LOG.error("Error: ", e);
         } catch (NoSuchAlgorithmException e) {
             LOG.error("Error: ", e);
