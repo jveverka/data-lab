@@ -15,6 +15,7 @@ images, video streams, text documents, file system. This project is work in prog
 ### Microservices
 * [__data-scanner-service__](data-scanner-service) - [__microservice__] simple service for scanning file system.
 * [__ml-services__](ml-services) - [__microservices__] simple services utilizing using machine learning.
+* [__message-broker__](message-broker) - [__microservice__]
 
 ### Components 
 * [__file-system-service__](file-system-service) - [__library__] simple library for scanning file system.
@@ -26,12 +27,14 @@ images, video streams, text documents, file system. This project is work in prog
 
 ### Technology stack
 * __Microservices__ - REST, Message Broker integrations, K8s, WIP
-* __ElasticSearch 7.x__ - main meta-data database
-* __Kibana 7.x__ - basic data visualizations
+* __ElasticSearch 7.5__ - main meta-data database
+* __Kibana 7.5__ - basic data visualizations
+* __RabbitMQ 3.8__ - message broker
 * __Java 11__ - microservice implementations 
-* __Python 3.6.x__ - microservice implementations
+* __Python 3.6.9__ - microservice implementations
 * __TensorFlow 2.0 / Keras__ - ML related tasks
-* __Gradle 6.x__ - build system 
+* __Gradle 6.0.1__ - build system 
+* __Ubuntu 18.04 LTS__ - default target environment
 
 ### Run and build
 ```
