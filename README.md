@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Build Status](https://travis-ci.org/jveverka/data-lab.svg?branch=master)](https://travis-ci.org/jveverka/data-lab.svg?branch=master)
+[![Build Status](https://travis-ci.org/jveverka/data-lab.svg?branch=master)](https://travis-ci.org/jveverka/data-lab?branch=master)
 
 # Data Lab Project
 __Data Lab Project__ provides advanced analytics and query services on various document sources like 
