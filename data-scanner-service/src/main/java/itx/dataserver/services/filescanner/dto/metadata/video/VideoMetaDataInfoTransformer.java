@@ -62,6 +62,7 @@ public class VideoMetaDataInfoTransformer implements DataTransformer<VideoMetaDa
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public VideoMetaDataInfo getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String videoType = (String)source.get("videoType");

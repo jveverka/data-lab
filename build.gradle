@@ -9,18 +9,18 @@ subprojects {
     targetCompatibility = 11
 
     dependencies {
-        compile 'org.slf4j:slf4j-api:1.8.0-beta4'
-        compile 'org.slf4j:slf4j-simple:1.8.0-beta4'
+        implementation 'org.slf4j:slf4j-api:1.8.0-beta4'
+        implementation 'org.slf4j:slf4j-simple:1.8.0-beta4'
     }
 }
 
 project(':data-scanner-service') {
     dependencies {
-        compile project(':elasticsearch-service')
-        compile project(':media-info-service')
-        compile project(':file-system-service')
-        compile project(':od-yolov3-tf2-java')
-        testCompile project(':media-data')
+        implementation project(':elasticsearch-service')
+        implementation project(':media-info-service')
+        implementation project(':file-system-service')
+        implementation project(':od-yolov3-tf2-java')
+        testImplementation project(':media-data')
     }
 }
 
@@ -28,7 +28,7 @@ project(':file-system-service') {}
 
 project(':media-info-service') {
     dependencies {
-        testCompile project(':media-data')
+        testImplementation project(':media-data')
     }
 }
 
@@ -37,12 +37,12 @@ project(':media-data') {}
 project(':elasticsearch-service') {}
 project(':elasticsearch-tests') {
     dependencies {
-        compile project(':elasticsearch-service')
+        implementation project(':elasticsearch-service')
     }
 }
 
 project(':od-yolov3-tf2-java') {
     dependencies {
-        testCompile project(':media-data')
+        testImplementation project(':media-data')
     }
 }

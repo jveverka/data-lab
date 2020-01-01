@@ -57,6 +57,7 @@ public class UnmappedDataTransformer implements DataTransformer<UnmappedData> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public UnmappedData getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String type = (String)source.get("type");

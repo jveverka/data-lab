@@ -5,12 +5,15 @@ apply plugin: 'application'
 mainClassName = 'itx.dataserver.DsScanMain'
 
 dependencies {
-    compile 'com.beust:jcommander:1.78'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1'
-    testCompile 'org.testng:testng:7.0.0'
-    testCompile 'org.mockito:mockito-core:3.0.0'
+    implementation 'com.beust:jcommander:1.78'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1'
+    implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.4.2'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC4'
+    implementation 'com.drewnoakes:metadata-extractor:2.12.0'
+    testImplementation 'org.testng:testng:7.0.0'
+    testImplementation 'org.mockito:mockito-core:3.0.0'
 }
 
 repositories {

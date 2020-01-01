@@ -64,6 +64,7 @@ public class ObjectRecognitionDataTransformer implements DataTransformer<ObjectR
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ObjectRecognition getInstance(DocumentId id, Map<String, Object> source) throws DataMappingException {
         FileInfoId fileInfoId = new FileInfoId(id.getId());
         String path = (String)source.get("path");
