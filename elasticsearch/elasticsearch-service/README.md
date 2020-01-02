@@ -1,6 +1,6 @@
 # ElasticSearch Service
 Library implementing easier access to ElasticSearch data.
-Tested with __[ElasticSearch](https://www.elastic.co/downloads/past-releases/elasticsearch-7-4-2) 7.4.2__
+Tested with __[ElasticSearch](https://www.elastic.co/downloads/past-releases/elasticsearch-7-5-1) 7.5.1__
 
 ### Implemented features
 * __Index operations__ - created, delete, check existence of ES indices.
