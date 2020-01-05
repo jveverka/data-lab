@@ -30,6 +30,6 @@ gradle clean build test publishToMavenLocal
   ```
 * Gradle dependency
   ```
-  compile 'itx.elastic.service:elasticsearch-service:1.0.0'
+  implementation 'itx.elastic.service:elasticsearch-service:1.0.0'
   ```
   

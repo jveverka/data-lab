@@ -26,7 +26,7 @@ Maven dependency:
 ```
 Gradle dependency:
 ```
-compile 'itx.ml.service:od-yolov3-tf2-java:1.0.0'
+implementation 'itx.ml.service:od-yolov3-tf2-java:1.0.0'
 ```
 Use in java code:
 ```
