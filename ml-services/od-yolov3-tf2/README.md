@@ -30,14 +30,24 @@ Supported image formats: JPEG, PNG.
   ./convert.py
   ```  
 
-## Run Object detection - CLI  
+## Run Image Object detection - CLI  
 ```
 ./detect-image.py --image path/to/image/file.jpg
 ```
 Check console output and ``output.jpg`` image for generated results.
 
-## Run Object detection - REST service
-* Start seb server. 
+## Run Video Object detection - CLI
+```
+# from file
+./detect-video.py --video path/to/video/file.mp4
+
+# webcam
+./detect-video.py --video 0
+```
+Annotated video frames are displayed on UI in new window.
+
+## Run Image Object detection - REST service
+* Start web server. 
   ```
   ./detect-image-rest.py 
   ```
