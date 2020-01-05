@@ -32,14 +32,14 @@ Supported image formats: JPEG, PNG.
 
 ## Run Object detection - CLI  
 ```
-./detect.py --image path/to/image/file.jpg
+./detect-image.py --image path/to/image/file.jpg
 ```
 Check console output and ``output.jpg`` image for generated results.
 
 ## Run Object detection - REST service
 * Start seb server. 
   ```
-  ./detect-rest.py 
+  ./detect-image-rest.py 
   ```
 * Get service version, response is JSON formatted version.  
   ```
