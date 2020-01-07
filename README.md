@@ -36,7 +36,8 @@ images, video streams, text documents, file system. This project is work in prog
 * __Gradle 6.0.1__ - build system 
 * __Ubuntu 18.04 LTS__ - default target environment
 
-### Run and build
+### Build, Test and Run
 ```
-gradle clean build test
+gradle clean installDist distZip test
 ```
+Follow [this user](docs/user-guide.md) guide to run microservices locally.
