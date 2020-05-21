@@ -6,18 +6,18 @@ Source images are loaded from local disk, or uploaded in http post multipart req
 Supported image formats: JPEG, PNG.
 
 ## Install Environment
-* Ubuntu __18.04.3 LTS__
-* Python __3.6.9__
+* Ubuntu __20.04 LTS__
+* Python __3.8.x__
 * GPU computing
   ```
-  sudo apt install nvidia-driver-440 cuda-10-2 libcudnn7
-  pip3 install --user tensorflow-gpu==2.0.0b1
+  sudo apt install nvidia-driver-440 nvidia-cuda-toolkit
+  pip3 install --user tensorflow-gpu==2.2.0
   ```
 * Python modules
   ```
-  pip3 install --user tensorflow==2.0.0b1 # CPU only computing
-  pip3 install --user opencv-python==4.1.1.26
-  pip3 install --user Flask==1.1.1
+  pip3 install --user tensorflow==2.2.0 # CPU only computing
+  pip3 install --user opencv-python==4.1.2.30
+  pip3 install --user Flask==1.1.2
   ``` 
 * download pre-trained model
   ```
