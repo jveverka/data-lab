@@ -1,5 +1,5 @@
 # ElasticSearch Service
-This library was tested with __[ElasticSearch](https://www.elastic.co/downloads/elasticsearch) 7.5.1__.
+This library was tested with __[ElasticSearch](https://www.elastic.co/downloads/elasticsearch) 7.7.0__.
 
 * [ElasticSearch Service library](elasticsearch-service) - library implementation.
 * [Integration Tests](elasticsearch-tests) - test suite for library functionality verification.
@@ -8,7 +8,7 @@ This library was tested with __[ElasticSearch](https://www.elastic.co/downloads/
 * Download ElasticSearch [binary package](https://www.elastic.co/downloads/elasticsearch).
 * Extract the package in any directory 
   ```
-  tar xzvf elasticsearch-7.5.1-linux-x86_64.tar.gz
+  tar xzvf elasticsearch-7.7.0-linux-x86_64.tar.gz
   ```
 
 ### Configure ElasticSearch
@@ -22,7 +22,7 @@ cluster.initial_master_nodes: ["node-1"]
 ### Start ElasticSearch server
 * go to ElasticSearch directory
   ```
-  cd elasticsearch-7.5.1/bin
+  cd elasticsearch-7.7.0/bin
   ```
 * start ElasticSearch server
   ```
@@ -37,7 +37,7 @@ cluster.initial_master_nodes: ["node-1"]
 * Download Kibana [binary package](https://www.elastic.co/downloads/kibana)
 * Extract the package in any directory
   ```
-  tar xzvf kibana-7.5.1-linux-x86_64.tar.gz
+  tar xzvf kibana-7.7.0-linux-x86_64.tar.gz
   ```
 * configure kibana server to listen on all network interfaces,
   edit ``config/kibana.yaml`` so it contains this minimal configuration:
@@ -46,7 +46,7 @@ cluster.initial_master_nodes: ["node-1"]
   ```
 * start kibana server
   ```
-  cd kibana-7.5.1-linux-x86_64/bin
+  cd kibana-7.7.0-linux-x86_64/bin
   ./kibana
   ```
 * kibana server is available at local address ``http://192.168.44.33:5601/`` as well as on other interfaces.  

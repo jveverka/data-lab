@@ -1,5 +1,5 @@
 # Integration Testing for ElasticSearchService(s)
-In order to run this integration test suite, __ElasticSearch 7.5.1__ instance must be running on 
+In order to run this integration test suite, __ElasticSearch 7.7.0__ instance must be running on 
 [http://localhost:9200](http://localhost:9200). 
 
 ### Build and Run

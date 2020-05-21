@@ -81,6 +81,7 @@ public class ElasticSearchServiceDocumentsTestsIT {
 
         result = elasticSearchService.flushIndex(EventData.class);
         Assert.assertTrue(result);
+
         //TODO: fix transactional behavior
         Thread.sleep(30_000);
 
@@ -88,6 +89,9 @@ public class ElasticSearchServiceDocumentsTestsIT {
             result = elasticSearchService.saveDocument(EventData.class, eventData[i]);
             Assert.assertTrue(result);
         }
+
+        //TODO: fix transactional behavior
+        Thread.sleep(30_000);
 
         elasticSearchService.getDocuments(EventData.class, testObserver, 20);
         testObserver.await(1, TimeUnit.MINUTES);

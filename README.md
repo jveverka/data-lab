@@ -27,14 +27,14 @@ images, video streams, text documents, file system. This project is work in prog
 
 ### Technology stack
 * __Microservices__ - REST, Message Broker integrations, K8s, WIP
-* __ElasticSearch 7.5.x__ - main meta-data database
-* __Kibana 7.5.x__ - basic data visualizations
+* __ElasticSearch 7.7.x__ - main meta-data database
+* __Kibana 7.7.x__ - basic data visualizations
 * __RabbitMQ 3.8__ - message broker
 * __Java 11__ - microservice implementations 
-* __Python 3.6.9__ - microservice implementations
+* __Python 3.8.x__ - microservice implementations
 * __TensorFlow 2.0 / Keras__ - ML related tasks
-* __Gradle 6.0.1__ - build system 
-* __Ubuntu 18.04 LTS__ - default target environment
+* __Gradle 6.3.x__ - build system or later 
+* __Ubuntu 20.04 LTS__ - default target environment
 
 ### Build, Test and Run
 ```
