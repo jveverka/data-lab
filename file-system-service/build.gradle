@@ -4,11 +4,11 @@ apply plugin: 'maven-publish'
 apply plugin: 'jacoco'
 
 dependencies {
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC4'
-    testImplementation 'org.testng:testng:7.0.0'
-    testImplementation 'com.fasterxml.jackson.core:jackson-core:2.10.1'
-    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
-    testImplementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
+    testImplementation 'org.testng:testng:7.1.0'
+    testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.0'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
+    testImplementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0'
 }
 
 repositories {
