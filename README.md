@@ -1,4 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Java11](https://img.shields.io/badge/java-11-blue)](https://img.shields.io/badge/java-11-blue)
+[![Gradle](https://img.shields.io/badge/gradle-v6.5-blue)](https://img.shields.io/badge/gradle-v6.5-blue)
 [![Build Status](https://travis-ci.org/jveverka/data-lab.svg?branch=master)](https://travis-ci.org/jveverka/data-lab?branch=master)
 
 # Data Lab Project
@@ -33,7 +35,7 @@ images, video streams, text documents, file system. This project is work in prog
 * __Java 11__ - microservice implementations 
 * __Python 3.8.x__ - microservice implementations
 * __TensorFlow 2.0 / Keras__ - ML related tasks
-* __Gradle 6.3.x__ - build system or later 
+* __Gradle 6.5.x__ - build system or later 
 * __Ubuntu 20.04 LTS__ - default target environment
 
 ### Build, Test and Run
