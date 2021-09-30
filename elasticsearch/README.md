@@ -7,7 +7,6 @@ This library was tested with __[ElasticSearch](https://www.elastic.co/downloads/
 ### Docker-Compose EK Stack
 * Start EK stack in docker-compose
   ```
-  wget https://raw.githubusercontent.com/jveverka/guildelines-and-procedures/master/docker/elastic-monitoring-stack/ek-docker-compose.yml
   docker-compose -f ek-docker-compose.yml up -d
   docker-compose -f ek-docker-compose.yml down -v
   ```

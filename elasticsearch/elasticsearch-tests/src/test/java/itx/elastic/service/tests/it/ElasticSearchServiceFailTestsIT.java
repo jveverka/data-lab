@@ -7,6 +7,7 @@ import itx.elastic.service.tests.it.dto.EventData;
 import itx.elastic.service.tests.it.dto.EventDataId;
 import itx.elastic.service.tests.it.dto.EventDataTransformer;
 import itx.elastic.service.tests.it.dto.Location;
+import org.elasticsearch.ElasticsearchException;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -35,44 +36,44 @@ public class ElasticSearchServiceFailTestsIT {
         eventData = EventData.from(new EventDataId("id1"), "name1", "description1", ZonedDateTime.now(), 3600, new Location(45.2F, 15.3F));
     }
 
-    @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    @Test(expectedExceptions = { ElasticsearchException.class, IOException.class, ConnectException.class})
     public void testDisconnectedIndexExists() throws IOException {
         elasticSearchService.hasIndex(EventData.class);
         Assert.fail();
     }
 
-    @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    @Test(expectedExceptions = { ElasticsearchException.class, IOException.class, ConnectException.class})
     public void testDisconnectedIndexCreate() throws IOException {
         elasticSearchService.createIndex(EventData.class);
         Assert.fail();
     }
 
-    @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    @Test(expectedExceptions = { ElasticsearchException.class, IOException.class, ConnectException.class})
     public void testDisconnectedIndexDelete() throws IOException {
         elasticSearchService.deleteIndex(EventData.class);
         Assert.fail();
     }
 
-    @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    @Test(expectedExceptions = { ElasticsearchException.class, IOException.class, ConnectException.class})
     public void testFlushIndex() throws IOException {
         elasticSearchService.flushIndex(EventData.class);
         Assert.fail();
     }
 
-    @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    @Test(expectedExceptions = { ElasticsearchException.class, IOException.class, ConnectException.class})
     public void testDisconnectedDeleteDocument() throws IOException {
         elasticSearchService.deleteDocumentById(EventData.class, TestUtils.createDocumentId(eventData.getId()));
         Assert.fail();
     }
 
-    @Test(expectedExceptions = {IOException.class, ConnectException.class})
+    @Test(expectedExceptions = { ElasticsearchException.class, IOException.class, ConnectException.class})
     public void testDisconnectedCreateDocument() throws IOException {
         elasticSearchService.saveDocument(EventData.class, eventData);
         Assert.fail();
     }
 
     @Test
-    public void testDisconnectedGetDocuments() throws IOException, InterruptedException {
+    public void testDisconnectedGetDocuments() throws InterruptedException {
         TestObserver observer = new TestObserver();
         elasticSearchService.getDocuments(EventData.class, observer, 100);
         boolean await = observer.await(10, TimeUnit.SECONDS);
