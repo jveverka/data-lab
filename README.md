@@ -29,8 +29,8 @@ images, video streams, text documents, file system. This project is work in prog
 
 ### Technology stack
 * __Microservices__ - REST, Message Broker integrations, K8s, WIP
-* __ElasticSearch 7.x__ - main meta-data database
-* __Kibana 7.x__ - basic data visualizations
+* __ElasticSearch 7.15.x__ - main meta-data database
+* __Kibana 7.15.x__ - basic data visualizations
 * __RabbitMQ 3.8__ - message broker
 * __Java 11__ - microservice implementations 
 * __Python 3.8.x__ - microservice implementations
