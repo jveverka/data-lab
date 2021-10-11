@@ -17,7 +17,7 @@ public class DsScanArguments {
     private int elasticPort = 9200;
 
     @Parameter(names = {"-i", "--init-indices" }, description = "Initialize ElasticSearch indices, this will delete and create empty indices.")
-    private boolean initIndices = false;
+    private boolean initIndices = true;
 
     @Parameter(names = {"-m", "--meta-data" }, description = "Meta Data file name used during data scanning.")
     private String metaDataFileName = ".annotation-meta-data-bulk.json";
