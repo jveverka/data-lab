@@ -1,6 +1,7 @@
 # Object Detection Services
 This project contains implementations of [ML](https://en.wikipedia.org/wiki/Machine_learning) 
 based object detection services. Object detection is done in bitmap images (JPEG, PNG).
+Install [instructions for dependencies](https://github.com/jveverka/guildelines-and-procedures/tree/master/ubuntu-notes/cuda-and-tensorflow).
 
 ## Services
 * [Object Detection YOLOv3 TF2 Service](od-yolov3-tf2) - REST service, Image object detection.
