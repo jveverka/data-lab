@@ -37,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,7 +53,7 @@ public class FileScannerServiceImpl implements FileScannerService {
     private final MlScannerService mlScannerService;
     private final ExecutorService mlExecutorService;
 
-    public FileScannerServiceImpl(ClientConfig config, InetSocketAddress mlAddress, int executorSize) {
+    public FileScannerServiceImpl(ClientConfig config, String mlBaseUrl, int executorSize) {
         LOG.info("FileScannerService: initializing ...");
         this.executorService = Executors.newFixedThreadPool(executorSize);
         this.dirScanner = new FSServiceImpl(executorService);
@@ -73,7 +72,7 @@ public class FileScannerServiceImpl implements FileScannerService {
         this.elasticSearchService.registerDataTransformer(ObjectRecognition.class, objectRecognitionDataTransformer);
         this.mediaService = new MediaServiceImpl();
         this.mlExecutorService = Executors.newSingleThreadExecutor();
-        ObjectRecognitionService objectRecognitionService = new ObjectRecognitionServiceImpl(mlAddress);
+        ObjectRecognitionService objectRecognitionService = new ObjectRecognitionServiceImpl(mlBaseUrl);
         this.mlScannerService = new MlScannerServiceImpl(mlExecutorService, elasticSearchService, objectRecognitionService);
     }
 

@@ -4,52 +4,51 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import itx.ml.service.odyolov3tf2.http.client.dto.PathRequest;
 import itx.ml.service.odyolov3tf2.http.client.dto.Result;
 import itx.ml.service.odyolov3tf2.http.client.dto.Version;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ObjectRecognitionServiceImpl implements ObjectRecognitionService {
 
-    private static final String PROTOCOL_PREFIX = "http://";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String ERROR = "Error";
+    private static final String URI_VERSION = "/version";
+    private static final String URI_LOCAL_DETECT = "/local-detect";
+    private static final String URI_UPLOAD_DETECT = "/upload-detect";
+    private static final String APPLICATION_JSON = "application/json";
+    private static final String IMAGE_JPEG = "image/jpeg";
 
-    private final HttpClient httpClient;
-    private final URI getVersionUri;
-    private final URI getResultLocalDetect;
-    private final URI getResultUploadDetect;
+    private final String baseUrl;
+    private final OkHttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public ObjectRecognitionServiceImpl(InetSocketAddress address) {
-        InetSocketAddress.createUnresolved("", 120);
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
+    public ObjectRecognitionServiceImpl(String baseUrl) {
+        this.httpClient = new OkHttpClient();
         this.objectMapper = new ObjectMapper();
-        this.getVersionUri = URI.create(PROTOCOL_PREFIX  + address.getHostName() + ":" + address.getPort() + "/version");
-        this.getResultLocalDetect = URI.create(PROTOCOL_PREFIX  + address.getHostName() + ":" + address.getPort() + "/local-detect");
-        this.getResultUploadDetect = URI.create(PROTOCOL_PREFIX  + address.getHostName() + ":" + address.getPort() + "/upload-detect");
+        this.baseUrl = baseUrl;
+    }
+
+    public ObjectRecognitionServiceImpl(String baseUrl, OkHttpClient httpClient, ObjectMapper objectMapper) {
+        this.httpClient = httpClient;
+        this.objectMapper = objectMapper;
+        this.baseUrl = baseUrl;
     }
 
     @Override
     public Version getVersion() throws ORException {
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .header(CONTENT_TYPE, "application/json")
-                    .uri(getVersionUri)
+            Request request = new Request.Builder()
+                    .get()
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
+                    .url(baseUrl + URI_VERSION)
                     .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            return objectMapper.readValue(response.body(), Version.class);
+            Response response = httpClient.newCall(request).execute();
+            return objectMapper.readValue(response.body().string(), Version.class);
         } catch (Exception e) {
             throw new ORException(ERROR, e);
         }
@@ -58,17 +57,16 @@ public class ObjectRecognitionServiceImpl implements ObjectRecognitionService {
     @Override
     public Result getResult(InputStream is, String fileName, String mimeType) throws ORException {
         try {
-            String boundary = "X-HTTP11CLIENT-SEPARATOR";
-            HttpRequest request = HttpRequest.newBuilder()
-                .POST(ofMimeMultipartData(is, fileName, mimeType, boundary))
-                .header(CONTENT_TYPE, "multipart/form-data;boundary=" + boundary)
-                .uri(getResultUploadDetect)
-                .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() != 200) {
-                throw new ORException("Http status: " + response.statusCode());
+            Request request = new Request.Builder()
+                    .post(RequestBody.create(is.readAllBytes(), MediaType.parse(IMAGE_JPEG)))
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
+                    .url(baseUrl + URI_UPLOAD_DETECT)
+                    .build();
+            Response response = httpClient.newCall(request).execute();
+            if (response.code() != 200) {
+                throw new ORException("Http status: " + response.code());
             }
-            return objectMapper.readValue(response.body(), Result.class);
+            return objectMapper.readValue(response.body().string(), Result.class);
         } catch (Exception e) {
             throw new ORException(ERROR, e);
         }
@@ -79,34 +77,19 @@ public class ObjectRecognitionServiceImpl implements ObjectRecognitionService {
         try {
             PathRequest pathRequest = new PathRequest(path.toString());
             String jsonData = objectMapper.writeValueAsString(pathRequest);
-            HttpRequest request = HttpRequest.newBuilder()
-                .POST(HttpRequest.BodyPublishers.ofString(jsonData))
-                .header(CONTENT_TYPE, "application/json")
-                .uri(getResultLocalDetect)
-                .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() != 200) {
-                throw new ORException("Http status: " + response.statusCode());
+            Request request = new Request.Builder()
+                    .post(RequestBody.create(jsonData, MediaType.parse(APPLICATION_JSON)))
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
+                    .url(baseUrl + URI_LOCAL_DETECT)
+                    .build();
+            Response response = httpClient.newCall(request).execute();
+            if (response.code() != 200) {
+                throw new ORException("Http status: " + response.code());
             }
-            return objectMapper.readValue(response.body(), Result.class);
+            return objectMapper.readValue(response.body().string(), Result.class);
         } catch (Exception e) {
             throw new ORException(ERROR, e);
         }
-    }
-
-    private static HttpRequest.BodyPublisher ofMimeMultipartData(InputStream is, String fileName, String mimeType, String boundary) throws IOException {
-        List<byte[]> byteArrays = new ArrayList<>();
-        byte[] separator = ("--" + boundary + "\r\nContent-Disposition: form-data; name=").getBytes(StandardCharsets.UTF_8);
-
-        byteArrays.add(separator);
-
-        byteArrays.add(("\"file\"; filename=\"" + fileName
-                        + "\"\r\nContent-Type: " + mimeType + "\r\n\r\n").getBytes(StandardCharsets.UTF_8));
-        byteArrays.add(is.readAllBytes());
-        byteArrays.add("\r\n".getBytes(StandardCharsets.UTF_8));
-
-        byteArrays.add(("--" + boundary + "--").getBytes(StandardCharsets.UTF_8));
-        return HttpRequest.BodyPublishers.ofByteArrays(byteArrays);
     }
 
 }
