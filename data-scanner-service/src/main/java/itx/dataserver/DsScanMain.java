@@ -38,8 +38,8 @@ public class DsScanMain {
                 .addEndPoint(arguments.getElasticHost(), arguments.getElasticPort(), "http")
                 .build();
         LOG.info("DsMain: ML-Service={}:{}", arguments.getMlHost(), arguments.getMlPort());
-        InetSocketAddress mlAddress = InetSocketAddress.createUnresolved(arguments.getMlHost(), arguments.getMlPort());
-        try (FileScannerService scanner = new FileScannerServiceImpl(config, mlAddress, arguments.getExecutorSize())) {
+        String mlBaseUrl = "http://" + arguments.getMlHost() + ":" + arguments.getMlPort();
+        try (FileScannerService scanner = new FileScannerServiceImpl(config, mlBaseUrl, arguments.getExecutorSize())) {
             if (arguments.isInitIndices()) {
                 LOG.info("DsMain: ES init indices ...");
                 scanner.initIndices();

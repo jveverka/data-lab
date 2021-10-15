@@ -9,15 +9,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
-import java.net.InetSocketAddress;
 
 public class HttpClientTestsIT {
 
     private final ObjectRecognitionService objectRecognitionService;
 
     public HttpClientTestsIT() {
-        this.objectRecognitionService = new ObjectRecognitionServiceImpl(
-                InetSocketAddress.createUnresolved("127.0.0.1", 5000));
+        this.objectRecognitionService = new ObjectRecognitionServiceImpl("http://127.0.0.1:5000");
     }
 
     @Test
